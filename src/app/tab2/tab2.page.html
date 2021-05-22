@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Reservationen
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,74 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">Reservationen</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-list>
+    <ion-list-header>
+      Zukünftige Reservationen
+    </ion-list-header>
+
+    <ion-item-sliding>
+      <ion-item button detail  (click)="presentModal()">
+        <ion-avatar slot="start">
+          <img src="/assets/img/desks/desk-1.jpeg">
+        </ion-avatar>
+        <ion-label>
+          <h2>Tisch 1</h2>
+          <h3>Ganzer Tag</h3>
+          <p>CHF 15.-</p>
+        </ion-label>
+        <ion-badge slot="end">
+          22.05.2020
+        </ion-badge>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="cancel()">stornieren</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item button detail  (click)="presentModal()">
+        <ion-avatar slot="start">
+          <img src="/assets/img/desks/desk-1.jpeg">
+        </ion-avatar>
+        <ion-label>
+          <h2>Tisch 1</h2>
+          <h3>Morgen</h3>
+          <p>CHF 10.-</p>
+        </ion-label>
+        <ion-badge slot="end">
+          25.05.2020
+        </ion-badge>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="cancel()">stornieren</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      Vergangene Reservationen
+    </ion-list-header>
+    <ion-item button detail (click)="presentModal()">
+      <ion-avatar slot="start">
+        <img src="/assets/img/desks/desk-1.jpeg">
+      </ion-avatar>
+      <ion-label>
+        <h2>Tisch 2</h2>
+        <h3>Nachmittag</h3>
+        <p>CHF 10.-</p>
+      </ion-label>
+      <ion-badge slot="end">
+        12.05.2020
+      </ion-badge>
+    </ion-item>
+
+  </ion-list>
+
+
 </ion-content>

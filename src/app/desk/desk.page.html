@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Desk buchen</ion-title>
+    
+    <ion-buttons slot="primary">
+      <ion-button (click)="dismiss()">
+        schliessen
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<ion-list>
+
+  <ion-item>
+    <ion-label>Desk auswählen</ion-label>
+    <ion-select placeholder="Desk auswählen">
+      <ion-select-option value="1">Desk 1</ion-select-option>
+      <ion-select-option value="2">Desk 2</ion-select-option>
+      <ion-select-option value="3">Desk 3</ion-select-option>
+      <ion-select-option value="4">Desk 4</ion-select-option>
+      <ion-select-option value="5">Desk 5</ion-select-option>
+      <ion-select-option value="6">Desk 6</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Buchungsdatum wählen</ion-label>
+    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DDD DD.MM.YYYY"  min="2021-05-20" max="2022-12-31" value="2022-05-22T15:03:46.789"></ion-datetime>
+  </ion-item>
+
+  <ion-radio-group>
+    <ion-list-header>
+      <ion-label>
+        Angebot wählen
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label><h2>Morgen</h2><p>08:00 - 12:30 Uhr</p></ion-label>
+      <ion-radio value="morning"></ion-radio>
+      <ion-badge slot="end">CHF 10.-</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><h2>Nachmittag</h2> <p>13:00 - 17:30 Uhr</p></ion-label>
+      <ion-radio value="afternoon"></ion-radio>
+      <ion-badge slot="end">CHF 10.-</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><h2>Ganzer Tag</h2> <p>08:00 - 17:30 Uhr</p></ion-label>
+      <ion-radio value="day"></ion-radio>
+      <ion-badge slot="end">CHF 15.-</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><h2>Ganze Woche</h2> <p>Mo bis Fr 08:00 - 17:30 Uhr</p></ion-label>
+      <ion-radio value="week"></ion-radio>
+      <ion-badge slot="end">CHF 50.-</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-label><h2>Ganzer Monat</h2></ion-label>
+      <ion-radio value="month"></ion-radio>
+      <ion-badge slot="end">CHF 200.-</ion-badge>
+    </ion-item>
+
+  </ion-radio-group>
+</ion-list>
+
+<ion-button (click)="dismiss()" expand="block">Reservieren</ion-button>
+
+</ion-content>

@@ -1,17 +1,104 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Desk buchen
     </ion-title>
+    <ion-buttons collapse="true"  slot="end">
+      <ion-button >
+        <ion-icon slot="icon-only" name="calendar"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Desk buchen</ion-title>
     </ion-toolbar>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button >
+        <ion-icon slot="icon-only" name="calendar"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+
+  <ion-card button="true" (click)="presentModal()">
+    <img src="/assets/img/desks/desk-1.jpeg" />
+    <ion-card-header>
+      <ion-card-subtitle><ion-badge color="success">frei</ion-badge></ion-card-subtitle>
+      <ion-card-title>Tisch 1</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card button="true" (click)="presentModal()">
+    <img src="/assets/img/desks/desk-2.jpeg" />
+    <ion-card-header>
+      <ion-card-subtitle><ion-badge color="danger">besetzt</ion-badge></ion-card-subtitle>
+      <ion-card-title>Tisch 2</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+    </ion-card-content>
+  </ion-card>
+
+  
+  <ion-card button="true" (click)="presentModal()">
+    <img src="/assets/img/desks/desk-1.jpeg" />
+    <ion-card-header>
+      <ion-card-subtitle><ion-badge color="danger">besetzt</ion-badge></ion-card-subtitle>
+      <ion-card-title>Tisch 3</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card button="true" (click)="presentModal()">
+    <img src="/assets/img/desks/desk-2.jpeg" />
+    <ion-card-header>
+      <ion-card-subtitle><ion-badge color="danger">besetzt</ion-badge></ion-card-subtitle>
+      <ion-card-title>Tisch 4</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card button="true" (click)="presentModal()">
+      <img src="/assets/img/desks/desk-1.jpeg" />
+      <ion-card-header>
+        <ion-card-subtitle><ion-badge color="danger">besetzt</ion-badge></ion-card-subtitle>
+        <ion-card-title>Tisch 5</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card button="true" (click)="presentModal()">
+      <img src="/assets/img/desks/desk-2.jpeg" />
+      <ion-card-header>
+        <ion-card-subtitle><ion-badge color="danger">besetzt</ion-badge></ion-card-subtitle>
+        <ion-card-title>Tisch 6</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        Genug vom Home-Office? Im Meetingpoint am Herrenacker im Schaffhausen findest du deine Oase: sechs voll ausgestattete Work Desks stehen für dich bereit. Buchbar ganz flexibel. Wenn du nur kurz ein paar Mails checken möchtest, hast du im Bistro genügend Platz, es dir mit einem Kaffee gemütlich zu machen.
+      </ion-card-content>
+    </ion-card>
+
+
+
 </ion-content>
