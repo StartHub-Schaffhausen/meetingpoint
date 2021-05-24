@@ -1,4 +1,5 @@
 export interface Reservation {
+    id: string;
     date: Date;
     bookingMorning: boolean;
     bookingAfternoon: boolean;

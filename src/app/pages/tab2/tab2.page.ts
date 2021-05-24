@@ -49,7 +49,10 @@ export class Tab2Page {
 
   }
 
-  async cancel() {
+  async cancel(reservation) {
+
+    console.log(reservation);
+
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Buchung stornieren?',
@@ -62,6 +65,8 @@ export class Tab2Page {
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
             this.slidingItem.close();
+
+            this.rreservationCollection.doc(reservation.id).delete();
           }
         }, {
           text: 'Abbrechen',

@@ -44,6 +44,7 @@ export class DeskPage implements OnInit {
     }
 
     this.reservation = {
+      id: '',
       date: this.selectedDate,
       bookingMorning: false,
       bookingAfternoon: false,

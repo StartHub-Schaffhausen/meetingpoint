@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { UserProfile } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,6 +18,7 @@ export class Tab3Page implements OnInit{
   constructor(
     private authService: AuthService,
     private router: Router,
+    private toastController: ToastController,
     private afs: AngularFirestore,
   ) {
 
@@ -25,7 +27,7 @@ export class Tab3Page implements OnInit{
   async ngOnInit(){
     const user = await this.authService.getUserProfile();
 
-    if(!user){
+    if(user){
       this.userProfileDoc = this.afs.collection('users').doc<UserProfile>(user.uid);
       this.userProfile = this.userProfileDoc.valueChanges();
     }
@@ -38,15 +40,20 @@ export class Tab3Page implements OnInit{
   }
 
   async saveProfile(userProfile){
-    this.userProfileDoc.update({
-      email: userProfile.email,
-      firstName: userProfile.firstName,
-      lastName: userProfile.lastName,
-      profilePicture: userProfile.profilePicture
+    await this.userProfileDoc.update(userProfile);
 
-    });
+    this.presentToast();
 
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Änderungen gespeichert.',
+      color: 'success',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
 }
 
