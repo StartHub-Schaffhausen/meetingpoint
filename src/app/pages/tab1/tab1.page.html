@@ -4,7 +4,7 @@
       Desk buchen
     </ion-title>
     <ion-buttons collapse="true"  slot="end">
-      <ion-button >
+      <ion-button (click)="presentAlertPrompt()">
         <ion-icon slot="icon-only" name="calendar"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,11 +17,25 @@
       <ion-title size="large">Desk buchen</ion-title>
     </ion-toolbar>
     <ion-buttons collapse="true" slot="end">
-      <ion-button >
+      <ion-button (click)="presentAlertPrompt()">
         <ion-icon slot="icon-only" name="calendar"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-header>
+
+
+
+  <ion-segment (ionChange)="segmentChanged($event)" value="today">
+    <ion-segment-button value="today">
+      <ion-label>Heute</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tomorrow">
+      <ion-label>Morgen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="custom">
+      <ion-label>Benutzerdefiniert</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
 
   <ion-card button="true" (click)="presentModal()">
