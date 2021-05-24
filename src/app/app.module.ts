@@ -18,18 +18,19 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    BrowserModule,
     IonicModule.forRoot(),
+    BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-  enabled: environment.production,
+      enabled: environment.production,
   // Register the ServiceWorker as soon as the app is stable
   // or after 30 seconds (whichever comes first).
-  registrationStrategy: 'registerWhenStable:30000'
-})],
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

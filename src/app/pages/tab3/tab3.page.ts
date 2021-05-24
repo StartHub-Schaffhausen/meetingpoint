@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserProfile } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,10 +10,16 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  user: UserProfile;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
 
-  logout(){
-    console.log('logout');
+  async logout(){
+    await this.authService.logoutUser();
+    this.router.navigateByUrl('logout');
   }
 }

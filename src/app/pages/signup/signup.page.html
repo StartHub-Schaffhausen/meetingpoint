@@ -1,9 +1,33 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-title>
+      Registrieren
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registrieren</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-item>
+    <ion-label position="stacked">E-Mail Adresse</ion-label>
+    <ion-input  [(ngModel)]="user.email" type="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Passwort</ion-label>
+    <ion-input  [(ngModel)]="user.password" type="password"></ion-input>
+  </ion-item>
+
+  <ion-button color="primary" expand="block" (click)="signupUser()" >Registrieren</ion-button>
+
+  <ion-button color="secondary" expand="block" href="/login">Login</ion-button>
+
+  <!--<ion-button color="tertiary" expand="block" (click)="mobileLogin()">SMS Login</ion-button>-->
 
 </ion-content>

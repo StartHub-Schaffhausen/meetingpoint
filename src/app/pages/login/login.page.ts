@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { UserCredential } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public user: UserCredential;
 
   constructor(
     private authService: AuthService,
@@ -17,11 +19,16 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.user = {
+      email: '',
+      password: ''
+    };
+
   }
-  async loginUser(credentials): Promise<void> {
-    this.authService.loginUser(credentials.email, credentials.password).then(
+  async loginUser(): Promise<void> {
+    this.authService.loginUser(this.user.email, this.user.password).then(
       () => {
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('tabs');
       },
       async error => {
         const alert = await this.alertCtrl.create({

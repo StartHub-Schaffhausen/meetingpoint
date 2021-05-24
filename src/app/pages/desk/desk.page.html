@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Desk buchen</ion-title>
+    <ion-title>{{desk.name}} buchen</ion-title>
     
     <ion-buttons slot="primary">
       <ion-button (click)="dismiss()">
@@ -15,9 +15,9 @@
 
 <ion-list>
 
-  <ion-item>
+  <!--<ion-item>
     <ion-label>Desk auswählen</ion-label>
-    <ion-select placeholder="Desk auswählen">
+    <ion-select placeholder="Desk auswählen" value='{{desk.name}}'>
       <ion-select-option value="1">Desk 1</ion-select-option>
       <ion-select-option value="2">Desk 2</ion-select-option>
       <ion-select-option value="3">Desk 3</ion-select-option>
@@ -25,14 +25,14 @@
       <ion-select-option value="5">Desk 5</ion-select-option>
       <ion-select-option value="6">Desk 6</ion-select-option>
     </ion-select>
-  </ion-item>
+  </ion-item>-->
 
   <ion-item>
     <ion-label position="floating">Buchungsdatum wählen</ion-label>
-    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DDD DD.MM.YYYY"  min="2021-05-20" max="2022-12-31" value="2022-05-22T15:03:46.789"></ion-datetime>
+    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DD.MM.YYYY"  min="{{minDate}}" max="{{maxDate}}" value="{{reservation.date}}"></ion-datetime>
   </ion-item>
 
-  <ion-radio-group>
+  <ion-radio-group value="{{reservation.reservationType}}">
     <ion-list-header>
       <ion-label>
         Angebot wählen

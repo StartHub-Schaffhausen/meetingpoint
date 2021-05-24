@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { UserCredential } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -10,18 +11,39 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SignupPage implements OnInit {
 
+  public user: UserCredential;
+
   constructor(
     private authService: AuthService,
     private alertCtrl: AlertController,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.user = {
+      email: '',
+      password: ''
+    };
+
   }
-  async signupUser(credentials): Promise<void> {
-    this.authService.signupUser(credentials.email, credentials.password).then(
+
+
+  mobileLogin(phonenumber: string){
+    return this.authService.mobileLogin(phonenumber);
+  }
+
+  login(){
+    return this.router.navigateByUrl('login');
+  }
+
+  async signupUser(): Promise<void> {
+
+    console.log('signup user: ' + this.user.email);
+
+    this.authService.signupUser(this.user.email, this.user.password).then(
       () => {
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('tabs');
       },
       async (error: any) => {
         const alert = await this.alertCtrl.create({
