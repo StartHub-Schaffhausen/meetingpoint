@@ -20,27 +20,27 @@
 
 
   <ion-avatar class="ion-margin-start">
-    <img src="{{ user.profilePicture || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+    <img src="{{ userProfile.profilePicture || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
   </ion-avatar>
   
 
   <ion-item>
     <ion-label position="stacked">E-Mail Adresse</ion-label>
-    <ion-input  [(ngModel)]="user.email" type="email"></ion-input>
+    <ion-input  [(ngModel)]="userProfile.email" type="email"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Voranme</ion-label>
-    <ion-input  [(ngModel)]="user.firstName" type="text"></ion-input>
+    <ion-input  [(ngModel)]="userProfile.firstName" type="text"></ion-input>
   </ion-item>
 
 
   <ion-item>
     <ion-label position="stacked">Nachname</ion-label>
-    <ion-input  [(ngModel)]="user.lastName" type="text"></ion-input>
+    <ion-input  [(ngModel)]="userProfile.lastName" type="text"></ion-input>
   </ion-item>
 
-  <ion-button color="primary" expand="block" (click)="saveProfile()">speichern</ion-button>
+  <ion-button color="primary" expand="block" (click)="saveProfile(userProfile)">speichern</ion-button>
 
 
 

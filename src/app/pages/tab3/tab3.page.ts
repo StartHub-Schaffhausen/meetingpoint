@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UserProfile } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -9,22 +11,24 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit{
-
-  user: UserProfile;
+  userProfile: Observable<UserProfile>;
+  private userProfileDoc: AngularFirestoreDocument<UserProfile>;
 
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+    private afs: AngularFirestore,
+  ) {
 
-  ngOnInit(){
+  }
 
-    this.user = {
-      email: '',
-      firstName: '',
-      lastName: '',
-      profilePicture: ''
-    };
+  async ngOnInit(){
+    const user = await this.authService.getUserProfile();
+
+    if(!user){
+      this.userProfileDoc = this.afs.collection('users').doc<UserProfile>(user.uid);
+      this.userProfile = this.userProfileDoc.valueChanges();
+    }
   }
 
 
@@ -33,7 +37,14 @@ export class Tab3Page implements OnInit{
     this.router.navigateByUrl('logout');
   }
 
-  async saveProfile(){
+  async saveProfile(userProfile){
+    this.userProfileDoc.update({
+      email: userProfile.email,
+      firstName: userProfile.firstName,
+      lastName: userProfile.lastName,
+      profilePicture: userProfile.profilePicture
+
+    });
 
   }
 

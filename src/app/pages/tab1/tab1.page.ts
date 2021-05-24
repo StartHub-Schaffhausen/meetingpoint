@@ -30,7 +30,7 @@ export class Tab1Page {
     private alertController: AlertController,
     private afs: AngularFirestore
     ) {
-      this.resourcesCollection = afs.collection<Desk>('resources');
+      this.resourcesCollection = this.afs.collection<Desk>('resources');
       this.items = this.resourcesCollection.valueChanges();
       this.selectedDate = new Date();
       this.minDate = new Date();
@@ -54,10 +54,10 @@ export class Tab1Page {
 
     modal.onDidDismiss().then(data=>{
       console.log(data);
-      if (data.role){
-        console.log('closed');
-      }else{
+      if (data.data.booked){
         this.presentToast();
+      }else{
+        console.log('closed');
       }
     });
 

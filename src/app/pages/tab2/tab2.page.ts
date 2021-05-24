@@ -1,6 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AlertController, IonItemSliding, IonRouterOutlet, ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Reservation } from 'src/app/models/reservation';
+import { AuthService } from 'src/app/services/auth.service';
 import { ReservationPage } from '../reservation/reservation.page';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Component({
   selector: 'app-tab2',
@@ -10,9 +16,25 @@ import { ReservationPage } from '../reservation/reservation.page';
 export class Tab2Page {
   @ViewChild(IonItemSliding) slidingItem: IonItemSliding;
 
-  constructor(public modalController: ModalController, private routerOutlet: IonRouterOutlet, public alertController: AlertController) {
+  user: firebase.User;
+  items: Observable<Reservation[]>;
+  private rreservationCollection: AngularFirestoreCollection<Reservation>;
+  constructor(
+    private afs: AngularFirestore,
+    public modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
+    public alertController: AlertController,
+    private authService: AuthService) {
 
+    this.authService.getUserProfile().then(user=>{
 
+      if (user){
+        this.rreservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
+        this.items = this.rreservationCollection.valueChanges();
+      }
+      this.user = user;
+
+    });
   }
 
   async presentModal() {

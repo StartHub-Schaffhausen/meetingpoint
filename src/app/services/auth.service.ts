@@ -10,12 +10,20 @@ import 'firebase/auth';
   providedIn: 'root'
 })
 export class AuthService {
+  private user: firebase.User;
 
   constructor(public auth: AngularFireAuth) { }
 
   mobileLogin(phonenumber: string){
    //this.auth.signInWithPhoneNumber(phonenumber, )
   }
+
+
+  async getUserProfile(): Promise<firebase.User>{
+    this.user = await this.auth.currentUser;
+    return this.user;
+  }
+
 
   loginUser(
     email: string,

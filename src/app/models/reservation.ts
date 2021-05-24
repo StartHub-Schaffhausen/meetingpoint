@@ -4,7 +4,10 @@ export interface Reservation {
     bookingAfternoon: boolean;
     bookingDay: boolean;
     bookingWeek: boolean;
+    bookingType: string;
     userId: string;
     bookingCreated: Date;
     reservationType: string;
+    price: string;
+    image: string;
  }

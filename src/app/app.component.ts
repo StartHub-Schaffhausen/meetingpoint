@@ -8,6 +8,8 @@ import 'firebase/firestore';
 
 import {SwUpdate} from '@angular/service-worker';
 import { AlertController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,18 +21,27 @@ export class AppComponent {
   constructor(
     private swUpdate: SwUpdate,
     private alertController: AlertController,
+    private afAuth: AngularFireAuth,
+    private router: Router,
   ) {
     this.initializeApp();
 
-   /* firebase.auth().onAuthStateChanged((user) => {
+
+    this.afAuth.onAuthStateChanged((user)=>{
+
       if (user) {
         // User is signed in.
         console.log('User is signed in.');
+        this.router.navigateByUrl('tabs');
+
       } else {
         // No user is signed in.
         console.log(' No user is signed in.');
+        this.router.navigateByUrl('login');
       }
-    });*/
+
+
+    });
   }
 
   initializeApp(): void {
