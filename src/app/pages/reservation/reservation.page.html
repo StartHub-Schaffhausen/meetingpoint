@@ -37,12 +37,12 @@
         </ion-badge>
       </ion-item>
 
-      <ion-button expand="block" color="danger" (click)="cancel(reservation)">
+      <ion-button *ngIf="allowDelete" expand="block" color="danger" (click)="cancel(reservation)">
         stornieren
       </ion-button>
  
   </ion-list>
 
-  <deckgo-qrcode content="{{ reservation.id }}"></deckgo-qrcode>
+  <deckgo-qrcode *ngIf="allowDelete" content="{{ reservation.id }}"></deckgo-qrcode>
 
 </ion-content>

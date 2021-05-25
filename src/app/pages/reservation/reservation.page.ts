@@ -10,6 +10,7 @@ import { Reservation } from 'src/app/models/reservation';
 })
 export class ReservationPage implements OnInit {
   @Input() reservation: Reservation;
+  @Input() allowDelete: boolean;
 
   constructor(
     private modalController: ModalController,

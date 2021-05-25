@@ -67,14 +67,15 @@ export class Tab2Page implements OnInit {
   }
 
 
-  async presentModal(reservation) {
+  async presentModal(reservation, status) {
     const modal = await this.modalController.create({
       component: ReservationPage,
       //cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
       componentProps:{
-        reservation
+        reservation,
+        allowDelete: status
       }
 
     });
