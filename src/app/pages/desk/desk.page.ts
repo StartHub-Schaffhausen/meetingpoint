@@ -30,7 +30,7 @@ export class DeskPage implements OnInit {
     private alertCtrl: AlertController
     ) {
     this.minDate = new Date();
-    this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
+    this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 90);
 
     this.reservation = {
       id: '',
@@ -55,8 +55,68 @@ export class DeskPage implements OnInit {
       this.reservation.userId = user.uid;
     }
 
-    this.reservation.dateFrom = this.selectedDate;
+    this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+    this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+
     this.currentDesk = this.desk;
+
+   }
+
+   radioChange(ev: any){
+    switch (ev.detail.value){
+      case 'Morning':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 12:30:000.000Z');
+      break;
+      case 'Afternoon':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 13:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      case 'Day':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      case 'Week':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      default:
+      break;
+    }
+
+    console.log(this.selectedDate.toISOString());
+    console.log(this.reservation.dateFrom.toISOString());
+    console.log(this.reservation.dateTo.toISOString());
+
+   }
+
+
+   dateChange(ev){
+     this.selectedDate = new Date(ev.detail.value);
+     switch (this.reservation.bookingType){
+      case 'Morning':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 12:30:000.000Z');
+      break;
+      case 'Afternoon':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 13:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      case 'Day':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      case 'Week':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0,10) + ' 08:00:000.000Z');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0,10) + ' 17:30:000.000Z');
+      break;
+      default:
+      break;
+    }
+    console.log(this.selectedDate.toISOString());
+    console.log(this.reservation.dateFrom.toISOString());
+    console.log(this.reservation.dateTo.toISOString());
+
 
    }
 

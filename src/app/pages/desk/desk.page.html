@@ -28,11 +28,12 @@
   </ion-item>-->
 
   <ion-item>
-    <ion-label position="floating">Buchungsdatum wählen</ion-label>
-    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DD.MM.YYYY"  min="{{minDate}}" max="{{maxDate}}" value="{{reservation?.date}}"></ion-datetime>
+    <ion-label position="floating">Reservationsdatum wählen</ion-label>
+    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DD.MM.YYYY" value="{{selectedDate}}" (ionChange)="dateChange($event)"></ion-datetime>
   </ion-item>
 
-  <ion-radio-group [(ngModel)]="this.reservation.bookingType" value="{{reservation.bookingType}}">
+
+  <ion-radio-group (ionChange)="radioChange($event)" [(ngModel)]="reservation.bookingType" value="{{reservation.bookingType}}">
     <ion-list-header>
       <ion-label>
         Angebot wählen

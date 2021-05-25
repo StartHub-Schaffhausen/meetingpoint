@@ -19,7 +19,9 @@ export class Tab2Page implements OnInit {
 
   user: firebase.User;
   reservation$: Observable<Reservation[]>;
+  reservationPast$: Observable<Reservation[]>;
   private reservationCollection: AngularFirestoreCollection<Reservation>;
+  private reservationCollectionPast: AngularFirestoreCollection<Reservation>;
   constructor(
     private afs: AngularFirestore,
     public modalController: ModalController,
@@ -31,8 +33,15 @@ export class Tab2Page implements OnInit {
   async ngOnInit(){
     const user: firebase.User = await this.authService.getUserProfile();
     if (user){
-      this.reservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
-      this.reservation$ = this.reservationCollection.valueChanges();
+      this.reservationCollection = this.afs.collection('users').doc(user.uid)
+      .collection<Reservation>('reservations', ref => ref.where('dateFrom', '>=', new Date())
+      .orderBy('dateFrom'));
+      this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
+
+      this.reservationCollectionPast = this.afs.collection('users').doc(user.uid)
+      .collection<Reservation>('reservations', ref => ref.where('dateFrom', '<', new Date())
+      .orderBy('dateFrom'));
+      this.reservationPast$ = this.reservationCollectionPast.valueChanges({ idField: 'id' });
       this.user = user;
     }
   }

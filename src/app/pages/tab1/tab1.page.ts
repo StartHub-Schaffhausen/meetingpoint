@@ -31,8 +31,8 @@ export class Tab1Page {
     private alertController: AlertController,
     private afs: AngularFirestore
     ) {
-      this.resourceRef = this.afs.collection<Desk>('resources');
-      this.items$ = this.resourceRef.valueChanges();
+      this.resourceRef = this.afs.collection<Desk>('resources', ref=> ref.orderBy('name'));
+      this.items$ = this.resourceRef.valueChanges({ idField: 'id' });
 
       this.selectedDate = new Date();
 
