@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Reservation } from 'src/app/models/reservation';
 
 @Component({
   selector: 'app-reservation',
@@ -7,6 +8,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./reservation.page.scss'],
 })
 export class ReservationPage implements OnInit {
+  @Input() reservation: Reservation;
 
   constructor(private modalController: ModalController) { }
 

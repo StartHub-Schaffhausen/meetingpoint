@@ -12,4 +12,48 @@
 
 <ion-content>
 
+
+  <ion-list lines="none">
+
+  
+
+   
+      <ion-list-header>
+        <ion-label>
+          Gewähltes Angebot
+        </ion-label>
+      </ion-list-header>
+  
+      <ion-item *ngIf="reservation?.reservationType=='morning'">
+        <ion-label><h2>Morgen</h2><p>08:00 - 12:30 Uhr</p></ion-label>
+        <ion-radio value="morning"></ion-radio>
+        <ion-badge slot="end">CHF 10.-</ion-badge>
+      </ion-item>
+  
+      <ion-item *ngIf="reservation?.reservationType=='afternoon'">
+        <ion-label><h2>Nachmittag</h2> <p>13:00 - 17:30 Uhr</p></ion-label>
+        <ion-radio value="afternoon"></ion-radio>
+        <ion-badge slot="end">CHF 10.-</ion-badge>
+      </ion-item>
+  
+      <ion-item *ngIf="reservation?.reservationType=='day'">
+        <ion-label><h2>Ganzer Tag</h2> <p>08:00 - 17:30 Uhr</p></ion-label>
+        <ion-radio value="day"></ion-radio>
+        <ion-badge slot="end">CHF 15.-</ion-badge>
+      </ion-item>
+  
+      <ion-item *ngIf="reservation?.reservationType=='week'">
+        <ion-label><h2>Ganze Woche</h2> <p>Mo bis Fr 08:00 - 17:30 Uhr</p></ion-label>
+        <ion-radio value="week"></ion-radio>
+        <ion-badge slot="end">CHF 50.-</ion-badge>
+      </ion-item>
+  
+      <ion-item *ngIf="reservation?.reservationType=='month'">
+        <ion-label><h2>Ganzer Monat</h2></ion-label>
+        <ion-radio value="month"></ion-radio>
+        <ion-badge slot="end">CHF 200.-</ion-badge>
+      </ion-item>
+ 
+  </ion-list>
+
 </ion-content>

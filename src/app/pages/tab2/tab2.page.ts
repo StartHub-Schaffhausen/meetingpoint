@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AlertController, IonItemSliding, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import 'firebase/auth';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   @ViewChild(IonItemSliding) slidingItem: IonItemSliding;
 
   user: firebase.User;
@@ -24,25 +24,27 @@ export class Tab2Page {
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     public alertController: AlertController,
-    private authService: AuthService) {
-
-    this.authService.getUserProfile().then(user=>{
-
-      if (user){
-        this.reservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
-        this.reservation$ = this.reservationCollection.valueChanges();
-      }
+    private authService: AuthService
+    ) {
+  }
+  async ngOnInit(){
+    const user: firebase.User = await this.authService.getUserProfile();
+    if (user){
+      this.reservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
+      this.reservation$ = this.reservationCollection.valueChanges();
       this.user = user;
-
-    });
+    }
   }
 
-  async presentModal() {
+  async presentModal(reservation) {
     const modal = await this.modalController.create({
       component: ReservationPage,
       //cssClass: 'my-custom-class',
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps:{
+        reservation
+      }
 
     });
     return await modal.present();
@@ -54,7 +56,7 @@ export class Tab2Page {
     console.log(reservation);
 
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      //cssClass: 'my-custom-class',
       header: 'Buchung stornieren?',
       message: 'Möchtest du die Buchung wirklich  <strong>stornieren</strong>?',
       buttons: [
