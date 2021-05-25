@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { UserProfile } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-tab3',
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit{
-  userProfile: Observable<UserProfile>;
+  userProfile$: Observable<UserProfile>;
   private userProfileDoc: AngularFirestoreDocument<UserProfile>;
 
   constructor(
@@ -29,7 +30,7 @@ export class Tab3Page implements OnInit{
 
     if(user){
       this.userProfileDoc = this.afs.collection('users').doc<UserProfile>(user.uid);
-      this.userProfile = this.userProfileDoc.valueChanges();
+      this.userProfile$ = this.userProfileDoc.valueChanges();
     }
   }
 
@@ -55,5 +56,24 @@ export class Tab3Page implements OnInit{
     });
     toast.present();
   }
+  async takePicture(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+//    let imageUrl = image.webPath;
+
+this.userProfile$.subscribe(data=>{
+    const profile = data;
+    profile.profilePicture = image.base64String;
+
+    this.userProfileDoc.set(profile);
+  });
+}
 }
 

@@ -3,11 +3,6 @@
     <ion-title>
       Desk buchen
     </ion-title>
-    <ion-buttons collapse="true"  slot="end">
-      <ion-button (click)="presentAlertPrompt()">
-        <ion-icon slot="icon-only" name="calendar"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -37,7 +32,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-card *ngFor="let desk of items | async" button="true" (click)="presentModal(desk)">
+  <ion-card *ngFor="let desk of items$ | async" button="true" (click)="presentModal(desk)">
     <img src="{{desk.picture}}" />
     <ion-card-header>
       <ion-card-subtitle>
