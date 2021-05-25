@@ -14,17 +14,10 @@
   </ion-header>
 
 
-  <div *ngIf="!user">
-    <ion-textarea>
-      <h1>Bitte einloggen</h1>
-      
-      <ion-button color="primary" expand="block" href="/login">Login</ion-button>
-
-    </ion-textarea>
-  </div>
+  
 
 
-  <ion-list *ngIf="user">
+  <ion-list>
     <ion-list-header>
       Zukünftige Reservationen
     </ion-list-header>
@@ -40,7 +33,7 @@
           <p>{{reservation.price}}</p>
         </ion-label>
         <ion-badge slot="end">
-          {{reservation.date}}
+          {{(reservation.date.seconds * 1000 ) | date:'dd.MM.y'}}
         </ion-badge>
       </ion-item>
       <ion-item-options side="end">

@@ -5,7 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { Observable, pipe } from 'rxjs';
 import { UserProfile } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-tab3',
@@ -56,11 +56,14 @@ export class Tab3Page implements OnInit{
     });
     toast.present();
   }
+
   async takePicture(){
     const image = await Camera.getPhoto({
       quality: 90,
+      correctOrientation: true,
+      source: CameraSource.Prompt,
       allowEditing: true,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.Base64
     });
     // image.webPath will contain a path that can be set as an image src.
     // You can access the original file using image.path, which can be
@@ -68,11 +71,13 @@ export class Tab3Page implements OnInit{
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
 //    let imageUrl = image.webPath;
 
-this.userProfile$.subscribe(data=>{
-    const profile = data;
-    profile.profilePicture = image.base64String;
+//console.log(image);
 
-    this.userProfileDoc.set(profile);
+this.userProfile$.subscribe(async data=>{
+    const profile = data;
+    profile.profilePicture = 'data:image/' + image.format.toLowerCase() + ';base64,'  + image.base64String;
+
+    await this.userProfileDoc.set(profile);
   });
 }
 }

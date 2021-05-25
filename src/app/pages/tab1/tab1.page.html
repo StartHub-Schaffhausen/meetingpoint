@@ -1,5 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header [translucent]="true" >
+  <ion-toolbar >
     <ion-title>
       Desk buchen
     </ion-title>
@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar >
       <ion-title size="large">Desk buchen</ion-title>
     </ion-toolbar>
     <ion-buttons collapse="true" slot="end">
@@ -20,7 +20,7 @@
 
 
 
-  <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}">
+  <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="tertiary">
     <ion-segment-button value="today">
       <ion-label>Heute</ion-label>
     </ion-segment-button>
