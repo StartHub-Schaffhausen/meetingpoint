@@ -8,7 +8,6 @@ export interface Reservation {
     bookingType: string;
     userId: string;
     bookingCreated: Date;
-    reservationType: string;
     price: string;
-    image: string;
+    picture: string;
  }

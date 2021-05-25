@@ -29,19 +29,6 @@ export class DeskPage implements OnInit {
     ) {
     this.minDate = new Date();
     this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
-   }
-
-   async ngOnInit(){
-    const user = await this.authService.getUserProfile();
-
-    if (!user){
-      const alert = await this.alertCtrl.create({
-        message: 'Bitte zuerst einloggen',
-        buttons: [{ text: 'Ok', role: 'cancel' }],
-      });
-      await alert.present();
-      this.router.navigateByUrl('login');
-    }
 
     this.reservation = {
       id: '',
@@ -50,18 +37,39 @@ export class DeskPage implements OnInit {
       bookingAfternoon: false,
       bookingDay: false,
       bookingWeek: false,
-      userId: user.uid || null,
+      userId: null,
       bookingCreated: new Date(),
-      reservationType:  'day',
+      bookingType: 'Day',
       price: '',
-      image: '',
-      bookingType: ''
+      picture: '',
     };
-    console.log(this.reservation);
+   }
+
+   async ngOnInit(){
+    const user = await this.authService.getUserProfile();
+    if (user){
+      this.reservation.userId = user.uid;
+    }
+
+    this.reservation.date = this.selectedDate;
+
    }
 
    async bookReservation(){
-    const user = await this.authService.getUserProfile();
+     console.log('Reservation');
+     console.log(this.reservation);
+
+     console.log('Desk');
+     console.log(this.desk);
+
+     this.reservation.picture = this.desk.picture;
+
+     //let string = this.reservation.bookingType;
+     this.reservation.price = this.desk['price' + this.reservation.bookingType];
+
+     this.reservation['booking' + this.reservation.bookingType] = true;
+
+     const user = await this.authService.getUserProfile();
     if (user){
       await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation);
       this.dismiss(true);

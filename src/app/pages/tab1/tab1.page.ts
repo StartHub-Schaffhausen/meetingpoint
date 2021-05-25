@@ -12,14 +12,14 @@ import { Desk } from 'src/app/models/resources';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  selectedDate: Date;
 
   minDate: Date;
   maxDate: Date;
 
-  selectedDate: Date;
   segment = 'today';
+
   items$: Observable<Desk[]>;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   private resourceRef: AngularFirestoreCollection<Desk>;
 
 
@@ -32,7 +32,9 @@ export class Tab1Page {
     ) {
       this.resourceRef = this.afs.collection<Desk>('resources');
       this.items$ = this.resourceRef.valueChanges();
+
       this.selectedDate = new Date();
+
       this.minDate = new Date();
       this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
   }
@@ -43,6 +45,7 @@ export class Tab1Page {
   async presentModal(desk: Desk) {
 
     console.log(desk);
+    console.log(this.selectedDate);
 
     const modal = await this.modalController.create({
       component: DeskPage,
