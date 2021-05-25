@@ -1,5 +1,6 @@
 import { Component,Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Reservation } from 'src/app/models/reservation';
 
 @Component({
@@ -10,7 +11,11 @@ import { Reservation } from 'src/app/models/reservation';
 export class ReservationPage implements OnInit {
   @Input() reservation: Reservation;
 
-  constructor(private modalController: ModalController) { }
+  constructor(
+    private modalController: ModalController,
+    private alertController: AlertController,
+    private afs: AngularFirestore,
+    ) { }
 
   ngOnInit() {
     console.log(this.reservation);
@@ -31,6 +36,37 @@ export class ReservationPage implements OnInit {
       dismissed: true,
       reservation: true
     });
+  }
+
+  async cancel(reservation) {
+
+    console.log(reservation);
+
+    const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class',
+      header: 'Buchung stornieren?',
+      message: 'Möchtest du die Buchung wirklich  <strong>stornieren</strong>?',
+      buttons: [
+        {
+          text: 'Stornieren',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: async (blah) => {
+            console.log('Confirm Cancel: blah');
+            await this.afs.collection('users').doc(reservation.uid).collection('reservations').doc(reservation.id).delete();
+            this.dismiss();
+          }
+        }, {
+          text: 'Abbrechen',
+          handler: () => {
+            console.log('Confirm Okay');
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

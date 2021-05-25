@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'add-desk',
+    loadChildren: () => import('./pages/add-desk/add-desk.module').then( m => m.AddDeskPageModule)
   }
 ];
 @NgModule({

@@ -5,6 +5,7 @@ import { DeskPage } from '../desk/desk.page';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Desk } from 'src/app/models/resources';
+import { AddDeskPage } from '../add-desk/add-desk.page';
 
 @Component({
   selector: 'app-tab1',
@@ -40,6 +41,28 @@ export class Tab1Page {
   }
   addDesk(desk: Desk) {
     this.resourceRef.add(desk);
+  }
+
+  async addResource(){
+    const modal = await this.modalController.create({
+      component: AddDeskPage,
+      //cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+
+    });
+
+    modal.onDidDismiss().then(data=>{
+      console.log(data);
+      if (data.data.booked){
+        this.presentToasResource();
+      }else{
+        console.log('closed');
+      }
+
+    });
+
+    return await modal.present();
   }
 
   async presentModal(desk: Desk) {
@@ -81,7 +104,15 @@ export class Tab1Page {
     });
     toast.present();
   }
-
+  async presentToasResource() {
+    const toast = await this.toastController.create({
+      message: 'Erfolgreich hinzugefügt.',
+      color: 'success',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
 
   segmentChanged(event){
     console.log(event.detail.value);

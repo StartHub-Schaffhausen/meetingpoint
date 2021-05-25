@@ -15,10 +15,15 @@
 
   <ion-list lines="none">
       <ion-list-header>
-        <ion-label>
-          Tisch 1
+        <ion-label color="secondary">
+          {{reservation.desk.name}}
         </ion-label>
       </ion-list-header>
+
+      <ion-item>
+        <ion-label color="secondary">Beschreibung</ion-label>
+        <ion-textarea readonly value="{{reservation.desk.description}}" clearInput ></ion-textarea>
+      </ion-item>
   
       <ion-item >
         <ion-label *ngIf="reservation.bookingType=='Morning'"><h2>Morgen</h2><p>08:00 - 12:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
@@ -32,10 +37,12 @@
         </ion-badge>
       </ion-item>
 
-      <ion-button expand="block" color="danger" (click)="stornieren(reservation)">
+      <ion-button expand="block" color="danger" (click)="cancel()">
         stornieren
       </ion-button>
  
   </ion-list>
+
+  <deckgo-qrcode content="{{ reservation.id }}"></deckgo-qrcode>
 
 </ion-content>

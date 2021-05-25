@@ -15,7 +15,7 @@
 
   <ion-list *ngIf="reservation$ | async as reservationList">
     <ion-list-header>
-      Zukünftige Reservationen
+      Kommende Reservationen
     </ion-list-header>
 
     <ion-item-sliding *ngFor="let reservation of reservationList">
@@ -24,11 +24,11 @@
           <img src="{{reservation.picture}}">
         </ion-avatar>
 
-        <ion-label *ngIf="reservation.bookingType=='Morning'"><h2>Morgen</h2><p>08:00 - 12:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
-        <ion-label *ngIf="reservation.bookingType=='Afternoon'"><h2 >Nachmittag</h2> <p>13:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
-        <ion-label *ngIf="reservation.bookingType=='Day'"><h2>Ganzer Tag</h2> <p>08:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
-        <ion-label *ngIf="reservation.bookingType=='Week'"><h2>Ganze Woche</h2> <p>Mo bis Fr 08:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
-        <ion-label *ngIf="reservation.bookingType=='Month'"><h2>Ganzer Monat</h2><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+        <ion-label *ngIf="reservation.bookingType=='Morning'"><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>Morgen</h2><p>08:00 - 12:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+        <ion-label *ngIf="reservation.bookingType=='Afternoon'"><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2 >Nachmittag</h2> <p>13:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+        <ion-label *ngIf="reservation.bookingType=='Day'"><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>Ganzer Tag</h2> <p>08:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+        <ion-label *ngIf="reservation.bookingType=='Week'"><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>Ganze Woche</h2> <p>Mo bis Fr 08:00 - 17:30 Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+        <ion-label *ngIf="reservation.bookingType=='Month'"><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>Ganzer Monat</h2><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
 
         <ion-badge slot="end">
           {{(reservation.date.seconds * 1000 ) | date:'dd.MM.y'}}
@@ -43,5 +43,10 @@
 
 
   </ion-list>
-
+  <!--
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon (click)="addReservation()" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>-->
 </ion-content>

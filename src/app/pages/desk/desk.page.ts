@@ -20,6 +20,8 @@ export class DeskPage implements OnInit {
   minDate: Date;
   maxDate: Date;
 
+  currentDesk: Desk;
+
   constructor(
     private modalController: ModalController,
     private afs: AngularFirestore,
@@ -42,6 +44,7 @@ export class DeskPage implements OnInit {
       bookingType: 'Day',
       price: '',
       picture: '',
+      desk: this.desk
     };
    }
 
@@ -52,6 +55,7 @@ export class DeskPage implements OnInit {
     }
 
     this.reservation.date = this.selectedDate;
+    this.currentDesk = this.desk;
 
    }
 
@@ -60,18 +64,25 @@ export class DeskPage implements OnInit {
      console.log(this.reservation);
 
      console.log('Desk');
-     console.log(this.desk);
+     console.log(this.currentDesk);
 
-     this.reservation.picture = this.desk.picture;
+     this.reservation.picture = this.currentDesk.picture;
+     this.reservation.desk = this.currentDesk;
 
      //let string = this.reservation.bookingType;
-     this.reservation.price = this.desk['price' + this.reservation.bookingType];
+     this.reservation.price = this.currentDesk['price' + this.reservation.bookingType];
 
      this.reservation['booking' + this.reservation.bookingType] = true;
 
      const user = await this.authService.getUserProfile();
     if (user){
-      await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation);
+      const newBooking = await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation);
+      await this.afs.collection('users').doc(user.uid).collection('reservations').doc(newBooking.id).set({
+        id: newBooking.id,
+      },
+      {
+        merge: true
+      });
       this.dismiss(true);
     }
    }

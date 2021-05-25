@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReservationPage } from '../reservation/reservation.page';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { DeskPage } from '../desk/desk.page';
 
 @Component({
   selector: 'app-tab2',
@@ -35,6 +36,27 @@ export class Tab2Page implements OnInit {
       this.user = user;
     }
   }
+
+  async addReservation() {
+
+
+    const modal = await this.modalController.create({
+      component: DeskPage,
+      //cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+
+    });
+
+    modal.onDidDismiss().then(data=>{
+      console.log(data);
+
+    });
+
+    return await modal.present();
+
+  }
+
 
   async presentModal(reservation) {
     const modal = await this.modalController.create({

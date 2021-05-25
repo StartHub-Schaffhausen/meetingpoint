@@ -1,3 +1,5 @@
+import { Desk } from './resources';
+
 export interface Reservation {
     id: string;
     date: Date;
@@ -10,4 +12,5 @@ export interface Reservation {
     bookingCreated: Date;
     price: string;
     picture: string;
+    desk: Desk;
  }

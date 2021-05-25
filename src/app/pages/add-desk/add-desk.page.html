@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Resource hinzufügen</ion-title>
+    
+    <ion-buttons slot="primary">
+      <ion-button (click)="dismiss(false)">
+        schliessen
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Allgemeine Informationen</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Name</ion-label>
+      <ion-input [(ngModel)]="desk.name" clearInput value="Tisch 1"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked" color="secondary">Beschreibung</ion-label>
+      <ion-textarea [(ngModel)]="desk.description" clearInput value="Mehr Informationen" placeholder="Enter more information here..."></ion-textarea>
+    </ion-item>
+
+    <ion-item (click)="takePicture()">
+      <ion-thumbnail slot="start">
+        <img src="{{ desk.picture }}">
+      </ion-thumbnail>
+      <ion-label>Bild hinzufügen/ändern</ion-label>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>Preise in CHF</ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Morgen</ion-label>
+      <ion-input type="number" [(ngModel)]="desk.priceMorning" clearInput ></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Nachmittag</ion-label>
+      <ion-input type="number" [(ngModel)]="desk.priceAfternoon" clearInput ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Ganzer Tag</ion-label>
+      <ion-input type="number"  [(ngModel)]="desk.priceDay" clearInput ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Ganze Woche</ion-label>
+      <ion-input type="number" [(ngModel)]="desk.priceWeek" clearInput ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked" color="secondary" >Ganzer Monat</ion-label>
+      <ion-input type="number" [(ngModel)]="desk.priceMonth" clearInput ></ion-input>
+    </ion-item>     
+
+  </ion-list>
+
+  <ion-button expand="block" (click)="addResource()">hinzufügen</ion-button>
+
+</ion-content>
