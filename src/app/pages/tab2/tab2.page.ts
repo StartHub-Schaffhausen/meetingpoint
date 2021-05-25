@@ -34,13 +34,13 @@ export class Tab2Page implements OnInit {
     const user: firebase.User = await this.authService.getUserProfile();
     if (user){
       this.reservationCollection = this.afs.collection('users').doc(user.uid)
-      .collection<Reservation>('reservations', ref => ref.where('dateFrom', '>=', new Date())
-      .orderBy('dateFrom'));
+      .collection<Reservation>('reservations', ref => ref.where('dateTo', '>=', new Date())
+      .orderBy('dateTo'));
       this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
 
       this.reservationCollectionPast = this.afs.collection('users').doc(user.uid)
-      .collection<Reservation>('reservations', ref => ref.where('dateFrom', '<', new Date())
-      .orderBy('dateFrom'));
+      .collection<Reservation>('reservations', ref => ref.where('dateTo', '<', new Date())
+      .orderBy('dateTo'));
       this.reservationPast$ = this.reservationCollectionPast.valueChanges({ idField: 'id' });
       this.user = user;
     }

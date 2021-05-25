@@ -44,12 +44,12 @@
 
   </ion-list>
 
-  <ion-list *ngIf="reservationPast$ | async as reservationList">
+  <ion-list *ngIf="reservationPast$ | async as reservationListPast">
     <ion-list-header>
       Vergangene Reservationen
     </ion-list-header>
 
-    <ion-item-sliding *ngFor="let reservation of reservationList" #slidingItem>
+    <ion-item-sliding *ngFor="let reservation of reservationListPast" #slidingItemPast>
       <ion-item button detail  (click)="presentModal(reservation)">
         <ion-avatar slot="start">
           <img src="{{reservation.picture}}">
@@ -68,7 +68,7 @@
        
 
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
+        <ion-item-option color="danger" (click)="cancel(slidingItemPast, reservation)">stornieren</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
 
