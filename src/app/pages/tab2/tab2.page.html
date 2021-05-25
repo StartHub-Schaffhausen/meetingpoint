@@ -11,18 +11,14 @@
     <ion-toolbar>
       <ion-title size="large">Reservationen</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header>  
 
-
-  
-
-
-  <ion-list>
+  <ion-list *ngIf="reservation$ | async as reservationList">
     <ion-list-header>
       Zukünftige Reservationen
     </ion-list-header>
 
-    <ion-item-sliding *ngFor="let reservation of items | async">
+    <ion-item-sliding *ngFor="let reservation of reservationList">
       <ion-item button detail  (click)="presentModal()">
         <ion-avatar slot="start">
           <img src="{{reservation.image}}">
@@ -41,13 +37,64 @@
       </ion-item-options>
     </ion-item-sliding>
 
+
+    <ng-container ngIf="!reservationList">
+
+      <ion-list-header>
+        <ion-label>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
   </ion-list>
-
-  <ion-list *ngIf="user">
-    <ion-list-header>
-      Vergangene Reservationen
-    </ion-list-header>
-    </ion-list>
-
 
 </ion-content>

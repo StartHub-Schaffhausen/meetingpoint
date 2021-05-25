@@ -17,8 +17,8 @@ export class Tab2Page {
   @ViewChild(IonItemSliding) slidingItem: IonItemSliding;
 
   user: firebase.User;
-  items: Observable<Reservation[]>;
-  private rreservationCollection: AngularFirestoreCollection<Reservation>;
+  reservation$: Observable<Reservation[]>;
+  private reservationCollection: AngularFirestoreCollection<Reservation>;
   constructor(
     private afs: AngularFirestore,
     public modalController: ModalController,
@@ -29,8 +29,8 @@ export class Tab2Page {
     this.authService.getUserProfile().then(user=>{
 
       if (user){
-        this.rreservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
-        this.items = this.rreservationCollection.valueChanges();
+        this.reservationCollection = this.afs.collection('users').doc(user.uid).collection<Reservation>('reservations');
+        this.reservation$ = this.reservationCollection.valueChanges();
       }
       this.user = user;
 
@@ -66,7 +66,7 @@ export class Tab2Page {
             console.log('Confirm Cancel: blah');
             this.slidingItem.close();
 
-            this.rreservationCollection.doc(reservation.id).delete();
+            this.reservationCollection.doc(reservation.id).delete();
           }
         }, {
           text: 'Abbrechen',
