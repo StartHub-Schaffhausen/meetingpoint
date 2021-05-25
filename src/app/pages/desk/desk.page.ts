@@ -34,7 +34,8 @@ export class DeskPage implements OnInit {
 
     this.reservation = {
       id: '',
-      date: this.selectedDate,
+      dateFrom: this.selectedDate,
+      dateTo: new Date(),
       bookingMorning: false,
       bookingAfternoon: false,
       bookingDay: false,
@@ -54,7 +55,7 @@ export class DeskPage implements OnInit {
       this.reservation.userId = user.uid;
     }
 
-    this.reservation.date = this.selectedDate;
+    this.reservation.dateFrom = this.selectedDate;
     this.currentDesk = this.desk;
 
    }

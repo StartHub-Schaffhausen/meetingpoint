@@ -53,7 +53,7 @@ export class ReservationPage implements OnInit {
           cssClass: 'secondary',
           handler: async (blah) => {
             console.log('Confirm Cancel: blah');
-            await this.afs.collection('users').doc(reservation.uid).collection('reservations').doc(reservation.id).delete();
+            await this.afs.collection('users').doc(reservation.userId).collection('reservations').doc(reservation.id).delete();
             this.dismiss();
           }
         }, {

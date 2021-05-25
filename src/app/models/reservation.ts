@@ -2,7 +2,8 @@ import { Desk } from './resources';
 
 export interface Reservation {
     id: string;
-    date: Date;
+    dateFrom: Date;
+    dateTo: Date;
     bookingMorning: boolean;
     bookingAfternoon: boolean;
     bookingDay: boolean;
