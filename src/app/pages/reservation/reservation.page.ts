@@ -48,11 +48,13 @@ export class ReservationPage implements OnInit {
       message: 'Möchtest du die Buchung wirklich  <strong>stornieren</strong>?',
       buttons: [
         {
-          text: 'Stornieren',
+          text: 'Buchung stornieren',
           role: 'cancel',
           cssClass: 'secondary',
           handler: async (blah) => {
-            console.log('Confirm Cancel: blah');
+            console.log('stornieren');
+            console.log(reservation.userId);
+            console.log(reservation.id);
             await this.afs.collection('users').doc(reservation.userId).collection('reservations').doc(reservation.id).delete();
             this.dismiss();
           }
@@ -60,7 +62,6 @@ export class ReservationPage implements OnInit {
           text: 'Abbrechen',
           handler: () => {
             console.log('Confirm Okay');
-
           }
         }
       ]

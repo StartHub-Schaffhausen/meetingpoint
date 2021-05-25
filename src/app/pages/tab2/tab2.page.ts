@@ -83,14 +83,13 @@ export class Tab2Page implements OnInit {
       message: 'Möchtest du die Buchung wirklich  <strong>stornieren</strong>?',
       buttons: [
         {
-          text: 'Stornieren',
+          text: 'Buchung stornieren',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+          handler: async (blah) => {
+            console.log('stornieren');
+            await this.reservationCollection.doc(reservation.id).delete();
             this.slidingItem.close();
-
-            this.reservationCollection.doc(reservation.id).delete();
           }
         }, {
           text: 'Abbrechen',
