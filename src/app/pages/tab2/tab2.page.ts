@@ -15,7 +15,7 @@ import { DeskPage } from '../desk/desk.page';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
-  @ViewChild(IonItemSliding) slidingItem: IonItemSliding;
+  //@ViewChild(IonItemSliding) slidingItem: IonItemSliding;
 
   user: firebase.User;
   reservation$: Observable<Reservation[]>;
@@ -73,7 +73,7 @@ export class Tab2Page implements OnInit {
 
   }
 
-  async cancel(reservation) {
+  async cancel(slidingItem: IonItemSliding, reservation) {
 
     console.log(reservation);
 
@@ -88,14 +88,14 @@ export class Tab2Page implements OnInit {
           cssClass: 'secondary',
           handler: async (blah) => {
             console.log('stornieren');
+            slidingItem.close();
             await this.reservationCollection.doc(reservation.id).delete();
-            this.slidingItem.close();
           }
         }, {
           text: 'Abbrechen',
           handler: () => {
             console.log('Confirm Okay');
-            this.slidingItem.close();
+            slidingItem.close();
 
           }
         }
