@@ -28,7 +28,8 @@ export class LoginPage implements OnInit {
   async loginUser(): Promise<void> {
     this.authService.loginUser(this.user.email, this.user.password).then(
       () => {
-        this.router.navigateByUrl('tabs');
+        console.log('logged in');
+          this.router.navigateByUrl('tabs');
       },
       async error => {
         const alert = await this.alertCtrl.create({

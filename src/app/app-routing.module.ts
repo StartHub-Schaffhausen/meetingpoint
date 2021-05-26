@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'reservation',
-    loadChildren: () => import('./pages/reservation/reservation.module').then( m => m.ReservationPageModule)
+    loadChildren: () => import('./pages/reservation/reservation.module').then( m => m.ReservationPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'desk',
-    loadChildren: () => import('./pages/desk/desk.module').then( m => m.DeskPageModule)
+    loadChildren: () => import('./pages/desk/desk.module').then( m => m.DeskPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
@@ -32,7 +36,8 @@ const routes: Routes = [
   },
   {
     path: 'add-desk',
-    loadChildren: () => import('./pages/add-desk/add-desk.module').then( m => m.AddDeskPageModule)
+    loadChildren: () => import('./pages/add-desk/add-desk.module').then( m => m.AddDeskPageModule),
+    canActivate: [AuthGuard],
   }
 ];
 @NgModule({
