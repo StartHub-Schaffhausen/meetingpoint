@@ -185,7 +185,7 @@ export class DeskPage implements OnInit {
           });
         });
 
-        const notification: LocalNotificationSchema = {
+        /*const notification: LocalNotificationSchema = {
           id: 123123,
           title: this.reservation.desk.name,
           body: this.reservation.dateFrom.toISOString(),
@@ -207,11 +207,11 @@ export class DeskPage implements OnInit {
           }).then(alert => {
             alert.present();
           });
-        });
+        });*/
 
         this.dismiss(true);
       } else {
-        alert('no user available');
+        alert('User Error: no user available.');
       }
   }
 
