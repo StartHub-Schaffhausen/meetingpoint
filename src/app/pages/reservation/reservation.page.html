@@ -39,13 +39,15 @@
       <ion-img src={{reservation.desk.picture}}>
 
       </ion-img>
-
-      <ion-button *ngIf="allowDelete" expand="block" color="danger" (click)="cancel(reservation)">
-        stornieren
-      </ion-button>
+      <div *ngIf="allowDelete">
+        <ion-button expand="block" color="danger" (click)="cancel(reservation)">
+          stornieren
+        </ion-button>
+      </div>
  
   </ion-list>
-
-  <deckgo-qrcode *ngIf="allowDelete" content="{{ reservation.id }}"></deckgo-qrcode>
+  <div *ngIf="allowDelete">
+  <deckgo-qrcode  content="{{ reservation.id }}"></deckgo-qrcode>
+  </div>
 
 </ion-content>

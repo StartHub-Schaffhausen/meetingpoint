@@ -15,6 +15,7 @@ import { ReservationPage } from './reservation.page';
     IonicModule,
     ReservationPageRoutingModule
   ],
-  declarations: [ReservationPage]
+  declarations: [ReservationPage],
+
 })
 export class ReservationPageModule {}
