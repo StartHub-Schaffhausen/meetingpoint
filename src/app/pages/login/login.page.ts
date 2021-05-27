@@ -30,14 +30,14 @@ export class LoginPage implements OnInit {
       () => {
         console.log('logged in');
           this.router.navigateByUrl('tabs');
-      },
-      async error => {
-        const alert = await this.alertCtrl.create({
-          message: error.message,
+      }).catch(err=>{
+        this.alertCtrl.create({
+          message: err.message,
           buttons: [{ text: 'Ok', role: 'cancel' }],
+        }).then(alert=>{
+          alert.present();
         });
-        await alert.present();
-      }
-    );
+
+      });
   }
 }
