@@ -33,7 +33,7 @@
         <ion-label *ngIf="reservation.bookingType=='Month'"><h2>Ganzer Monat</h2><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
 
         <ion-badge slot="end">
-          {{reservation.dateFrom | date:'dd.MM.y'}}
+          {{reservation.dateFrom}}
         </ion-badge>
       </ion-item>
 
