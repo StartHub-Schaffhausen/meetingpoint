@@ -147,14 +147,18 @@ export class DeskPage implements OnInit {
     console.log(this.currentDesk);*/
 
     try {
-
       this.reservation.picture = this.desk.picture;
       this.reservation.desk = this.desk;
+    } catch (e) {
+      alert('Error 1: ' + JSON.stringify(e));
+    }
 
-      //let string = this.reservation.bookingType;
+    try {
       this.reservation.price = this.desk['price' + this.reservation.bookingType];
-
       this.reservation['booking' + this.reservation.bookingType] = true;
+    } catch (e) {
+      alert('Error 2: ' + JSON.stringify(e));
+    }
 
       const user = await this.authService.getUserProfile().catch(err=>{
         this.alertCtrl.create({
@@ -167,6 +171,7 @@ export class DeskPage implements OnInit {
           alert.present();
         });
       });
+
       if (user) {
         const newBooking = await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation).catch(err=>{
           this.alertCtrl.create({
@@ -192,15 +197,23 @@ export class DeskPage implements OnInit {
         const scheduleOptions: ScheduleOptions = {
           notifications: [notification]
         };
-        LocalNotifications.schedule(scheduleOptions);
+        LocalNotifications.schedule(scheduleOptions).catch(err=>{
+          this.alertCtrl.create({
+            message: 'Schedule Notification Error: ' + err.message,
+            buttons: [{
+              text: 'Ok',
+              role: 'cancel'
+            }],
+          }).then(alert => {
+            alert.present();
+          });
+        });
 
         this.dismiss(true);
       } else {
         alert('no user available');
       }
-    } catch (e) {
-      alert('Error: ' + JSON.stringify(e));
-    }
+
 
   }
 
