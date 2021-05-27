@@ -14,7 +14,7 @@ import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 })
 export class Tab3Page implements OnInit{
   userProfile$: Observable<UserProfile>;
-  private userProfileDoc: AngularFirestoreDocument<UserProfile>;
+  private userProfileRef: AngularFirestoreDocument<UserProfile>;
 
   constructor(
     private authService: AuthService,
@@ -28,8 +28,8 @@ export class Tab3Page implements OnInit{
   async ngOnInit(){
     const user = await this.authService.getUserProfile();
     if(user){
-      this.userProfileDoc = this.afs.collection('users').doc<UserProfile>(user.uid);
-      this.userProfile$ = this.userProfileDoc.valueChanges();
+      this.userProfileRef = this.afs.collection('users').doc<UserProfile>(user.uid);
+      this.userProfile$ = this.userProfileRef.valueChanges();
     }
   }
 
@@ -40,10 +40,8 @@ export class Tab3Page implements OnInit{
   }
 
   async saveProfile(userProfile){
-    await this.userProfileDoc.update(userProfile);
-
+    await this.userProfileRef.update(userProfile);
     this.presentToast();
-
   }
 
   async presentToast() {
@@ -56,7 +54,7 @@ export class Tab3Page implements OnInit{
     toast.present();
   }
 
-  async takePicture(){
+  async takePicture(userProfile){
     const image = await Camera.getPhoto({
       quality: 90,
       correctOrientation: true,
@@ -71,13 +69,9 @@ export class Tab3Page implements OnInit{
 //    let imageUrl = image.webPath;
 
 //console.log(image);
+    userProfile.profilePicture = 'data:image/' + image.format.toLowerCase() + ';base64,'  + image.base64String;
+    await this.userProfileRef.set(userProfile);
 
-this.userProfile$.subscribe(async data=>{
-    const profile = data;
-    profile.profilePicture = 'data:image/' + image.format.toLowerCase() + ';base64,'  + image.base64String;
-
-    await this.userProfileDoc.set(profile);
-  });
 }
 }
 
