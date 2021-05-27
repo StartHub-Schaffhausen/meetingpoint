@@ -47,20 +47,29 @@ export class DeskPage implements OnInit {
     private afs: AngularFirestore,
     private authService: AuthService,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
   ) {
+  }
+
+  async ngOnInit() {
     this.minDate = new Date();
     this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 90);
 
+    console.log('desk');
+    console.log(this.desk);
+    console.log('reservation');
+
+    const user = await this.authService.getUserProfile();
+    if (user) {
     this.reservation = {
       id: '',
-      dateFrom: this.selectedDate,
-      dateTo: new Date(),
+      dateFrom: new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00'),
+      dateTo: new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00'),
       bookingMorning: false,
       bookingAfternoon: false,
       bookingDay: false,
       bookingWeek: false,
-      userId: '',
+      userId: user.uid,
       bookingCreated: new Date(),
       bookingType: 'Day',
       price: '',
@@ -68,27 +77,17 @@ export class DeskPage implements OnInit {
       desk: this.desk
     };
   }
-
-  async ngOnInit() {
-    const user = await this.authService.getUserProfile();
-    if (user) {
-      this.reservation.userId = user.uid;
-    }
-
-    this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
-    this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
-
-
+  console.log(this.reservation);
   }
 
   radioChange(ev: any) {
     switch (ev.detail.value) {
       case 'Morning':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + 'T08:00:00');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '12:30:00');
         break;
       case 'Afternoon':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:0');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Day':
@@ -102,6 +101,7 @@ export class DeskPage implements OnInit {
       default:
         break;
     }
+    this.reservation.bookingType = ev.detail.value;
 
     /*console.log(this.selectedDate.toISOString());
     console.log(this.reservation.dateFrom.toISOString());
@@ -114,11 +114,11 @@ export class DeskPage implements OnInit {
     this.selectedDate = new Date(ev.detail.value);
     switch (this.reservation.bookingType) {
       case 'Morning':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + 'T08:00:00');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '12:30:00');
         break;
       case 'Afternoon':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:0');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Day':
@@ -140,11 +140,11 @@ export class DeskPage implements OnInit {
   }
 
   async bookReservation() {
-    /*console.log('Reservation');
+    console.log('Reservation');
     console.log(this.reservation);
 
     console.log('Desk');
-    console.log(this.currentDesk);*/
+    console.log(this.reservation.desk);
 
     try {
       this.reservation.picture = this.desk.picture;
