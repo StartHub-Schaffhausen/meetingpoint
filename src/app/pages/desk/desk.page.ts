@@ -84,9 +84,9 @@ export class DeskPage implements OnInit {
       break;
     }
 
-    console.log(this.selectedDate.toISOString());
+    /*console.log(this.selectedDate.toISOString());
     console.log(this.reservation.dateFrom.toISOString());
-    console.log(this.reservation.dateTo.toISOString());
+    console.log(this.reservation.dateTo.toISOString());*/
 
    }
 
@@ -113,19 +113,19 @@ export class DeskPage implements OnInit {
       default:
       break;
     }
-    console.log(this.selectedDate.toISOString());
+    /*console.log(this.selectedDate.toISOString());
     console.log(this.reservation.dateFrom.toISOString());
     console.log(this.reservation.dateTo.toISOString());
-
+*/
 
    }
 
    async bookReservation(){
-     console.log('Reservation');
+     /*console.log('Reservation');
      console.log(this.reservation);
 
      console.log('Desk');
-     console.log(this.currentDesk);
+     console.log(this.currentDesk);*/
 
      this.reservation.picture = this.currentDesk.picture;
      this.reservation.desk = this.currentDesk;
@@ -145,6 +145,8 @@ export class DeskPage implements OnInit {
         merge: true
       });
       this.dismiss(true);
+    }else{
+      alert('no user available');
     }
    }
 

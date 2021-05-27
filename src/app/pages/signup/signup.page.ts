@@ -44,14 +44,14 @@ export class SignupPage implements OnInit {
     this.authService.signupUser(this.user.email, this.user.password).then(
       () => {
         this.router.navigateByUrl('tabs');
-      },
-      async (error: any) => {
-        const alert = await this.alertCtrl.create({
-          message: error.message,
+      }).catch(err=>{
+        this.alertCtrl.create({
+          message: err.message,
           buttons: [{ text: 'Ok', role: 'cancel' }],
+        }).then(alert=>{
+          alert.present();
         });
-        await alert.present();
-      }
-    );
+
+      });
   }
 }
