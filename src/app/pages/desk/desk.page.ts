@@ -27,6 +27,8 @@ import {
   Router
 } from '@angular/router';
 
+import { LocalNotifications, ScheduleOptions,LocalNotificationSchema } from '@capacitor/local-notifications';
+
 @Component({
   selector: 'app-desk',
   templateUrl: './desk.page.html',
@@ -178,6 +180,20 @@ export class DeskPage implements OnInit {
           });
         });
 
+        const notification: LocalNotificationSchema = {
+          id: 123123,
+          title: this.reservation.desk.name,
+          body: this.reservation.dateFrom.toISOString(),
+          schedule: {
+            at: this.reservation.dateFrom,
+          }
+        };
+
+        const scheduleOptions: ScheduleOptions = {
+          notifications: [notification]
+        };
+        LocalNotifications.schedule(scheduleOptions);
+
         this.dismiss(true);
       } else {
         alert('no user available');
@@ -196,4 +212,5 @@ export class DeskPage implements OnInit {
       booked
     });
   }
+
 }
