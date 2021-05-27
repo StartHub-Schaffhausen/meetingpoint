@@ -8,16 +8,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
-  {
+  /*{
     path: 'reservation',
     loadChildren: () => import('./pages/reservation/reservation.module').then( m => m.ReservationPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-desk',
+    loadChildren: () => import('./pages/add-desk/add-desk.module').then( m => m.AddDeskPageModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'desk',
     loadChildren: () => import('./pages/desk/desk.module').then( m => m.DeskPageModule),
     canActivate: [AuthGuard],
-  },
+  },*/
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
@@ -34,11 +39,6 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
-  {
-    path: 'add-desk',
-    loadChildren: () => import('./pages/add-desk/add-desk.module').then( m => m.AddDeskPageModule),
-    canActivate: [AuthGuard],
-  }
 ];
 @NgModule({
   imports: [
