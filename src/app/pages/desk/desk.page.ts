@@ -127,6 +127,9 @@ export class DeskPage implements OnInit {
      console.log('Desk');
      console.log(this.currentDesk);*/
 
+     try{
+
+ 
      this.reservation.picture = this.currentDesk.picture;
      this.reservation.desk = this.currentDesk;
 
@@ -143,12 +146,23 @@ export class DeskPage implements OnInit {
       },
       {
         merge: true
+      }).catch(err=>{
+        this.alertCtrl.create({
+          message: err.message,
+          buttons: [{ text: 'Ok', role: 'cancel' }],
+        }).then(alert=>{
+          alert.present();
+        });
       });
       this.dismiss(true);
     }else{
       alert('no user available');
     }
-   }
+  }catch(e){
+    alert(JSON.stringify(e));
+  }
+
+}
 
 
   dismiss(booked) {
