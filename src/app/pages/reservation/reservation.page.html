@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Deine Reservation</ion-title>
+    <ion-title>Deine Reservation {{reservation.desk.name}}</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="dismiss()">
         schliessen
@@ -15,26 +15,30 @@
 
   <ion-list lines="none">
       <ion-list-header>
-        <ion-label color="secondary">
-          {{reservation.desk.name}}
+        <ion-label>
+           {{reservation.bookingType}}
         </ion-label>
       </ion-list-header>
 
       <ion-item>
-        <ion-label color="secondary">Beschreibung</ion-label>
+        <ion-label >Desk Beschreibung</ion-label>
         <ion-textarea readonly value="{{reservation.desk.description}}" clearInput ></ion-textarea>
       </ion-item>
   
       <ion-item >
         <ion-label >
-          <h2>Deine Buchung</h2>
-          <p>{{(reservation.dateFrom.seconds}} - {{(reservation.dateTo.seconds}} Uhr</p>
+          <h2>Buchungsdatum</h2>
+          <p>{{reservation.dateFrom.seconds}} - {{reservation.dateTo.seconds}} Uhr</p>
           <p>Preis: CHF {{reservation.price}}.-</p></ion-label>
 
         <ion-badge slot="end">
-          {{(reservation.dateFrom.seconds}}
+          {{reservation.dateFrom.seconds}}
         </ion-badge>
       </ion-item>
+
+      <ion-img src={{reservation.desk.picture}}>
+
+      </ion-img>
 
       <ion-button *ngIf="allowDelete" expand="block" color="danger" (click)="cancel(reservation)">
         stornieren
