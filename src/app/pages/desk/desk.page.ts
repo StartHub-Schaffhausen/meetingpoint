@@ -213,8 +213,6 @@ export class DeskPage implements OnInit {
       } else {
         alert('no user available');
       }
-
-
   }
 
   dismiss(booked) {
