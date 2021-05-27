@@ -58,7 +58,7 @@ export class DeskPage implements OnInit {
       bookingAfternoon: false,
       bookingDay: false,
       bookingWeek: false,
-      userId: null,
+      userId: '',
       bookingCreated: new Date(),
       bookingType: 'Day',
       price: '',
@@ -154,16 +154,21 @@ export class DeskPage implements OnInit {
 
       this.reservation['booking' + this.reservation.bookingType] = true;
 
-      const user = await this.authService.getUserProfile();
+      const user = await this.authService.getUserProfile().catch(err=>{
+        this.alertCtrl.create({
+          message: 'Get Userprofile Error: ' + err.message,
+          buttons: [{
+            text: 'Ok',
+            role: 'cancel'
+          }],
+        }).then(alert => {
+          alert.present();
+        });
+      });
       if (user) {
-        const newBooking = await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation);
-        await this.afs.collection('users').doc(user.uid).collection('reservations').doc(newBooking.id).set({
-          id: newBooking.id,
-        }, {
-          merge: true
-        }).catch(err => {
+        const newBooking = await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation).catch(err=>{
           this.alertCtrl.create({
-            message: err.message,
+            message: 'Add Booking Error: ' + err.message,
             buttons: [{
               text: 'Ok',
               role: 'cancel'
@@ -172,6 +177,7 @@ export class DeskPage implements OnInit {
             alert.present();
           });
         });
+
         this.dismiss(true);
       } else {
         alert('no user available');
