@@ -75,8 +75,8 @@ export class DeskPage implements OnInit {
       this.reservation.userId = user.uid;
     }
 
-    this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-    this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+    this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+    this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
 
 
   }
@@ -84,20 +84,20 @@ export class DeskPage implements OnInit {
   radioChange(ev: any) {
     switch (ev.detail.value) {
       case 'Morning':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 12:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + 'T08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '12:30:00');
         break;
       case 'Afternoon':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 13:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:0');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Day':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Week':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       default:
         break;
@@ -114,20 +114,20 @@ export class DeskPage implements OnInit {
     this.selectedDate = new Date(ev.detail.value);
     switch (this.reservation.bookingType) {
       case 'Morning':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 12:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + 'T08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '12:30:00');
         break;
       case 'Afternoon':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 13:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '13:00:0');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Day':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Week':
-        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 08:00:000.000Z');
-        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 10) + ' 17:30:000.000Z');
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       default:
         break;
