@@ -32,37 +32,7 @@
         <img src="{{ desk.picture }}">
       </ion-thumbnail>
       <ion-label>Bild hinzufügen/ändern</ion-label>
-    </ion-item>
-
-    <ion-list-header>
-      <ion-label>Preise in CHF</ion-label>
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label position="stacked" color="secondary" >Morgen</ion-label>
-      <ion-input type="number" [(ngModel)]="desk.priceMorning" clearInput ></ion-input>
-    </ion-item>
-
-
-    <ion-item>
-      <ion-label position="stacked" color="secondary" >Nachmittag</ion-label>
-      <ion-input type="number" [(ngModel)]="desk.priceAfternoon" clearInput ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked" color="secondary" >Ganzer Tag</ion-label>
-      <ion-input type="number"  [(ngModel)]="desk.priceDay" clearInput ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked" color="secondary" >Ganze Woche</ion-label>
-      <ion-input type="number" [(ngModel)]="desk.priceWeek" clearInput ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked" color="secondary" >Ganzer Monat</ion-label>
-      <ion-input type="number" [(ngModel)]="desk.priceMonth" clearInput ></ion-input>
-    </ion-item>     
+    </ion-item>  
 
   </ion-list>
 

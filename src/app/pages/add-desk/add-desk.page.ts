@@ -22,12 +22,6 @@ export class AddDeskPage implements OnInit {
       name: 'Tisch 1',
       description: 'Eine Beschreibung',
       picture: '/assets/img/desks/desk-1.jpeg',
-      priceMorning: 10,
-      priceAfternoon: 10,
-      priceDay: 15,
-      priceWeek: 60,
-      priceMonth: 200,
-      statusFree: true
     };
 
   }
