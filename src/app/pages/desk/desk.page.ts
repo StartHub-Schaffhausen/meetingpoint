@@ -1,33 +1,14 @@
 import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
-import {
-  AlertController,
-  ModalController
-} from '@ionic/angular';
-import {
-  Reservation
-} from 'src/app/models/reservation';
-import {
-  Desk
-} from 'src/app/models/resources';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import {
-  Observable
-} from 'rxjs';
-import {
-  AuthService
-} from 'src/app/services/auth.service';
-import {
-  Router
-} from '@angular/router';
+  Component,  Input,  OnInit} from '@angular/core';
+import {  AlertController,  ModalController} from '@ionic/angular';
+import {  Reservation} from 'src/app/models/reservation';
+import {  Desk} from 'src/app/models/resources';
+import {  AngularFirestore,  AngularFirestoreCollection} from '@angular/fire/firestore';
+import {  AuthService} from 'src/app/services/auth.service';
+import {  Router} from '@angular/router';
 
 import { LocalNotifications, ScheduleOptions,LocalNotificationSchema } from '@capacitor/local-notifications';
+import { config } from 'src/app/config/config';
 
 @Component({
   selector: 'app-desk',
@@ -41,6 +22,8 @@ export class DeskPage implements OnInit {
   reservation: Reservation;
   minDate: Date;
   maxDate: Date;
+
+  deskConfig = config.offer;
 
   constructor(
     private modalController: ModalController,
