@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Observable, pipe } from 'rxjs';
 import { UserProfile } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-tab3',
@@ -14,7 +15,12 @@ import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 })
 export class Tab3Page implements OnInit{
   userProfile$: Observable<UserProfile>;
+  invoices$: Observable<any[]>;
   private userProfileRef: AngularFirestoreDocument<UserProfile>;
+  private invoiceCollection: AngularFirestoreCollection<any>;
+
+
+
 
   constructor(
     private authService: AuthService,
@@ -30,9 +36,24 @@ export class Tab3Page implements OnInit{
     if(user){
       this.userProfileRef = this.afs.collection('users').doc<UserProfile>(user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
+
+      this.invoiceCollection = this.afs.collection('users').doc(user.uid)
+      .collection<any>('invoices');
+      this.invoices$ = this.invoiceCollection.valueChanges({ idField: 'id' });
+
+
+
     }
   }
 
+  openInvoice(invoice){
+
+    if (invoice.statusPaid){
+      Browser.open({ url: invoice.pdf });
+    }else{
+      Browser.open({ url: invoice.stripeInvoiceUrl });
+    }
+  }
 
   async logout(){
     await this.authService.logoutUser();

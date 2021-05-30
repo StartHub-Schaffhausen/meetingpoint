@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
     "@angular/service-worker": "~11.2.0",
+    "@capacitor/browser": "^1.0.0",
     "@capacitor/camera": "^1.0.0",
     "@capacitor/core": "3.0.0",
     "@capacitor/local-notifications": "^1.0.0",
