@@ -42,6 +42,9 @@ export class AppComponent {
 
 
     });
+    this.afAuth.setPersistence('session');
+
+
   }
 
   initializeApp(): void {

@@ -50,7 +50,8 @@ export class DeskPage implements OnInit {
       dateTo: new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00'),
       userId: user.uid,
       bookingCreated: new Date(),
-      bookingType: 'Day',
+      bookingType: this.deskConfig.find(element=>element.type==='Day').type,
+      bookingTypeDescription: this.deskConfig.find(element=>element.type==='Day').description,
       price: '',
       picture: '',
       desk: this.desk
@@ -134,7 +135,7 @@ export class DeskPage implements OnInit {
 
     try {
       this.reservation.price = this.desk['price' + this.reservation.bookingType];
-      this.reservation['booking' + this.reservation.bookingType] = true;
+      this.reservation.bookingTypeDescription = this.deskConfig.find(element=>element.type===this.reservation.bookingType).description;
     } catch (e) {
       alert('Error 2: ' + JSON.stringify(e));
     }

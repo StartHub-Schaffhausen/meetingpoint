@@ -8,6 +8,7 @@ import { ReservationPage } from '../reservation/reservation.page';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { DeskPage } from '../desk/desk.page';
+import { config } from 'src/app/config/config';
 
 @Component({
   selector: 'app-tab2',
@@ -16,7 +17,7 @@ import { DeskPage } from '../desk/desk.page';
 })
 export class Tab2Page implements OnInit {
   //@ViewChild(IonItemSliding) slidingItem: IonItemSliding;
-
+  deskConfig = config.offer;
   user: firebase.User;
   reservation$: Observable<Reservation[]>;
   reservationPast$: Observable<Reservation[]>;

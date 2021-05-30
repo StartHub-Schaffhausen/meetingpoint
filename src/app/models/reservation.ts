@@ -5,6 +5,7 @@ export interface Reservation {
     dateFrom: Date;
     dateTo: Date;
     bookingType: string;
+    bookingTypeDescription: string;
     userId: string;
     bookingCreated: Date;
     price: string;
