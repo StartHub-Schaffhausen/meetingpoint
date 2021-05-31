@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
+  {
+    path: 'invoice',
+    loadChildren: () => import('./pages/invoice/invoice.module').then( m => m.InvoicePageModule)
+  },
 ];
 @NgModule({
   imports: [

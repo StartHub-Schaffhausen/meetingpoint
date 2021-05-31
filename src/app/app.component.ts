@@ -7,9 +7,11 @@ import 'firebase/firestore';
 */
 
 import {SwUpdate} from '@angular/service-worker';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -22,6 +24,9 @@ export class AppComponent {
     private swUpdate: SwUpdate,
     private alertController: AlertController,
     private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    public modalController: ModalController,
+    //public routerOutlet: IonRouterOutlet,
     private router: Router,
   ) {
     this.initializeApp();
@@ -43,8 +48,6 @@ export class AppComponent {
 
     });
     this.afAuth.setPersistence('session');
-
-
   }
 
   initializeApp(): void {
@@ -81,5 +84,8 @@ export class AppComponent {
 
     await alert.present();
   }
+
+
+
 
 }

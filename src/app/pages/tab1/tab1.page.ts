@@ -1,34 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, IonRouterOutlet, ModalController, ToastController } from '@ionic/angular';
 import { DeskPage } from '../desk/desk.page';
-
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
+import { AngularFirestore, AngularFirestoreCollection, SnapshotOptions } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Desk } from 'src/app/models/resources';
 import { AddDeskPage } from '../add-desk/add-desk.page';
+import { AuthService } from 'src/app/services/auth.service';
+import { InvoicePage } from '../invoice/invoice.page';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit{
   selectedDate: Date;
 
   minDate: Date;
   maxDate: Date;
 
   segment = 'today';
+  user: firebase.User;
 
   items$: Observable<Desk[]>;
   private resourceRef: AngularFirestoreCollection<Desk>;
-
 
   constructor(
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private toastController: ToastController,
     private alertController: AlertController,
+    private authService: AuthService,
     private afs: AngularFirestore
     ) {
       this.resourceRef = this.afs.collection<Desk>('resources', ref=> ref.orderBy('name'));
@@ -39,6 +42,44 @@ export class Tab1Page {
       this.minDate = new Date();
       this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
   }
+
+  async ngOnInit(){
+    const user: firebase.User = await this.authService.getUserProfile();
+    if (user){
+      this.user = user;
+     /* this.afs.collection('users').doc(user.uid)
+      .collection<any>('invoices').auditTrail().subscribe(console.log);*/
+
+/*      firebase.firestore().collection('users').doc(user.uid).collection('invoices').onSnapshot((snapshot)=>{
+        snapshot.docChanges({includeMetadataChanges:false}).forEach(change=>{
+          if (change.type === 'added') {
+            // change.doc here is new a new document
+            console.log(change.doc.data());
+            this.presentInvoiceModal(change.doc.data());
+          }
+        });
+      });
+      */
+
+      /*this.afs.collection('users').doc(user.uid)
+      .collection<any>('invoices').valueChanges().subscribe(snapshot=>{
+        snapshot.forEach(invoice=>{
+          console.log(invoice);
+          this.presentInvoiceModal(invoice.payload.doc.data());
+        });
+      });*/
+
+      /*this.afs.collection('users').doc(user.uid)
+      .collection<any>('invoices').snapshotChanges(['added']).subscribe(snapshot=>{
+        snapshot.forEach(invoice=>{
+          console.log(invoice);
+          this.presentInvoiceModal(invoice.payload.doc.data());
+        });
+      });*/
+    }
+  }
+
+
   addDesk(desk: Desk) {
     this.resourceRef.add(desk);
   }
@@ -81,10 +122,19 @@ export class Tab1Page {
       }
     });
 
-    modal.onDidDismiss().then(data=>{
+    modal.onDidDismiss().then(async (data)=>{
       console.log(data);
-      if (data.data.booked){
+      if (data.data.bookingId){
         this.presentToast();
+        const user: firebase.User = await this.authService.getUserProfile();
+        this.afs.collection('users').doc().collection('invoices').doc(data.data.bookingId).snapshotChanges().forEach(snap=>{
+          console.log(snap.type);
+          if (snap.type ==='added'){
+            this.presentInvoiceModal(snap.payload.data());
+            console.log(snap.payload.data());
+          }
+        });
+
       }else{
         console.log('closed');
       }
@@ -169,6 +219,19 @@ export class Tab1Page {
   }
 
 
+  async presentInvoiceModal(invoice) {
+    const modal = await this.modalController.create({
+      component: InvoicePage,
+      //cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps:{
+        invoice
+      }
 
+    });
+    return await modal.present();
+
+  }
 
 }

@@ -3,7 +3,7 @@ import {
 import {  AlertController,  ModalController} from '@ionic/angular';
 import {  Reservation} from 'src/app/models/reservation';
 import {  Desk} from 'src/app/models/resources';
-import {  AngularFirestore,  AngularFirestoreCollection} from '@angular/fire/firestore';
+import {  AngularFirestore,  AngularFirestoreCollection, DocumentReference} from '@angular/fire/firestore';
 import {  AuthService} from 'src/app/services/auth.service';
 import {  Router} from '@angular/router';
 
@@ -153,18 +153,9 @@ export class DeskPage implements OnInit {
       });
 
       if (user) {
-        const newBooking = await this.afs.collection('users').doc(user.uid).collection('reservations').add(this.reservation).catch(err=>{
-          this.alertCtrl.create({
-            message: 'Add Booking Error: ' + err.message,
-            buttons: [{
-              text: 'Ok',
-              role: 'cancel'
-            }],
-          }).then(alert => {
-            alert.present();
-          });
-        });
-
+        const newBooking: DocumentReference = await this.afs.collection('users')
+        .doc(user.uid).collection('reservations')
+        .add(this.reservation);
         /*const notification: LocalNotificationSchema = {
           id: 123123,
           title: this.reservation.desk.name,
@@ -189,18 +180,18 @@ export class DeskPage implements OnInit {
           });
         });*/
 
-        this.dismiss(true);
+        this.dismiss(newBooking.id);
       } else {
         alert('User Error: no user available.');
       }
   }
 
-  dismiss(booked) {
+  dismiss(bookingId) {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
       dismissed: true,
-      booked
+      bookingId
     });
   }
 
