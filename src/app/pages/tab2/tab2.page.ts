@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { DeskPage } from '../desk/desk.page';
 import { config } from 'src/app/config/config';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-tab2',
@@ -74,6 +75,11 @@ export class Tab2Page implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async pay(slidingItem: IonItemSliding, reservation) {
+
+    await Browser.open({ url: reservation.stripeInvoiceUrl });
   }
 
   async cancel(slidingItem: IonItemSliding, reservation) {

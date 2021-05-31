@@ -127,19 +127,10 @@ export class DeskPage implements OnInit {
     console.log('Desk');
     console.log(this.reservation.desk);
 
-    try {
       this.reservation.picture = this.desk.picture;
       this.reservation.desk = this.desk;
-    } catch (e) {
-      alert('Error 1: ' + JSON.stringify(e));
-    }
 
-    try {
-      this.reservation.price = this.desk['price' + this.reservation.bookingType];
       this.reservation.bookingTypeDescription = this.deskConfig.find(element=>element.type===this.reservation.bookingType).description;
-    } catch (e) {
-      alert('Error 2: ' + JSON.stringify(e));
-    }
 
       const user = await this.authService.getUserProfile().catch(err=>{
         this.alertCtrl.create({
