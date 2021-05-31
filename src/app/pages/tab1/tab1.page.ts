@@ -34,7 +34,7 @@ export class Tab1Page implements OnInit{
     private authService: AuthService,
     private afs: AngularFirestore
     ) {
-      this.resourceRef = this.afs.collection<Desk>('resources', ref=> ref.orderBy('name'));
+      this.resourceRef = this.afs.collection<Desk>('desks', ref=> ref.orderBy('name'));
       this.items$ = this.resourceRef.valueChanges({ idField: 'id' });
 
       this.selectedDate = new Date();
@@ -126,14 +126,14 @@ export class Tab1Page implements OnInit{
       console.log(data);
       if (data.data.bookingId){
         this.presentToast();
-        const user: firebase.User = await this.authService.getUserProfile();
+        /*const user: firebase.User = await this.authService.getUserProfile();
         this.afs.collection('users').doc().collection('invoices').doc(data.data.bookingId).snapshotChanges().forEach(snap=>{
           console.log(snap.type);
           if (snap.type ==='added'){
             this.presentInvoiceModal(snap.payload.data());
             console.log(snap.payload.data());
           }
-        });
+        });*/
 
       }else{
         console.log('closed');

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Deine Reservation {{reservation.desk.name}}</ion-title>
+    <ion-title>{{reservation.desk.name}}: {{reservation.bookingTypeDescription}}</ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="dismiss()">
         schliessen
@@ -14,55 +14,102 @@
 
 
   <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>
-           {{reservation.bookingTypeDescription}}
-        </ion-label>
-      </ion-list-header>
+    <ion-list-header>
+      <ion-label>
+        {{reservation.desk.name}}: {{reservation.bookingTypeDescription}}
+      </ion-label>
+    </ion-list-header>
 
-      <ion-item>
-        <!--<ion-label >Desk Beschreibung</ion-label>-->
-        <ion-textarea readonly value="{{reservation.desk.description}}" clearInput ></ion-textarea>
-      </ion-item>
+    <ion-item>
+      <ion-textarea readonly value="{{reservation.desk.description}}" clearInput></ion-textarea>
+    </ion-item>
 
-      <ion-item >
-        <ion-label >
-          <h2>Start deiner Buchung</h2>
-          <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
-          </ion-label>  
-      </ion-item>
-  
-      <ion-item >
-        <ion-label >
-          <h2>Ende deiner Buchung</h2>
-          <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
-        </ion-label>
-      </ion-item>
+    <ion-list-header>
+      <ion-label>
+        Details deiner Reservation
+      </ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-icon slot="start" name="enter-outline"></ion-icon>
+      <ion-label>
+        <h2>Start deiner Buchung</h2>
+        <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
+          {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
 
-  
-      <ion-item >
-        <ion-label >
-          <h2>Preis:</h2>
-        </ion-label>
-         
-        <ion-badge slot="end">
-          CHF {{reservation.price}}.-
-        </ion-badge>
-      </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="exit-outline"></ion-icon>
+      <ion-label>
+        <h2>Ende deiner Buchung</h2>
+        <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
+          {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="cash-outline"></ion-icon>
+      <ion-label>
+        <h2>Preis</h2>
+      </ion-label>
+
+      <ion-badge slot="end">
+        CHF {{reservation.price}}.-
+      </ion-badge>
+    </ion-item>
 
 
-      <ion-img src={{reservation.desk.picture}}>
 
-      </ion-img>
-      <div *ngIf="allowDelete">
-        <ion-button expand="block" color="danger" (click)="cancel(reservation)">
-          stornieren
-        </ion-button>
-      </div>
- 
+    <ion-item *ngIf="!reservation.statusPaid" (click)="openLink(reservation.stripeInvoiceUrl)">
+      <ion-icon color="danger" slot="start" name="card-outline"></ion-icon>
+      <ion-label color="danger">
+        <h2>Rechnung bezahlen</h2>
+      </ion-label>
+      <ion-badge color="danger" slot="end">
+        bezahlen
+      </ion-badge>
+    </ion-item>
+
+    <ion-item *ngIf="reservation.pdf" (click)="openLink(reservation.pdf)">
+      <ion-icon slot="start" name="document-attach-outline"></ion-icon>
+      <ion-label>
+        <h2>Rechnung</h2>
+      </ion-label>
+      <ion-badge slot="end">
+        PDF herunterladen
+      </ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="home-outline"></ion-icon>
+      <ion-label>
+        <p>{{config.coworkingName}}</p>
+        <p>{{config.street}}</p>
+        <p>{{config.postalcode}} {{config.city}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-img src={{reservation.desk.picture}}>
+
+    </ion-img>
+
+    <ion-button *ngIf="!reservation.statusPaid" expand="block" color="danger" (click)="cancel(reservation)">
+      stornieren
+    </ion-button>
+
+
+
+    <ion-list-header *ngIf="reservation.statusPaid">
+      <ion-label>
+        Reservationsbestätigung
+      </ion-label>
+    </ion-list-header>
   </ion-list>
-  <div *ngIf="allowDelete">
-  <deckgo-qrcode  content="{{ reservation.id }}"></deckgo-qrcode>
+
+  <div *ngIf="reservation.statusPaid">
+    <deckgo-qrcode content="{{ reservation.stripeInvoiceUrl }}"></deckgo-qrcode>
   </div>
+
+
 
 </ion-content>

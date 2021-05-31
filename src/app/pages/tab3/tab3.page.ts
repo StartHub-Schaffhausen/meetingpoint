@@ -15,9 +15,9 @@ import { Browser } from '@capacitor/browser';
 })
 export class Tab3Page implements OnInit{
   userProfile$: Observable<UserProfile>;
-  invoices$: Observable<any[]>;
+ // invoices$: Observable<any[]>;
   private userProfileRef: AngularFirestoreDocument<UserProfile>;
-  private invoiceCollection: AngularFirestoreCollection<any>;
+  //private invoiceCollection: AngularFirestoreCollection<any>;
 
 
 
@@ -37,10 +37,10 @@ export class Tab3Page implements OnInit{
       this.userProfileRef = this.afs.collection('users').doc<UserProfile>(user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
 
-      this.invoiceCollection = this.afs.collection('users').doc(user.uid)
+     /* this.invoiceCollection = this.afs.collection('users').doc(user.uid)
       .collection<any>('invoices');
       this.invoices$ = this.invoiceCollection.valueChanges({ idField: 'id' });
-
+*/
 
 
     }

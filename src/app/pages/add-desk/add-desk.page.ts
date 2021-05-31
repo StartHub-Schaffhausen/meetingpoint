@@ -51,8 +51,8 @@ async addResource(){
 
   console.log(this.desk);
 
-    const newDesk = await this.afs.collection('resources').add(this.desk);
-    await this.afs.collection('resources').doc(newDesk.id).set({
+    const newDesk = await this.afs.collection('desks').add(this.desk);
+    await this.afs.collection('desks').doc(newDesk.id).set({
       id: newDesk.id
     },
     {

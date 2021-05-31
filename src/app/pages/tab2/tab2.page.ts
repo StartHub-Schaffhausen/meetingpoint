@@ -48,27 +48,22 @@ export class Tab2Page implements OnInit {
   }
 
   async addReservation() {
-
-
     const modal = await this.modalController.create({
       component: DeskPage,
       //cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-
     });
 
     modal.onDidDismiss().then(data=>{
       console.log(data);
-
     });
 
     return await modal.present();
-
   }
 
 
-  async presentModal(reservation, status) {
+  async presentModal(reservation) {
     const modal = await this.modalController.create({
       component: ReservationPage,
       //cssClass: 'my-custom-class',
@@ -76,12 +71,9 @@ export class Tab2Page implements OnInit {
       presentingElement: this.routerOutlet.nativeEl,
       componentProps:{
         reservation,
-        allowDelete: status
       }
-
     });
     return await modal.present();
-
   }
 
   async cancel(slidingItem: IonItemSliding, reservation) {

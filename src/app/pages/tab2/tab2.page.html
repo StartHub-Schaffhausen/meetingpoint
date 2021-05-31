@@ -19,25 +19,33 @@
     </ion-list-header>
 
     <ion-item-sliding *ngFor="let reservation of reservationList" #slidingItem>
-      <ion-item button detail  (click)="presentModal(reservation, true)">
+      <ion-item button detail  (click)="presentModal(reservation)">
         <ion-avatar slot="start">
           <img src="{{reservation.picture}}">
         </ion-avatar>
+        <ion-label>
+          <h2>{{reservation.desk.name}}: {{reservation.bookingTypeDescription}}</h2>
 
-        <ion-label><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>{{reservation.bookingTypeDescription}}</h2><p>{{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} - {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+          <h3>Start deiner Buchung</h3>
+          <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+
+          <h3>Ende deiner Buchung</h3>
+          <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+
+        </ion-label>
  
-        <ion-badge color="primary" slot="end" *ngIf="reservation.bookingType=='Day' || reservation.bookingType=='Morning' || reservation.bookingType=='Afternoon'">
-          {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
+        <ion-badge color="success" slot="end" *ngIf="reservation.statusPaid">
+          bezahlt
         </ion-badge>
-        <ion-badge color="primary" slot="end" *ngIf="reservation.bookingType=='Week' || reservation.bookingType=='Month'">
-          {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} -
-          {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
+        <ion-badge color="danger" slot="end" *ngIf="!reservation.statusPaid">
+          nicht bezahlt
         </ion-badge>
       </ion-item>
        
 
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
+        <ion-item-option *ngIf="!reservation.statusPaid" color="danger" (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
+        <ion-item-option *ngIf="!reservation.statusPaid" color="warning" (click)="pay(slidingItem, reservation)">bezahlen</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
 
@@ -50,19 +58,26 @@
     </ion-list-header>
 
     <!--<ion-item-sliding *ngFor="let reservation of reservationListPast" #slidingItemPast>-->
-        <ion-item button detail  (click)="presentModal(reservation, false)" *ngFor="let reservation of reservationListPast">
+        <ion-item button detail  (click)="presentModal(reservation)" *ngFor="let reservation of reservationListPast">
           <ion-avatar slot="start">
             <img src="{{reservation.picture}}">
           </ion-avatar>
+          <ion-label>
+            <h2>{{reservation.desk.name}}: {{reservation.bookingTypeDescription}}</h2>
   
-          <ion-label><ion-badge color="tertiary">{{reservation.desk.name}}</ion-badge><h2>{{reservation.bookingTypeDescription}}</h2><p>{{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} - {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p><p>Preis: CHF {{reservation.price}}.-</p></ion-label>
+            <h3>Start deiner Buchung</h3>
+            <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+  
+            <h3>Ende deiner Buchung</h3>
+            <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+  
+          </ion-label>
    
-          <ion-badge color="primary" slot="end" *ngIf="reservation.bookingType=='Day' || reservation.bookingType=='Morning' || reservation.bookingType=='Afternoon'">
-            {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
+          <ion-badge color="success" slot="end" *ngIf="reservation.statusPaid">
+            bezahlt
           </ion-badge>
-          <ion-badge color="primary" slot="end" *ngIf="reservation.bookingType=='Week' || reservation.bookingType=='Month'">
-            {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} -
-            {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
+          <ion-badge color="danger" slot="end" *ngIf="!reservation.statusPaid">
+            nicht bezahlt
           </ion-badge>
         </ion-item>
        

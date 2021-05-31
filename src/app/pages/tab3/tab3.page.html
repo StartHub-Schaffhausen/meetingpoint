@@ -47,13 +47,11 @@
   </ng-container>
 
 
-
+<!--
   <ion-list *ngIf="invoices$ | async as invoiceList">
     <ion-list-header>
       Rechnungen
     </ion-list-header>
-
-    <!--<ion-item-sliding *ngFor="let reservation of reservationListPast" #slidingItemPast>-->
         <ion-item button detail (click)="openInvoice(invoice)"  *ngFor="let invoice of invoiceList">
       
           <ion-label>
@@ -66,7 +64,7 @@
 
         </ion-item>
 
-  </ion-list>
+  </ion-list>-->
 
 
 </ion-content>

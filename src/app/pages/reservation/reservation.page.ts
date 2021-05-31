@@ -2,6 +2,8 @@ import { Component,Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Reservation } from 'src/app/models/reservation';
+import { config } from 'src/app/config/config';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-reservation',
@@ -10,8 +12,7 @@ import { Reservation } from 'src/app/models/reservation';
 })
 export class ReservationPage implements OnInit {
   @Input() reservation: Reservation;
-  @Input() allowDelete: boolean;
-
+  config = config;
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
@@ -21,7 +22,9 @@ export class ReservationPage implements OnInit {
   ngOnInit() {
     console.log(this.reservation);
   }
-
+  async openLink(link) {
+    await Browser.open({ url: link });
+  };
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
