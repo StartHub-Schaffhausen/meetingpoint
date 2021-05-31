@@ -52,7 +52,7 @@ export class DeskPage implements OnInit {
       bookingCreated: new Date(),
       bookingType: this.deskConfig.find(element=>element.type==='Day').type,
       bookingTypeDescription: this.deskConfig.find(element=>element.type==='Day').description,
-      price: 0,
+      price: this.deskConfig.find(element=>element.type===this.deskConfig.find(element=>element.type==='Day').type).price;,
       picture: '',
       desk: this.desk
     };
