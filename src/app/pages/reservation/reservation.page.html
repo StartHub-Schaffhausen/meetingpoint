@@ -106,8 +106,8 @@
     </ion-list-header>
   </ion-list>
 
-  <div *ngIf="reservation.statusPaid">
-    <deckgo-qrcode content="{{ reservation.stripeInvoiceUrl }}"></deckgo-qrcode>
+  <div *ngIf="reservation.statusPaid" style="padding-left:auto; padding-right:auto">
+    <deckgo-qrcode type="svg" style="--deckgo-qrcode-size: 400px; --deckgo-qrcode-background-fill:  #FFFFFF; --deckgo-qrcode-color-fill: #000000;" qrBackgroundColor="FFFFFF" qrFillColor="000000" content="{{ reservation.stripeInvoiceUrl }}"></deckgo-qrcode>
   </div>
 
 
