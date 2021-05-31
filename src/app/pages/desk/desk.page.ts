@@ -52,7 +52,7 @@ export class DeskPage implements OnInit {
       bookingCreated: new Date(),
       bookingType: this.deskConfig.find(element=>element.type==='Day').type,
       bookingTypeDescription: this.deskConfig.find(element=>element.type==='Day').description,
-      price: '',
+      price: 0,
       picture: '',
       desk: this.desk
     };
@@ -82,6 +82,7 @@ export class DeskPage implements OnInit {
         break;
     }
     this.reservation.bookingType = ev.detail.value;
+    this.reservation.price = this.deskConfig.find(element=>element.type===ev.detail.value).price;
 
     /*console.log(this.selectedDate.toISOString());
     console.log(this.reservation.dateFrom.toISOString());

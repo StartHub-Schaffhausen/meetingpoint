@@ -8,7 +8,7 @@ export interface Reservation {
     bookingTypeDescription: string;
     userId: string;
     bookingCreated: Date;
-    price: string;
+    price: number;
     picture: string;
     desk: Desk;
  }
