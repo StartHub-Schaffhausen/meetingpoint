@@ -25,6 +25,8 @@ export class DeskPage implements OnInit {
 
   deskConfig = config.offer;
 
+  occupied: any;
+
   constructor(
     private modalController: ModalController,
     private afs: AngularFirestore,
@@ -57,6 +59,16 @@ export class DeskPage implements OnInit {
       desk: this.desk
     };
   }
+
+  const ref$ = this.afs.collection('desks').doc(this.desk.id)
+  .collection('reservations').doc(this.selectedDate.toISOString().substr(0, 10)).get();
+
+  ref$.subscribe(data=>{
+    this.occupied =  data.data();
+    console.log('occupied: ' + JSON.stringify(this.occupied));
+  });
+
+
   console.log(this.reservation);
   }
 
@@ -84,14 +96,10 @@ export class DeskPage implements OnInit {
     this.reservation.bookingType = ev.detail.value;
     this.reservation.price = this.deskConfig.find(element=>element.type===ev.detail.value).price;
 
-    /*console.log(this.selectedDate.toISOString());
-    console.log(this.reservation.dateFrom.toISOString());
-    console.log(this.reservation.dateTo.toISOString());*/
-
   }
 
 
-  dateChange(ev) {
+  async dateChange(ev) {
     this.selectedDate = new Date(ev.detail.value);
     switch (this.reservation.bookingType) {
       case 'Morning':
@@ -113,6 +121,15 @@ export class DeskPage implements OnInit {
       default:
         break;
     }
+
+    const ref$ = this.afs.collection('desks').doc(this.desk.id)
+    .collection('reservations').doc(this.selectedDate.toISOString().substr(0, 10)).get();
+
+    ref$.subscribe(data=>{
+      this.occupied =  data.data();
+      console.log('occupied: ' + JSON.stringify(this.occupied));
+    });
+
     /*console.log(this.selectedDate.toISOString());
     console.log(this.reservation.dateFrom.toISOString());
     console.log(this.reservation.dateTo.toISOString());

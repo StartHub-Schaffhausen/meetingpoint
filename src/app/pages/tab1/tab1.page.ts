@@ -34,13 +34,13 @@ export class Tab1Page implements OnInit{
     private authService: AuthService,
     private afs: AngularFirestore
     ) {
+      this.selectedDate = new Date();
+      this.minDate = new Date();
+      this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
+
       this.resourceRef = this.afs.collection<Desk>('desks', ref=> ref.orderBy('name'));
       this.items$ = this.resourceRef.valueChanges({ idField: 'id' });
 
-      this.selectedDate = new Date();
-
-      this.minDate = new Date();
-      this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 90);
   }
 
   async ngOnInit(){

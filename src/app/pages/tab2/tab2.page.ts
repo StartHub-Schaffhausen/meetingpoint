@@ -80,6 +80,7 @@ export class Tab2Page implements OnInit {
   async pay(slidingItem: IonItemSliding, reservation) {
 
     await Browser.open({ url: reservation.stripeInvoiceUrl });
+    slidingItem.close();
   }
 
   async cancel(slidingItem: IonItemSliding, reservation) {
