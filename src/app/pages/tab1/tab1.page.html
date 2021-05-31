@@ -20,17 +20,17 @@
 
 
 
- <!-- <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="tertiary">
+ <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="tertiary">
     <ion-segment-button value="today">
       <ion-label>Heute</ion-label>
     </ion-segment-button>
     <ion-segment-button value="tomorrow">
       <ion-label>Morgen</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="custom">
+   <!-- <ion-segment-button value="custom">
       <ion-label>Benutzerdefiniert</ion-label>
-    </ion-segment-button>
-  </ion-segment>-->
+    </ion-segment-button>-->
+  </ion-segment>
 
   <ion-card *ngFor="let desk of items$ | async" button="true" (click)="presentModal(desk)">
     <img src="{{desk.picture}}" />

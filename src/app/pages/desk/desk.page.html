@@ -42,7 +42,11 @@
     <div *ngFor="let offer of deskConfig">
 
       <ion-item >
-        <ion-label><h2>{{offer.description}}</h2><p>{{offer.usageHours}}</p></ion-label>
+        <ion-label>
+          <h2>{{offer.description}}</h2>
+          <p>{{offer.usageHours}}</p>
+          <p *ngIf="(offer.type=='Week' || offer.type=='Month') && reservation.bookingType==offer.type">{{reservation.dateFrom | date:'dd.MM.y'}} - {{reservation.dateTo | date:'dd.MM.y'}}</p>
+        </ion-label>
         <ion-radio value="{{offer.type}}"></ion-radio>
 
         <ion-badge *ngIf="!occupied?.hasOwnProperty(offer.type)"slot="end" color="success">{{offer.price}} CHF</ion-badge>

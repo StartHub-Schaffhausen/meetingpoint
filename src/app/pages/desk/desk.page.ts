@@ -89,6 +89,12 @@ export class DeskPage implements OnInit {
       case 'Week':
         this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
+        this.reservation.dateTo = new Date(new Date().setDate(this.reservation.dateTo.getDate() + 5));
+        break;
+      case 'Month':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
+        this.reservation.dateTo = new Date(new Date().setDate(this.reservation.dateTo.getDate() + 30));
         break;
       default:
         break;
@@ -115,6 +121,10 @@ export class DeskPage implements OnInit {
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
       case 'Week':
+        this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
+        this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
+        break;
+      case 'Month':
         this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
         break;
