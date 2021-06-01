@@ -32,7 +32,7 @@ export class Tab3Page implements OnInit{
   }
 
   async ngOnInit(){
-    const user = await this.authService.getUserProfile();
+    const user = await this.authService.getUser();
     if(user){
       this.userProfileRef = this.afs.collection('users').doc<UserProfile>(user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();

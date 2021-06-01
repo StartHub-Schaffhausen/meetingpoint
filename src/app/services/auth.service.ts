@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-
+import {first} from 'rxjs/operators';
 
 //import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -18,12 +18,9 @@ export class AuthService {
    //this.auth.signInWithPhoneNumber(phonenumber, )
   }
 
-
-  async getUserProfile(): Promise<firebase.User>{
-    this.user = await this.auth.currentUser;
-    return this.user;
+  getUser(): Promise<firebase.User> {
+    return this.auth.authState.pipe(first()).toPromise();
   }
-
 
   loginUser(
     email: string,

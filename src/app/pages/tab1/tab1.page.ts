@@ -44,9 +44,18 @@ export class Tab1Page implements OnInit{
   }
 
   async ngOnInit(){
-    const user: firebase.User = await this.authService.getUserProfile();
+    const user: firebase.User = await this.authService.getUser();
     if (user){
       this.user = user;
+
+      this.afs.collection('users').doc(user.uid)
+      .collection('reservations',ref=>ref.where('statusPaid','==',false)).stateChanges(['added']).subscribe(data=>{
+        data.forEach(element=>{
+          console.log(element.payload.doc.data());
+
+          this.presentInvoiceModal(element.payload.doc.data());
+        });
+      });
      /* this.afs.collection('users').doc(user.uid)
       .collection<any>('invoices').auditTrail().subscribe(console.log);*/
 

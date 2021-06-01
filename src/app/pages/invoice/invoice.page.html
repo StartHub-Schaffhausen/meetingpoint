@@ -1,9 +1,110 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>invoice</ion-title>
+    <ion-title>Rechnung</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="dismiss()">
+        schliessen
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+
+
+  <ion-list lines="none">
+    <ion-list-header>
+      <ion-label>
+        Rechnung
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-textarea readonly value="{{invoice.desk.description}}" clearInput></ion-textarea>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>
+        Details deiner Reservation
+      </ion-label>
+    </ion-list-header>
+<ion-item>
+  <ion-label>
+    {{invoice.desk.name}}: {{invoice.bookingTypeDescription}}
+  </ion-label>
+</ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="enter-outline"></ion-icon>
+      <ion-label>
+        <h2>Start deiner Buchung</h2>
+        <p> {{(invoice.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
+          {{(invoice.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="exit-outline"></ion-icon>
+      <ion-label>
+        <h2>Ende deiner Buchung</h2>
+        <p> {{(invoice.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
+          {{(invoice.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="cash-outline"></ion-icon>
+      <ion-label>
+        <h2>Preis</h2>
+      </ion-label>
+
+      <ion-badge slot="end">
+        CHF {{invoice.price}}.-
+      </ion-badge>
+    </ion-item>
+
+
+
+    <ion-item  (click)="openLink(invoice.stripeInvoiceUrl)">
+      <ion-icon color="danger" slot="start" name="card-outline"></ion-icon>
+      <ion-label color="danger">
+        <h2>Rechnung bezahlen</h2>
+      </ion-label>
+      <ion-badge color="danger" slot="end">
+        bezahlen
+      </ion-badge>
+    </ion-item>
+
+    <ion-item (click)="openLink(invoice.pdf)">
+      <ion-icon slot="start" name="document-attach-outline"></ion-icon>
+      <ion-label>
+        <h2>Rechnung</h2>
+      </ion-label>
+      <ion-badge slot="end">
+        PDF herunterladen
+      </ion-badge>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="home-outline"></ion-icon>
+      <ion-label>
+        <p>{{config.coworkingName}}</p>
+        <p>{{config.street}}</p>
+        <p>{{config.postalcode}} {{config.city}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-img src={{invoice.desk.picture}}>
+
+    </ion-img>
+
+
+
+  </ion-list>
+
+
+
+
 
 </ion-content>

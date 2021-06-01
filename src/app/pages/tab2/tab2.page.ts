@@ -33,7 +33,7 @@ export class Tab2Page implements OnInit {
     ) {
   }
   async ngOnInit(){
-    const user: firebase.User = await this.authService.getUserProfile();
+    const user: firebase.User = await this.authService.getUser();
     if (user){
       this.reservationCollection = this.afs.collection('users').doc(user.uid)
       .collection<Reservation>('reservations', ref => ref.where('dateTo', '>=', new Date())

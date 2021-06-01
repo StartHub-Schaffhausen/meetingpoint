@@ -12,6 +12,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
+import firebase from 'firebase';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 
 @Component({
@@ -24,7 +27,7 @@ export class AppComponent {
     private swUpdate: SwUpdate,
     private alertController: AlertController,
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
+    private afStore: AngularFirestore,
     public modalController: ModalController,
     //public routerOutlet: IonRouterOutlet,
     private router: Router,
@@ -32,22 +35,46 @@ export class AppComponent {
     this.initializeApp();
 
 
-    this.afAuth.onAuthStateChanged((user)=>{
-
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
         console.log('User is signed in.');
-        //this.router.navigateByUrl('tabs');
 
       } else {
         // No user is signed in.
         console.log(' No user is signed in.');
-        //this.router.navigateByUrl('login');
       }
-
-
     });
+
+    // https://cloud.google.com/firestore/docs/manage-data/enable-offline
+    // The default cache size threshold is 40 MB. Configure "cacheSizeBytes"
+    // for a different threshold (minimum 1 MB) or set to "CACHE_SIZE_UNLIMITED"
+    // to disable clean-up.
+    firebase.firestore().settings({
+      cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+    });
+
+    firebase
+      .firestore()
+      .enablePersistence()
+      .catch((err) => {
+        if (err.code === 'failed-precondition') {
+          // Multiple tabs open, persistence can only be enabled
+          // in one tab at a a time.
+          // ...
+        } else if (err.code === 'unimplemented') {
+          // The current browser does not support all of the
+          // features required to enable persistence
+          // ...
+        }
+      });
+    // Subsequent queries will use persistence, if it was enabled successfully
     this.afAuth.setPersistence('session');
+
+
+
+
+
   }
 
   initializeApp(): void {

@@ -44,7 +44,7 @@ export class DeskPage implements OnInit {
     console.log(this.desk);
     console.log('reservation');
 
-    const user = await this.authService.getUserProfile();
+    const user = await this.authService.getUser();
     if (user) {
     this.reservation = {
       id: '',
@@ -89,12 +89,12 @@ export class DeskPage implements OnInit {
       case 'Week':
         this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
-        this.reservation.dateTo = new Date(new Date().setDate(this.reservation.dateTo.getDate() + 5));
+        this.reservation.dateTo = new Date(this.reservation.dateTo.getTime() + 1000 * 60 * 60 * 24 * 5);
         break;
       case 'Month':
         this.reservation.dateFrom = new Date(this.selectedDate.toISOString().substr(0, 11) + '08:00:00');
         this.reservation.dateTo = new Date(this.selectedDate.toISOString().substr(0, 11) + '17:30:00');
-        this.reservation.dateTo = new Date(new Date().setDate(this.reservation.dateTo.getDate() + 30));
+        this.reservation.dateTo = new Date(this.reservation.dateTo.getTime() + 1000 * 60 * 60 * 24 * 30);
         break;
       default:
         break;
@@ -159,7 +159,7 @@ export class DeskPage implements OnInit {
 
       this.reservation.bookingTypeDescription = this.deskConfig.find(element=>element.type===this.reservation.bookingType).description;
 
-      const user = await this.authService.getUserProfile().catch(err=>{
+      const user = await this.authService.getUser().catch(err=>{
         this.alertCtrl.create({
           message: 'Get Userprofile Error: ' + err.message,
           buttons: [{

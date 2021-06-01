@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       return new Promise( async (resolve,reject)=>{
-        const user = await this.authService.getUserProfile();
+        const user = await this.authService.getUser();
         //console.log(user);
         if (user){
           //console.log('guard true');
@@ -20,7 +20,9 @@ export class AuthGuard implements CanActivate {
           //return true;
         }else{
           //console.log('guard false');
-          resolve(this.router.createUrlTree(['/login']));
+          //reject(this.router.createUrlTree(['/login']));
+          this.router.navigateByUrl('/login');
+          reject('No user logged in');
           //return false;
         }
       });
