@@ -27,6 +27,7 @@ export class InvoicePage implements OnInit {
   }
   async openLink(link) {
     await Browser.open({ url: link });
+    this.dismiss();
   };
 
 }
