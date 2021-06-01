@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" >
-  <ion-toolbar >
+<ion-header [translucent]="true">
+  <ion-toolbar>
     <ion-title>
       Meeting Point
     </ion-title>
@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar >
+    <ion-toolbar>
       <ion-title size="large">Meeting Point </ion-title>
     </ion-toolbar>
     <ion-buttons collapse="true" slot="end">
@@ -20,14 +20,14 @@
 
 
 
- <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="tertiary">
+  <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="tertiary">
     <ion-segment-button value="today">
       <ion-label>Heute</ion-label>
     </ion-segment-button>
     <ion-segment-button value="tomorrow">
       <ion-label>Morgen</ion-label>
     </ion-segment-button>
-   <!-- <ion-segment-button value="custom">
+    <!-- <ion-segment-button value="custom">
       <ion-label>Benutzerdefiniert</ion-label>
     </ion-segment-button>-->
   </ion-segment>
@@ -36,21 +36,21 @@
     <img src="{{desk.picture}}" />
     <ion-card-header>
       <ion-card-subtitle>
-       <!-- <ion-badge *ngIf="desk.statusFree" color="success">frei</ion-badge>
+        <!-- <ion-badge *ngIf="desk.statusFree" color="success">frei</ion-badge>
         <ion-badge *ngIf="!desk.statusFree" color="danger">besetzt</ion-badge>-->
       </ion-card-subtitle>
       <ion-card-title>{{desk.name}}</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
       {{desk.description}}
     </ion-card-content>
   </ion-card>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon (click)="addResource()" name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab  *ngIf="user$  | async as user" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button *ngIf="user.data().admin"> 
+        <ion-icon (click)="addResource()" name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

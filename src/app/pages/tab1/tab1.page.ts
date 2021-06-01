@@ -8,7 +8,8 @@ import { Desk } from 'src/app/models/resources';
 import { AddDeskPage } from '../add-desk/add-desk.page';
 import { AuthService } from 'src/app/services/auth.service';
 import { InvoicePage } from '../invoice/invoice.page';
-
+import {first} from 'rxjs/operators';
+import { ThisReceiver } from '@angular/compiler';
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -21,7 +22,7 @@ export class Tab1Page implements OnInit{
   maxDate: Date;
 
   segment = 'today';
-  user: firebase.User;
+  user$: any;
 
   items$: Observable<Desk[]>;
   private resourceRef: AngularFirestoreCollection<Desk>;
@@ -46,7 +47,8 @@ export class Tab1Page implements OnInit{
   async ngOnInit(){
     const user: firebase.User = await this.authService.getUser();
     if (user){
-      this.user = user;
+      this.user$ = await this.afs.collection('users').doc(user.uid).get();
+
 
       this.afs.collection('users').doc(user.uid)
       .collection('reservations',ref=>ref.where('statusPaid','==',false)).stateChanges(['added']).subscribe(data=>{
