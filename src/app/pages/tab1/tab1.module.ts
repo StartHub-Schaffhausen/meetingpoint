@@ -7,6 +7,7 @@ import { Tab1Page } from './tab1.page';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { DeskPageModule } from '../desk/desk.module';
 import { InvoicePageModule } from '../invoice/invoice.module';
+import { AddDeskPageModule } from '../add-desk/add-desk.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { InvoicePageModule } from '../invoice/invoice.module';
     FormsModule,
     Tab1PageRoutingModule,
     DeskPageModule,
-    InvoicePageModule
+    InvoicePageModule,
+    AddDeskPageModule
   ],
   declarations: [Tab1Page]
 })

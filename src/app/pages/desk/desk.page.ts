@@ -7,7 +7,6 @@ import {  AngularFirestore,  AngularFirestoreCollection, DocumentReference} from
 import {  AuthService} from 'src/app/services/auth.service';
 import {  Router} from '@angular/router';
 
-import { LocalNotifications, ScheduleOptions,LocalNotificationSchema } from '@capacitor/local-notifications';
 import { config } from 'src/app/config/config';
 
 @Component({
@@ -56,7 +55,8 @@ export class DeskPage implements OnInit {
       bookingTypeDescription: this.deskConfig.find(element=>element.type==='Day').description,
       price: this.deskConfig.find(element=>element.type==='Day').price,
       picture: '',
-      desk: this.desk
+      desk: this.desk,
+      statusPaid: false
     };
   }
 

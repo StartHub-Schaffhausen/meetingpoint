@@ -11,4 +11,5 @@ export interface Reservation {
     price: number;
     picture: string;
     desk: Desk;
+    statusPaid: boolean;
  }

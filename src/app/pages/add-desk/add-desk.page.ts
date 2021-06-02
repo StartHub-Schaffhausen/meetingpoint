@@ -14,7 +14,9 @@ export class AddDeskPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private afs: AngularFirestore,
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.desk = {
@@ -23,7 +25,6 @@ export class AddDeskPage implements OnInit {
       description: 'Eine Beschreibung',
       picture: '/assets/img/desks/desk-1.jpeg',
     };
-
   }
   dismiss(booked) {
     // using the injected ModalController this page
@@ -47,11 +48,12 @@ export class AddDeskPage implements OnInit {
 
 }
 
-async addResource(){
+async addResource(desk){
 
   console.log(this.desk);
+  console.log(desk);
 
-    const newDesk = await this.afs.collection('desks').add(this.desk);
+    const newDesk = await this.afs.collection('desks').add(desk);
     await this.afs.collection('desks').doc(newDesk.id).set({
       id: newDesk.id
     },

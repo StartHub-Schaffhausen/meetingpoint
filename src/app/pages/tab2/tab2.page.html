@@ -12,9 +12,18 @@
       <ion-title size="large">Reservationen</ion-title>
     </ion-toolbar>
   </ion-header>  
+  
+  <ion-grid>
+    <ion-row>
+  
+      <ion-col>
+  
+      </ion-col>
+      <ion-col  size="12" size-sm>
+        
 
   <ion-list *ngIf="reservation$ | async as reservationList">
-    <ion-list-header>
+    <ion-list-header *ngIf="reservationList.length>0">
       Kommende Reservationen
     </ion-list-header>
 
@@ -53,7 +62,7 @@
   </ion-list>
 
   <ion-list *ngIf="reservationPast$ | async as reservationListPast">
-    <ion-list-header>
+    <ion-list-header *ngIf="reservationListPast.length>0">
       Vergangene Reservationen
     </ion-list-header>
 
@@ -89,6 +98,14 @@
 
 
   </ion-list>
+
+</ion-col>
+<ion-col>
+
+</ion-col>
+</ion-row>
+</ion-grid>
+
   <!--
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
