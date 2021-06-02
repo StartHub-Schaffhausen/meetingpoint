@@ -39,18 +39,18 @@
 
     <ion-item>
       <ion-label position="stacked">E-Mail Adresse</ion-label>
-      <ion-input readonly [(ngModel)]="userProfile.email" type="email"></ion-input>
+      <ion-input readonly [(ngModel)]="userProfile.email" ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Voranme</ion-label>
-      <ion-input [(ngModel)]="userProfile.firstName" type="text"></ion-input>
+      <ion-input [(ngModel)]="userProfile.firstName" ></ion-input>
     </ion-item>
 
 
     <ion-item>
       <ion-label position="stacked">Nachname</ion-label>
-      <ion-input [(ngModel)]="userProfile.lastName" type="text"></ion-input>
+      <ion-input [(ngModel)]="userProfile.lastName"></ion-input>
     </ion-item>
 
     <ion-button color="primary" expand="block" (click)="saveProfile(userProfile)">speichern</ion-button>
