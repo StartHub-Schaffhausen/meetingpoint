@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Resource hinzufügen</ion-title>
+    <ion-title>Tisch hinzufügen</ion-title>
     
     <ion-buttons slot="primary">
       <ion-button (click)="dismiss(false)">
@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
   <ion-list>
     <ion-list-header>
@@ -19,12 +19,12 @@
     </ion-list-header>
     <ion-item>
       <ion-label position="stacked" color="secondary" >Name</ion-label>
-      <ion-input [(ngModel)]="desk.name" clearInput value="Tisch 1"></ion-input>
+      <ion-input  [(ngModel)]="desk.name"></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label position="stacked" color="secondary">Beschreibung</ion-label>
-      <ion-textarea [(ngModel)]="desk.description" clearInput value="Mehr Informationen" placeholder="Enter more information here..."></ion-textarea>
+      <ion-textarea [(ngModel)]="desk.description"></ion-textarea>
     </ion-item>
 
     <ion-item (click)="takePicture()">
@@ -36,6 +36,6 @@
 
   </ion-list>
 
-  <ion-button expand="block" (click)="addResource()">hinzufügen</ion-button>
+  <ion-button expand="block" (click)="addResource(desk)">hinzufügen</ion-button>
 
 </ion-content>

@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" >
+<ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Profil</ion-title>
@@ -19,35 +19,52 @@
   </ion-header>
 
 
+  <ion-grid>
+    <ion-row>
+  
+      <ion-col>
+  
+      </ion-col>
+      <ion-col  size="12" size-sm>
+        
 
-  <ng-container  *ngIf="userProfile$ | async as userProfile">
-
+  <ion-list *ngIf="userProfile$ | async as userProfile">
+    <ion-list-header>
+      <ion-label>Dein Meeting Point Profil</ion-label>
+    </ion-list-header>
     <ion-avatar class="ion-margin-start" (click)="takePicture(userProfile)">
-      <img src="{{ userProfile.profilePicture || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+      <img
+        src="{{ userProfile.profilePicture || '/assets/logo.png'}}">
     </ion-avatar>
-    
+
     <ion-item>
       <ion-label position="stacked">E-Mail Adresse</ion-label>
-      <ion-input readonly [(ngModel)]="userProfile.email" type="email"></ion-input>
+      <ion-input readonly [(ngModel)]="userProfile.email" ></ion-input>
     </ion-item>
-  
+
     <ion-item>
       <ion-label position="stacked">Voranme</ion-label>
-      <ion-input  [(ngModel)]="userProfile.firstName" type="text"></ion-input>
+      <ion-input [(ngModel)]="userProfile.firstName" ></ion-input>
     </ion-item>
-  
-  
+
+
     <ion-item>
       <ion-label position="stacked">Nachname</ion-label>
-      <ion-input  [(ngModel)]="userProfile.lastName" type="text"></ion-input>
+      <ion-input [(ngModel)]="userProfile.lastName"></ion-input>
     </ion-item>
-  
+
     <ion-button color="primary" expand="block" (click)="saveProfile(userProfile)">speichern</ion-button>
-  
-  </ng-container>
 
 
-<!--
+  </ion-list>
+</ion-col>
+<ion-col>
+
+</ion-col>
+</ion-row>
+</ion-grid>
+
+  <!--
   <ion-list *ngIf="invoices$ | async as invoiceList">
     <ion-list-header>
       Rechnungen

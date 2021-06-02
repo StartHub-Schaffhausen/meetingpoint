@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { UserCredential } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,19 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPage implements OnInit {
   public user: UserCredential;
-
+  public authForm: FormGroup;
   constructor(
     private authService: AuthService,
     private router: Router,
+    private formBuilder: FormBuilder,
+    private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
-  ) { }
+  ) {
+    this.authForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.minLength(6)],
+    });
+  }
 
   ngOnInit() {
     this.user = {
@@ -25,8 +33,42 @@ export class LoginPage implements OnInit {
     };
 
   }
-  async loginUser(): Promise<void> {
-    this.authService.loginUser(this.user.email, this.user.password).then(
+
+  submitCredentials(authForm: FormGroup): void {
+    if (!authForm.valid) {
+      //console.log('Form is not valid yet, current value:', authForm.value);
+      this.alertCtrl.create({
+        message: 'Formular ist noch fehlerhaft',
+        buttons: [{ text: 'Ok', role: 'cancel' }],
+      }).then(alert=>{
+        alert.present();
+      });
+
+
+    } else {
+      this.presentLoading();
+      const credentials: UserCredential = {
+        email: authForm.value.email,
+        password: authForm.value.password,
+      };
+
+      this.loginUser(credentials);
+    }
+  }
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'my-custom-class',
+      message: 'Bitte warten...',
+      duration: 2000,
+    });
+    await loading.present();
+
+    const {role, data} = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
+
+  async loginUser(credentials: UserCredential): Promise<void> {
+    this.authService.loginUser(credentials.email, credentials.password).then(
       () => {
         console.log('logged in');
           this.router.navigateByUrl('tabs');
