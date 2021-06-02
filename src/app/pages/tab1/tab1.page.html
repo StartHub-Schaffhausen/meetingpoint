@@ -47,7 +47,7 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-sm  *ngFor="let desk of items$ | async">
+      <ion-col size="12" size-md  *ngFor="let desk of items$ | async">
         
   <ion-card button="true" (click)="presentModal(desk)">
     <img src="{{desk.picture}}" />
