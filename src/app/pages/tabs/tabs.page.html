@@ -1,6 +1,12 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
+
+    <ion-tab-button *ngIf="isAdmin" tab="dashboard">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>Übersicht</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="desks">
       <ion-icon name="calendar"></ion-icon>
       <ion-label>Desk buchen</ion-label>

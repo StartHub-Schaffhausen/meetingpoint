@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage implements OnInit {
+  isAdmin = false;
   user: firebase.User;
   reservation$: Observable<Reservation[]>;
   private reservationCollection: AngularFirestoreCollection<Reservation>;
@@ -23,6 +24,12 @@ export class TabsPage implements OnInit {
 
   async ngOnInit(){
     const user: firebase.User = await this.authService.getUser();
+    const userRef = await this.afs.collection('users').doc<any>(user.uid).get();
+    userRef.subscribe(userData=>{
+      this.isAdmin = userData.data().admin || false;
+    })
+
+
     if (user){
       this.reservationCollection = this.afs.collection('users').doc(user.uid)
       .collection<Reservation>('reservations', ref => ref.where('dateTo', '>=', new Date())
