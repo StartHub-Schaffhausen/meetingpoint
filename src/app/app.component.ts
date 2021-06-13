@@ -69,7 +69,7 @@ export class AppComponent {
         }
       });
     // Subsequent queries will use persistence, if it was enabled successfully
-    this.afAuth.setPersistence('session');
+    this.afAuth.setPersistence('local');
 
 
 
