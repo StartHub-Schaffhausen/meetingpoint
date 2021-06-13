@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, IonRouterOutlet, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { DeskPage } from '../desk/desk.page';
 import firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreCollection, SnapshotOptions } from '@angular/fire/firestore';
@@ -31,6 +31,7 @@ export class Tab1Page implements OnInit{
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private toastController: ToastController,
+    private loadingCtrl: LoadingController,
     private alertController: AlertController,
     private authService: AuthService,
     private afs: AngularFirestore
@@ -45,49 +46,7 @@ export class Tab1Page implements OnInit{
   }
 
   async ngOnInit(){
-    const user: firebase.User = await this.authService.getUser();
-    if (user){
-      this.user$ = await this.afs.collection('users').doc(user.uid).get();
 
-
-      this.afs.collection('users').doc(user.uid)
-      .collection('reservations',ref=>ref.where('statusPaid','==',false)).stateChanges(['added']).subscribe(data=>{
-        data.forEach(element=>{
-          console.log(element.payload.doc.data());
-
-          this.presentInvoiceModal(element.payload.doc.data());
-        });
-      });
-     /* this.afs.collection('users').doc(user.uid)
-      .collection<any>('invoices').auditTrail().subscribe(console.log);*/
-
-/*      firebase.firestore().collection('users').doc(user.uid).collection('invoices').onSnapshot((snapshot)=>{
-        snapshot.docChanges({includeMetadataChanges:false}).forEach(change=>{
-          if (change.type === 'added') {
-            // change.doc here is new a new document
-            console.log(change.doc.data());
-            this.presentInvoiceModal(change.doc.data());
-          }
-        });
-      });
-      */
-
-      /*this.afs.collection('users').doc(user.uid)
-      .collection<any>('invoices').valueChanges().subscribe(snapshot=>{
-        snapshot.forEach(invoice=>{
-          console.log(invoice);
-          this.presentInvoiceModal(invoice.payload.doc.data());
-        });
-      });*/
-
-      /*this.afs.collection('users').doc(user.uid)
-      .collection<any>('invoices').snapshotChanges(['added']).subscribe(snapshot=>{
-        snapshot.forEach(invoice=>{
-          console.log(invoice);
-          this.presentInvoiceModal(invoice.payload.doc.data());
-        });
-      });*/
-    }
   }
 
 
@@ -137,14 +96,27 @@ export class Tab1Page implements OnInit{
       console.log(data);
       if (data.data.bookingId){
         this.presentToast();
-        /*const user: firebase.User = await this.authService.getUserProfile();
-        this.afs.collection('users').doc().collection('invoices').doc(data.data.bookingId).snapshotChanges().forEach(snap=>{
-          console.log(snap.type);
-          if (snap.type ==='added'){
-            this.presentInvoiceModal(snap.payload.data());
-            console.log(snap.payload.data());
-          }
-        });*/
+
+        const loading = await this.loadingCtrl.create({
+          message: 'Bitte warten...',
+          
+        });
+        await loading.present();
+
+        const user: firebase.User = await this.authService.getUser();
+        const booking$ = this.afs.collection('users').doc(user.uid)
+        .collection('reservations').doc(data.data.bookingId).snapshotChanges();
+
+        booking$.subscribe(booking=>{
+
+          let data = booking.payload.data();
+
+            if (data.stripeInvoiceUrl){
+              loading.dismiss();
+              this.presentInvoiceModal(data);
+            }
+
+        });
 
       }else{
         console.log('closed');

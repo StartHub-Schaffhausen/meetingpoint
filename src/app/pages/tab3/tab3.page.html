@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Profil
+      Dein Profil
     </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="logout()">
@@ -14,7 +14,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Profil</ion-title>
+      <ion-title size="large">Dein Profil</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -30,7 +30,7 @@
 
   <ion-list *ngIf="userProfile$ | async as userProfile">
     <ion-list-header>
-      <ion-label>Dein Meeting Point Profil</ion-label>
+      <ion-label>Allgemeine Angaben</ion-label>
     </ion-list-header>
     <ion-avatar class="ion-margin-start" (click)="takePicture(userProfile)">
       <img

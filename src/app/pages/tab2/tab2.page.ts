@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AlertController, IonItemSliding, IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -51,7 +51,6 @@ export class Tab2Page implements OnInit {
   async addReservation() {
     const modal = await this.modalController.create({
       component: DeskPage,
-      //cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
     });
@@ -67,7 +66,6 @@ export class Tab2Page implements OnInit {
   async presentModal(reservation) {
     const modal = await this.modalController.create({
       component: ReservationPage,
-      //cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
       componentProps:{
@@ -88,12 +86,11 @@ export class Tab2Page implements OnInit {
     console.log(reservation);
 
     const alert = await this.alertController.create({
-      //cssClass: 'my-custom-class',
-      header: 'Buchung stornieren?',
+      header: 'Reservation stornieren?',
       message: 'Möchtest du die Buchung wirklich  <strong>stornieren</strong>?',
       buttons: [
         {
-          text: 'Buchung stornieren',
+          text: 'Reservation stornieren',
           role: 'cancel',
           cssClass: 'secondary',
           handler: async (blah) => {

@@ -175,30 +175,6 @@ export class DeskPage implements OnInit {
         const newBooking: DocumentReference = await this.afs.collection('users')
         .doc(user.uid).collection('reservations')
         .add(this.reservation);
-        /*const notification: LocalNotificationSchema = {
-          id: 123123,
-          title: this.reservation.desk.name,
-          body: this.reservation.dateFrom.toISOString(),
-          schedule: {
-            at: this.reservation.dateFrom,
-          }
-        };
-
-        const scheduleOptions: ScheduleOptions = {
-          notifications: [notification]
-        };
-        LocalNotifications.schedule(scheduleOptions).catch(err=>{
-          this.alertCtrl.create({
-            message: 'Schedule Notification Error: ' + err.message,
-            buttons: [{
-              text: 'Ok',
-              role: 'cancel'
-            }],
-          }).then(alert => {
-            alert.present();
-          });
-        });*/
-
         this.dismiss(newBooking.id);
       } else {
         alert('User Error: no user available.');
