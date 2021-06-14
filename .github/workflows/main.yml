@@ -1,11 +1,11 @@
-name: Build + Prerender + Deploy
+name: Build + Deploy
 on:
   push:
     branches:
       - master
 jobs:
   build:
-    name: Build & Prerender & Deploy Production App
+    name: Build & Deploy Production App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
