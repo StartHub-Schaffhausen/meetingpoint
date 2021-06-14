@@ -1,6 +1,6 @@
 {
-  "name": "meetingpoint",
-  "short_name": "meetingpoint",
+  "name": "MeetingPoint",
+  "short_name": "MeetingPoint",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
