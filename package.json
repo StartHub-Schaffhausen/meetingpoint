@@ -8,7 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "cross-env NODE_ENV=production ng build --prod",
-    "build:ci": "cross-env NODE_ENV=production npm run build --prod",
+    "build:ci": "cross-env NODE_ENV=production ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
