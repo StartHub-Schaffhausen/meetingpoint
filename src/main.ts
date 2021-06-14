@@ -4,7 +4,7 @@ import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { defineCustomElements as deckDeckGoElementQR } from '@deckdeckgo/qrcode/dist/loader';
 
 import { AppModule } from './app/app.module';
-import { environment } from './environments/environment.prod';
+import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
