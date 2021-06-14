@@ -1,7 +1,7 @@
 {
-  "name": "meetingpoint",
-  "short_name": "meetingpoint",
-  "description": "meetingpoint",
+  "name": "Meeting Point",
+  "short_name": "Meeting Point",
+  "description": "Meeting Point CoWorking @Herrenacker",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
