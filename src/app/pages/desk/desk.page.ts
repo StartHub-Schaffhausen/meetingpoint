@@ -56,7 +56,9 @@ export class DeskPage implements OnInit {
       price: this.deskConfig.find(element=>element.type==='Day').price,
       picture: '',
       desk: this.desk,
-      statusPaid: false
+      statusPaid: false,
+      stripeInvoiceUrl: '',
+      pdf: ''
     };
   }
 

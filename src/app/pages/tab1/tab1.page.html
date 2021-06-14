@@ -68,8 +68,8 @@
   </ion-grid>
 
 
-    <ion-fab  *ngIf="user$  | async as user" vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button *ngIf="user.data().admin"> 
+    <ion-fab  *ngIf="isAdmin" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button> 
         <ion-icon (click)="addResource()" name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>

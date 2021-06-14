@@ -22,7 +22,8 @@ export class Tab1Page implements OnInit{
   maxDate: Date;
 
   segment = 'today';
-  user$: any;
+ 
+  isAdmin: boolean; 
 
   items$: Observable<Desk[]>;
   private resourceRef: AngularFirestoreCollection<Desk>;
@@ -46,6 +47,13 @@ export class Tab1Page implements OnInit{
   }
 
   async ngOnInit(){
+
+    const user: firebase.User = await this.authService.getUser();
+    const userRef = await this.afs.collection('users').doc<any>(user.uid).get();
+    userRef.subscribe(userData=>{
+      this.isAdmin = userData.data().admin || false;
+    })
+
 
   }
 
