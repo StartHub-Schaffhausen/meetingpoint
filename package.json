@@ -1,14 +1,14 @@
 {
   "name": "meetingpoint",
-  "version": "0.0.1",
-  "author": "Sandro Scalco",
+  "version": "0.0.2",
+  "author": "Sandro Scalco sandro@starthub.sh",
   "homepage": "https://starthub.sh",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "cross-env NODE_ENV=production ng build --prod",
-    "build:ci": "cross-env NODE_ENV=production ng build --prod",
+    "build:ci": "cross-env NODE_ENV=production npm run build --target=production --prod --environment=prod --environment=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
