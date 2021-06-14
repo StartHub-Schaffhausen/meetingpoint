@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Reservation } from 'src/app/models/reservation';
 import firebase from 'firebase/app';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { Browser } from '@capacitor/browser';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -23,17 +23,12 @@ export class DashboardPage implements OnInit {
   async ngOnInit() {
     const user: firebase.User = await this.authService.getUser();
     if (user){
-      this.reservationCollection = this.afs.collection('invoices', ref => ref.where('dateTo', '>=', new Date())
-      .orderBy('dateTo'));
+      this.reservationCollection = this.afs.collection('invoices', ref => ref.where('reservationTo', '>=', new Date()).where('canceled', '==', false)
+      .orderBy('reservationTo'));
       this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
-
-      this.reservationCollectionPast = this.afs.collection('invoices', ref => ref.where('dateTo', '<', new Date())
-      .orderBy('dateTo'));
-      this.reservationPast$ = this.reservationCollectionPast.valueChanges({ idField: 'id' });
     }
-
-
-
   }
-
+  async openLink(link) {
+    await Browser.open({ url: link });
+  };
 }

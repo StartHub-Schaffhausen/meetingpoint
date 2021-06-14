@@ -36,6 +36,7 @@ export class DeskPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.occupied = {};
     this.minDate = new Date();
     this.maxDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 90);
 
@@ -66,7 +67,7 @@ export class DeskPage implements OnInit {
   .collection('reservations').doc(this.selectedDate.toISOString().substr(0, 10)).get();
 
   ref$.subscribe(data=>{
-    this.occupied =  data.data();
+    this.occupied =  data.data() || {};
     console.log('occupied: ' + JSON.stringify(this.occupied));
   });
 
@@ -138,7 +139,7 @@ export class DeskPage implements OnInit {
     .collection('reservations').doc(this.selectedDate.toISOString().substr(0, 10)).get();
 
     ref$.subscribe(data=>{
-      this.occupied =  data.data();
+      this.occupied =  data.data() || {};
       console.log('occupied: ' + JSON.stringify(this.occupied));
     });
 
@@ -156,6 +157,15 @@ export class DeskPage implements OnInit {
     console.log('Desk');
     console.log(this.reservation.desk);
 
+    if (this.reservation.bookingType === 'Morning' && this.occupied.hasOwnProperty('Morning') || 
+    this.reservation.bookingType === 'Afternoon' && this.occupied.hasOwnProperty('Afternoon') ||
+    this.reservation.bookingType === 'Day' && this.occupied.hasOwnProperty('Day') ||
+    this.reservation.bookingType === 'Week' && this.occupied.hasOwnProperty('Week') ||
+    this.reservation.bookingType === 'Month' && this.occupied.hasOwnProperty('Month')){
+
+      console.log("besetzt");
+
+    }else{
       this.reservation.picture = this.desk.picture;
       this.reservation.desk = this.desk;
 
@@ -181,6 +191,7 @@ export class DeskPage implements OnInit {
       } else {
         alert('User Error: no user available.');
       }
+    }
   }
 
   dismiss(bookingId) {
