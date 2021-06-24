@@ -35,7 +35,7 @@ export const config = {
       usageHours: '08:00 - 17:30',
       description: 'Ganzer Tag'
     },
-    {
+   /* {
       id: 4,
       type: 'Week',
       price: 65,
@@ -48,6 +48,6 @@ export const config = {
       price: 250,
       usageHours: '08:00 - 17:30',
       description: 'Ganzer Monat'
-    },
+    },*/
   ]
 };

@@ -9,6 +9,8 @@ import {  Router} from '@angular/router';
 
 import { config } from 'src/app/config/config';
 
+import { format, parseISO } from 'date-fns';
+
 @Component({
   selector: 'app-desk',
   templateUrl: './desk.page.html',
@@ -33,6 +35,8 @@ export class DeskPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
   ) {
+
+
   }
 
   async ngOnInit() {
@@ -107,8 +111,13 @@ export class DeskPage implements OnInit {
 
   }
 
-
   async dateChange(ev) {
+   
+    const dateFromIonDatetime = ev.detail.value;
+    const formattedString = format(parseISO(dateFromIonDatetime), 'dd.MM.yyyy');
+
+    console.log(formattedString); // Jun 4, 2021
+
     this.selectedDate = new Date(ev.detail.value);
     switch (this.reservation.bookingType) {
       case 'Morning':

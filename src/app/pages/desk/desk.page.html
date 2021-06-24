@@ -29,9 +29,17 @@
 
   <ion-item>
     <ion-label position="floating">Reservationsdatum wählen</ion-label>
-    <ion-datetime displayFormat="DDD DD.MM.YYYY" pickerFormat="DD.MM.YYYY" value="{{selectedDate}}" (ionChange)="dateChange($event)"></ion-datetime>
-  </ion-item>
+    <ion-datetime presentation="date" locale="de-DE" (ionChange)="dateChange($event)"></ion-datetime>
 
+<!-- Custom buttons 
+<ion-datetime #customDatetime>
+  <ion-buttons slot="buttons">
+    <ion-button (click)="confirm()">Good to go!</ion-button>
+    <ion-button (click)="reset()">Reset</ion-button>
+  </ion-buttons>
+</ion-datetime>-->
+
+  </ion-item>
 
   <ion-radio-group (ionChange)="radioChange($event)" value="Day">
     <ion-list-header>
@@ -45,7 +53,7 @@
         <ion-label>
           <h2>{{offer.description}}</h2>
           <p>{{offer.usageHours}}</p>
-          <p *ngIf="(offer.type=='Week' || offer.type=='Month') && reservation.bookingType==offer.type">{{reservation.dateFrom | date:'dd.MM.y'}} - {{reservation.dateTo | date:'dd.MM.y'}}</p>
+          <!--<p *ngIf="(offer.type=='Week' || offer.type=='Month') && reservation.bookingType==offer.type">{{reservation.dateFrom | date:'dd.MM.y'}} - {{reservation.dateTo | date:'dd.MM.y'}}</p>-->
         </ion-label>
         <ion-radio value="{{offer.type}}"></ion-radio>
 
