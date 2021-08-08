@@ -11,149 +11,70 @@
     <ion-toolbar>
       <ion-title size="large">Meeting Point </ion-title>
     </ion-toolbar>
-    <ion-buttons collapse="true" slot="end">
-      <ion-button (click)="presentAlertPrompt()">
-        <ion-icon slot="icon-only" name="calendar"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <!--
+     <ion-buttons collapse="true" slot="end">
+       <ion-button (click)="presentAlertPrompt()">
+         <ion-icon slot="icon-only" name="calendar"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    -->
   </ion-header>
 
-
   <ion-grid>
     <ion-row>
-
-      <ion-col>
-
+      <ion-col size="12" size-md="4">
+        <h1 class="text-2xl">Schritt 1: Tisch wählen:</h1>
+        <ion-datetime (ionChange)="changeStartDate($event)" presentation="date" locale="de-DE">
+        </ion-datetime>
       </ion-col>
-      <ion-col size="12" size-sm>
-
-        <ion-segment (ionChange)="segmentChanged($event)" value="{{segment}}" color="primary">
-          <ion-segment-button value="today">
-            <ion-label>Heute</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="tomorrow">
-            <ion-label>Morgen</ion-label>
-          </ion-segment-button>
-          <!-- <ion-segment-button value="custom">
-          <ion-label>Benutzerdefiniert</ion-label>
-        </ion-segment-button>-->
-        </ion-segment>
+      <ion-col  size="12" size-md="4">
+        <h1 class="text-2xl">Schritt 2: Tarif wählen:</h1>
+        <ion-radio-group (ionChange)="changeTarif($event)" value="{{selectedTarif}}">
+          <ion-item *ngFor="let entry of deskConfig">
+            <ion-label>{{entry.description}}</ion-label>
+            <ion-radio slot="start" value="{{entry.type}}"></ion-radio>
+            <ion-badge slot="end">
+              CHF {{entry.price}}.-
+            </ion-badge>
+          </ion-item>
+        </ion-radio-group>
       </ion-col>
-      <ion-col></ion-col>
-  
 
     </ion-row>
   </ion-grid>
 
-  <ion-grid>
+  <ion-grid class="mt-8">
+    <h1 class="text-2xl">Schritt 3: Tisch wählen:</h1>
     <ion-row>
-      <ng-container *ngIf="items$ | async as items; else loading">
-        <ion-col size="12" size-md *ngFor="let desk of items">
-
-          <ion-card button="true" (click)="presentModal(desk)">
-            <img src="{{desk.picture}}" />
-            <ion-card-header>
-              <ion-card-subtitle>
-                <!-- <ion-badge *ngIf="desk.statusFree" color="success">frei</ion-badge>
-        <ion-badge *ngIf="!desk.statusFree" color="danger">besetzt</ion-badge>-->
-              </ion-card-subtitle>
-              <ion-card-title>{{desk.name}}</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              {{desk.description}}
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-
-
-      </ng-container>
-      <ng-template #loading>
-        <ion-col>
-          <ion-card>
-            <ion-card-header>
-              <ion-card-subtitle>
-                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-              </ion-card-subtitle>
-              <ion-card-title>
-                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-              </ion-card-title>
-            </ion-card-header>
-            <ion-content>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            </ion-content>
-          </ion-card>
-      </ion-col>
-      <ion-col>
+      <ion-col size="12" size-md="3" *ngFor="let desk of freeDesks">
         <ion-card>
+          <img src="{{desk.picture}}" />
           <ion-card-header>
-            <ion-card-subtitle>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            </ion-card-subtitle>
-            <ion-card-title>
-              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            </ion-card-title>
+            <ion-card-title>{{desk.name}}</ion-card-title>
+            <ion-card-subtitle>{{desk.description}} </ion-card-subtitle>
           </ion-card-header>
-          <ion-content>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </ion-content>
+          <ion-footer>
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col>
+                <ion-button (click)="bookTable(desk)">
+                  Tisch buchen
+                </ion-button>
+              </ion-col>
+              <ion-col></ion-col>
+            </ion-row>
+          </ion-footer>
         </ion-card>
-    </ion-col>
-    <ion-col>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-subtitle>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </ion-card-subtitle>
-          <ion-card-title>
-            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          </ion-card-title>
-        </ion-card-header>
-        <ion-content>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </ion-content>
-      </ion-card>
-  </ion-col>
-  <ion-col>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </ion-card-subtitle>
-        <ion-card-title>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </ion-card-title>
-      </ion-card-header>
-      <ion-content>
-        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-      </ion-content>
-    </ion-card>
-</ion-col>
-      </ng-template>
-
-
-
+      </ion-col>
     </ion-row>
-
-
-
-   
-
   </ion-grid>
 
-
+  <!---
   <ion-fab *ngIf="isAdmin" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon (click)="addResource()" name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+-->
 
 </ion-content>

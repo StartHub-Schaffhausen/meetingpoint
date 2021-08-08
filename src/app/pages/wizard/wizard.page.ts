@@ -3,10 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  AlertController,
-  IonRouterOutlet,
   LoadingController,
-  ModalController,
   ToastController
 } from '@ionic/angular';
 import {
@@ -20,7 +17,9 @@ import {
   first
 } from 'rxjs/operators';
 
-import firebase from 'firebase/app';
+import {
+  AlertController
+} from '@ionic/angular';
 
 import {
   addBusinessDays,
@@ -28,27 +27,24 @@ import {
   subBusinessDays
 } from 'date-fns'
 import {
-  AuthService
-} from 'src/app/services/auth.service';
+  Desk
+} from 'src/app/models/resources';
 import {
   Reservation
 } from 'src/app/models/reservation';
 import {
-  Desk
-} from 'src/app/models/resources';
-import {
-  InvoicePage
-} from '../invoice/invoice.page';
+  AuthService
+} from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-wizard',
+  templateUrl: './wizard.page.html',
+  styleUrls: ['./wizard.page.scss'],
 })
-export class Tab1Page implements OnInit {
+export class WizardPage implements OnInit {
+
   selectedStartDate: Date = new Date();
   selectedEndDate: Date = new Date();
-
   showBack: boolean = false;
   showNext: boolean = true;
 
@@ -59,17 +55,12 @@ export class Tab1Page implements OnInit {
   freeDesks: any[] = [];
 
   constructor(
-    public modalController: ModalController,
-    private routerOutlet: IonRouterOutlet,
     public alertController: AlertController,
     public toastController: ToastController,
     public loadingController: LoadingController,
     private afs: AngularFirestore,
     private authService: AuthService,
-  ) {
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
-  }
+  ) {}
 
   async ngOnInit() {
 
@@ -77,6 +68,10 @@ export class Tab1Page implements OnInit {
   }
 
   async getReservations(startDate, endDate, tarif) {
+
+    console.log(startDate);
+    console.log(endDate);
+    console.log(tarif);
 
     this.freeDesks = [];
 
@@ -108,6 +103,7 @@ export class Tab1Page implements OnInit {
       } else { //Lese Mehrtagesreservationen
         let isFree = true;
         let deskname: any = deskElement.data();
+        console.log("Neuer Tisch: " + deskname.name);
 
         for (let i = startDate.getTime(); i <= endDate.getTime(); i = addBusinessDays(new Date(i), 1).getTime()) {
 
@@ -121,9 +117,9 @@ export class Tab1Page implements OnInit {
           if (deskReservationMulti.exists) { //Falls keine Reservation vorhanden, dann hinzufügen
             isFree = false
           }
-
+          console.log("Datum: " + date.toISOString().substr(0, 10) + " " + isFree);
         }
-
+        console.log("Tisch ist frei: " + isFree);
         if (isFree) {
           this.freeDesks.push(deskElement.data());
         }
@@ -143,95 +139,76 @@ export class Tab1Page implements OnInit {
   }
 
   changeTarif(event) {
-
+    console.log(event.detail.value);
+    console.log(this.selectedStartDate);
+    console.log(this.selectedEndDate);
     this.selectedTarif = event.detail.value;
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
 
     if (this.selectedTarif == 'Morning') {
       this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(13, 0, 0);
     }
 
     if (this.selectedTarif == 'Afternoon') {
       this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(13, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
     }
 
     if (this.selectedTarif == 'Day') {
       this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
     }
 
     if (this.selectedTarif == 'Week') {
       this.selectedEndDate = addBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 4);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
     }
 
     if (this.selectedTarif == 'Month') {
       this.selectedEndDate = addMonths(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
+      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1)
     }
 
     this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
   }
 
   changeStartDate(event) {
-
+    console.log(event.detail.value);
+    console.log(this.selectedStartDate);
+    console.log(this.selectedEndDate);
+    console.log(this.selectedTarif);
 
     this.selectedStartDate = new Date(event.detail.value);
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
-
 
     if (this.selectedTarif == 'Morning') {
       this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(13, 0, 0);
     }
 
     if (this.selectedTarif == 'Afternoon') {
       this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(13, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
     }
 
     if (this.selectedTarif == 'Day') {
       this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
     }
 
     if (this.selectedTarif == 'Week') {
-      this.selectedEndDate = addBusinessDays(new Date(event.detail.value).getTime(), 4);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
+      this.selectedEndDate = addBusinessDays(new Date(event.detail.value).getTime(), 5);
     }
 
     if (this.selectedTarif == 'Month') {
       this.selectedEndDate = addMonths(new Date(event.detail.value).getTime(), 1);
-      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
+      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1)
     }
+
+    console.log(this.selectedEndDate);
 
     this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
   }
-
 
   async bookTable(desk) {
     console.log(desk);
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Reservation bestfätigen!',
-      message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
+      header: 'Confirm!',
+      message: 'Message <strong>text</strong>!!!',
       buttons: [{
         text: 'Abbrechen',
         role: 'cancel',
@@ -240,7 +217,7 @@ export class Tab1Page implements OnInit {
           console.log('Confirm Cancel: blah');
         }
       }, {
-        text: 'verbindlich buchen',
+        text: 'berbindlich buchen',
         handler: () => {
           this.bookReservation(desk);
         }
@@ -254,75 +231,36 @@ export class Tab1Page implements OnInit {
 
   async bookReservation(desk: Desk) {
 
-    let reservation: Reservation = {
-      id: "",
-      picture: desk.picture,
-      desk: desk,
-      bookingType: this.selectedTarif,
-      dateFrom: this.selectedStartDate,
-      dateTo: this.selectedEndDate,
-      price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
-      bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
-      userId: "",
-      bookingCreated: "",
-      statusPaid: false,
-      stripeInvoiceUrl: "",
-      pdf: ""
-    }
+    let reservation: Reservation;
 
-    const user: firebase.User = await this.authService.getUser();
+    reservation.picture = desk.picture;
+    reservation.desk = desk;
+
+    reservation.bookingType = this.selectedTarif;
+    reservation.dateFrom = this.selectedStartDate;
+    reservation.dateTo = this.selectedEndDate;
+    reservation.price = this.deskConfig[this.selectedTarif].price;
+    reservation.bookingTypeDescription = this.deskConfig.find(element => element.type === reservation.bookingType).description;
+
+    const user = await this.authService.getUser().catch(err => {
+      this.alertController.create({
+        message: 'Get Userprofile Error: ' + err.message,
+        buttons: [{
+          text: 'Ok',
+          role: 'cancel'
+        }],
+      }).then(alert => {
+        alert.present();
+      });
+    });
 
     if (user) {
       const newBooking: DocumentReference = await this.afs.collection('users')
         .doc(user.uid).collection('reservations')
         .add(reservation);
-
-      const alert = await this.alertController.create({
-        message: 'Vielen Dank für deine Buchung. Als nächstes musst du noch die Rechnung bezahlen.',
-        buttons: [{
-          text: 'Ok',
-          role: 'cancel'
-        }],
-      });
-      alert.present();
-      await alert.onDidDismiss();
-
-      const loading = await this.loadingController.create({
-        message: 'Rechnung wird geladen...',
-      });
-      await loading.present();
-
-      //const user: firebase.User = await this.authService.getUser();
-      const booking$ = this.afs.collection('users').doc(user.uid)
-        .collection('reservations').doc(newBooking.id).snapshotChanges();
-
-      booking$.subscribe(booking => {
-
-        let data = booking.payload.data();
-        if (data.stripeInvoiceUrl) {
-          loading.dismiss();
-          this.presentInvoiceModal(data);
-        }
-      });
-
     } else {
-      //alert('User Error: no user available.');
+      alert('User Error: no user available.');
     }
-  }
-
-  async presentInvoiceModal(invoice) {
-    const modal = await this.modalController.create({
-      component: InvoicePage,
-      //cssClass: 'my-custom-class',
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
-      componentProps: {
-        invoice
-      }
-
-    });
-    return await modal.present();
-
   }
 
 

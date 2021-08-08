@@ -4,7 +4,7 @@ export const config = {
   postalcode: 8200,
   city: 'Schaffhausen',
   website: 'https://starthub.sh/Coworking',
-  email: 'coworking@starthub.sh',
+  email: 'hello@starthub.sh',
   openingHours: {
     monday: '08:00 - 18:00',
     tuesday: '08:00 - 18:00',
@@ -17,37 +17,37 @@ export const config = {
   offer: [{
       id: 1,
       type: 'Morning',
-      price: 10,
-      usageHours: '08:00 - 12:30',
+      price: 12,
+      usageHours: '08:00 - 13:00',
       description: 'Vormittag'
     },
     {
       id: 2,
       type: 'Afternoon',
-      price: 10,
-      usageHours: '13:00 - 17:30',
+      price: 12,
+      usageHours: '13:00 - 18:00',
       description: 'Nachmittag'
     },
     {
       id: 3,
       type: 'Day',
-      price: 15,
-      usageHours: '08:00 - 17:30',
+      price: 19,
+      usageHours: '08:00 - 18:00',
       description: 'Ganzer Tag'
     },
-   /* {
+    {
       id: 4,
       type: 'Week',
-      price: 65,
-      usageHours: '08:00 - 17:30',
+      price: 85,
+      usageHours: '08:00 - 18:00',
       description: 'Ganze Woche'
     },
     {
       id: 5,
       type: 'Month',
-      price: 250,
-      usageHours: '08:00 - 17:30',
+      price: 320,
+      usageHours: '08:00 - 18:00',
       description: 'Ganzer Monat'
-    },*/
+    },
   ]
 };

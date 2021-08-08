@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!--<ion-buttons slot="secondary">
+      <ion-button (click)="back()" *ngIf="showBack">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        zurück
+      </ion-button>
+    </ion-buttons>-->
+    <ion-title>
+      Meeting Point buchen
+    </ion-title>
+  <!--  <ion-buttons slot="primary">
+      <ion-button (click)="next()" *ngIf="showNext">
+        weiter
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>-->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-datetime (ionChange)="changeStartDate($event)" presentation="date" locale="de-DE">
+        </ion-datetime>
+      </ion-col>
+      <ion-col>
+        <ion-radio-group (ionChange)="changeTarif($event)" value="{{selectedTarif}}">
+          <ion-item *ngFor="let entry of deskConfig">
+            <ion-label>{{entry.description}}</ion-label>
+            <ion-radio slot="start" value="{{entry.type}}"></ion-radio>
+            <ion-badge slot="end">
+              CHF {{entry.price}}.-
+            </ion-badge>
+          </ion-item>
+        </ion-radio-group>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+
+        <ion-col size="12" size-md *ngFor="let desk of freeDesks">
+          <ion-card >
+            <img src="{{desk.picture}}" />
+            <ion-card-header>
+              <ion-card-title>{{desk.name}}</ion-card-title>
+              <ion-card-subtitle>{{desk.description}} </ion-card-subtitle>
+            </ion-card-header>
+            <ion-footer>
+              <ion-button (click)="bookTable(desk)">
+                Tisch buchen
+              </ion-button>
+            </ion-footer>
+          </ion-card>
+        </ion-col>
+
+     
+    </ion-row>
+  </ion-grid>
+</ion-content>
