@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Meeting Point
+      Coworking-Space im Meetingpoint
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Meeting Point </ion-title>
+      <ion-title size="large">Coworking-Space im Meetingpoint </ion-title>
     </ion-toolbar>
     <!--
      <ion-buttons collapse="true" slot="end">
@@ -23,7 +23,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="4">
-        <h1 class="text-2xl">Schritt 1: Tisch wählen:</h1>
+        <h1 class="text-2xl">Schritt 1: Datum wählen:</h1>
         <ion-datetime (ionChange)="changeStartDate($event)" presentation="date" locale="de-DE">
         </ion-datetime>
       </ion-col>
@@ -58,7 +58,7 @@
               <ion-col></ion-col>
               <ion-col>
                 <ion-button (click)="bookTable(desk)">
-                  Tisch buchen
+                  Tisch wählen
                 </ion-button>
               </ion-col>
               <ion-col></ion-col>
@@ -68,13 +68,14 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!---
-  <ion-fab *ngIf="isAdmin" vertical="bottom" horizontal="end" slot="fixed">
+  
+<!--
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon (click)="addResource()" name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 -->
+
 
 </ion-content>

@@ -39,6 +39,7 @@ import {
 import {
   InvoicePage
 } from '../invoice/invoice.page';
+import { AddDeskPage } from '../add-desk/add-desk.page';
 
 @Component({
   selector: 'app-tab1',
@@ -184,11 +185,9 @@ export class Tab1Page implements OnInit {
 
   changeStartDate(event) {
 
-
     this.selectedStartDate = new Date(event.detail.value);
     this.selectedStartDate.setHours(8, 0, 0);
     this.selectedEndDate.setHours(18, 0, 0);
-
 
     if (this.selectedTarif == 'Morning') {
       this.selectedEndDate = new Date(event.detail.value);
@@ -230,7 +229,7 @@ export class Tab1Page implements OnInit {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Reservation bestfätigen!',
+      header: 'Reservation bestätigen!',
       message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
       buttons: [{
         text: 'Abbrechen',
@@ -240,7 +239,7 @@ export class Tab1Page implements OnInit {
           console.log('Confirm Cancel: blah');
         }
       }, {
-        text: 'verbindlich buchen',
+        text: 'Ja, buchen!',
         handler: () => {
           this.bookReservation(desk);
         }
@@ -325,6 +324,36 @@ export class Tab1Page implements OnInit {
 
   }
 
+  async addResource(){
+    const modal = await this.modalController.create({
+      component: AddDeskPage,
+      //cssClass: 'my-custom-class',
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
 
+    });
+
+    modal.onDidDismiss().then(data=>{
+      console.log(data);
+      if (data.data.booked){
+        this.presentToasResource();
+      }else{
+        console.log('closed');
+      }
+
+    });
+
+    return await modal.present();
+  }
+
+  async presentToasResource() {
+    const toast = await this.toastController.create({
+      message: 'Erfolgreich hinzugefügt.',
+      color: 'success',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
 
 }

@@ -4,6 +4,8 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { Reservation } from 'src/app/models/reservation';
 import { config } from 'src/app/config/config';
 import { Browser } from '@capacitor/browser';
+import firebase from 'firebase/app';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-reservation',
@@ -16,6 +18,7 @@ export class ReservationPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
+    private authService: AuthService,
     private afs: AngularFirestore,
     ) { }
 
@@ -59,7 +62,9 @@ export class ReservationPage implements OnInit {
             console.log('stornieren');
             console.log(reservation.userId);
             console.log(reservation.id);
-            await this.afs.collection('users').doc(reservation.userId).collection('reservations').doc(reservation.id).delete();
+            const user: firebase.User = await this.authService.getUser();
+
+            await this.afs.collection('users').doc(user.uid).collection('reservations').doc(reservation.id).delete();
             this.dismiss();
           }
         }, {
