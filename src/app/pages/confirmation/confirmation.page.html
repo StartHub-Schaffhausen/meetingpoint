@@ -11,13 +11,7 @@
 
 <ion-content>
 
-  <ion-button color="primary" (click)="confirmBooking()" expand="block">
-    Verbindlich buchen
-  </ion-button>
-
   <ion-list lines="none">
-
-
     <ion-item>
       <ion-icon slot="start" name="enter-outline"></ion-icon>
       <ion-label>
@@ -53,6 +47,10 @@
         CHF {{price}}.-
       </ion-badge>
     </ion-item>
+    
+  <ion-button color="primary" (click)="confirmBooking()" expand="block">
+    Verbindlich buchen
+  </ion-button>
 
 
     <ion-item>
@@ -63,6 +61,7 @@
         <p>{{config.postalcode}} {{config.city}}</p>
       </ion-label>
     </ion-item>
+
 
     <ion-img src={{desk.picture}}>
 
