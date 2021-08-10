@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { WizardPageRoutingModule } from './wizard-routing.module';
+import { ConfirmationPageRoutingModule } from './confirmation-routing.module';
 
-import { WizardPage } from './wizard.page';
+import { ConfirmationPage } from './confirmation.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    WizardPageRoutingModule
+    ConfirmationPageRoutingModule
   ],
-  declarations: [WizardPage]
+  declarations: [ConfirmationPage]
 })
-export class WizardPageModule {}
+export class ConfirmationPageModule {}

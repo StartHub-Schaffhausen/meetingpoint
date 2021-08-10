@@ -25,7 +25,10 @@ import firebase from 'firebase/app';
 import {
   addBusinessDays,
   addMonths,
-  subBusinessDays
+  subBusinessDays,
+  setHours,
+  setMinutes,
+  setSeconds
 } from 'date-fns'
 import {
   AuthService
@@ -40,6 +43,7 @@ import {
   InvoicePage
 } from '../invoice/invoice.page';
 import { AddDeskPage } from '../add-desk/add-desk.page';
+import { ConfirmationPage } from '../confirmation/confirmation.page';
 
 @Component({
   selector: 'app-tab1',
@@ -49,10 +53,6 @@ import { AddDeskPage } from '../add-desk/add-desk.page';
 export class Tab1Page implements OnInit {
   selectedStartDate: Date = new Date();
   selectedEndDate: Date = new Date();
-
-  showBack: boolean = false;
-  showNext: boolean = true;
-
   selectedTarif = 'Day';
 
   bookingBlocked = false;
@@ -70,29 +70,31 @@ export class Tab1Page implements OnInit {
     private afs: AngularFirestore,
     private authService: AuthService,
   ) {
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
-
-    this.checkIfBlocked(this.selectedStartDate);
-
+    this.setStartEndDate();
+    this.checkIfBlocked();
+    this.getReservations();
   }
 
   async ngOnInit() {
-    this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
+    
   }
 
-
-  checkIfBlocked(date){
+  checkIfBlocked(){
     //console.log("is blocked? " + date.toISOString().substring(0,10));
 
-    if (date.toISOString().substring(0,10) < '2021-08-30'){
+    if (this.selectedStartDate.toISOString().substring(0,10) < '2021-08-30'){
       this.bookingBlocked = true;
+      this.presentToastBookingBlocked();
     }else{
       this.bookingBlocked = false;
     }
   }
 
-  async getReservations(startDate, endDate, tarif) {
+  async getReservations() {
+
+    /*console.log("Start: " + this.selectedStartDate);
+    console.log("Ende: " + this.selectedEndDate);
+    console.log("Tarif: " + this.selectedTarif);*/
 
     this.freeDesks = [];
 
@@ -111,10 +113,10 @@ export class Tab1Page implements OnInit {
 
       //Lese Tages-Reservationen
 
-      if (tarif == 'Day' || tarif == 'Morning' || tarif == 'Afternoon') {
+      if ( this.selectedTarif == 'Day' ||  this.selectedTarif == 'Morning' ||  this.selectedTarif == 'Afternoon') {
         const deskReservationRef$ =
           this.afs.collection('desks').doc(deskElement.id)
-          .collection('reservations').doc(startDate.toISOString().substr(0, 10)).get();
+          .collection('reservations').doc(this.selectedStartDate.toISOString().substr(0, 10)).get();
 
         const deskReservation: any = await deskReservationRef$.pipe(first()).toPromise();
         if (!deskReservation.exists) { //Falls keine Reservation vorhanden, dann hinzufügen
@@ -125,7 +127,7 @@ export class Tab1Page implements OnInit {
         let isFree = true;
         let deskname: any = deskElement.data();
 
-        for (let i = startDate.getTime(); i <= endDate.getTime(); i = addBusinessDays(new Date(i), 1).getTime()) {
+        for (let i = this.selectedStartDate.getTime(); i <= this.selectedEndDate.getTime(); i = addBusinessDays(new Date(i), 1).getTime()) {
 
           let date = new Date(i);
 
@@ -161,91 +163,93 @@ export class Tab1Page implements OnInit {
   changeTarif(event) {
 
     this.selectedTarif = event.detail.value;
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
 
-    if (this.selectedTarif == 'Morning') {
-      this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(13, 0, 0);
-    }
+    this.setStartEndDate();
 
-    if (this.selectedTarif == 'Afternoon') {
-      this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(13, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Day') {
-      this.selectedEndDate = this.selectedStartDate;
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Week') {
-      this.selectedEndDate = addBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 4);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Month') {
-      this.selectedEndDate = addMonths(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
+    this.getReservations();
   }
 
   changeStartDate(event) {
 
     this.selectedStartDate = new Date(event.detail.value);
-    this.selectedStartDate.setHours(8, 0, 0);
-    this.selectedEndDate.setHours(18, 0, 0);
+ 
+    this.checkIfBlocked();
 
-    this.checkIfBlocked(this.selectedStartDate);
+    this.setStartEndDate();
 
-
-    if (this.selectedTarif == 'Morning') {
-      this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(13, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Afternoon') {
-      this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(13, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Day') {
-      this.selectedEndDate = new Date(event.detail.value);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Week') {
-      this.selectedEndDate = addBusinessDays(new Date(event.detail.value).getTime(), 4);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    if (this.selectedTarif == 'Month') {
-      this.selectedEndDate = addMonths(new Date(event.detail.value).getTime(), 1);
-      this.selectedEndDate = subBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 1);
-      this.selectedStartDate.setHours(8, 0, 0);
-      this.selectedEndDate.setHours(18, 0, 0);
-    }
-
-    this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
+    this.getReservations();
   }
 
+  setStartEndDate(){
+    if (this.selectedTarif == 'Morning') {
+      this.selectedEndDate = this.selectedStartDate;
+
+      this.selectedStartDate = setHours(this.selectedStartDate,8);
+      
+      this.selectedEndDate = setHours(this.selectedEndDate,13);
+    }else if (this.selectedTarif == 'Afternoon') {
+      this.selectedEndDate = this.selectedStartDate;
+
+      this.selectedStartDate = setHours(this.selectedStartDate,13);
+
+      this.selectedEndDate = setHours(this.selectedEndDate,18);
+
+    }else if (this.selectedTarif == 'Day') {
+      this.selectedEndDate = this.selectedStartDate;
+
+      this.selectedStartDate = setHours(this.selectedStartDate,8);
+
+      this.selectedEndDate = setHours(this.selectedEndDate,18);
+
+    }else if (this.selectedTarif == 'Week') {
+      this.selectedEndDate = addBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 4);
+
+      this.selectedStartDate = setHours(this.selectedStartDate,8);
+
+      this.selectedEndDate = setHours(this.selectedEndDate,18);
+
+    }else if (this.selectedTarif == 'Month') {
+      this.selectedEndDate = addMonths(new Date(this.selectedStartDate.getTime()).getTime(), 1);
+
+      this.selectedEndDate = subBusinessDays(new Date(this.selectedEndDate.getTime()).getTime(), 1);
+
+      this.selectedStartDate = setHours(this.selectedStartDate,8);
+
+      this.selectedEndDate = setHours(this.selectedEndDate,18);
+    }
+    this.selectedStartDate = setMinutes(this.selectedStartDate,0);
+    this.selectedEndDate = setMinutes(this.selectedEndDate,0);
+
+  }
 
   async bookTable(desk) {
     //console.log(desk);
 
-    const alert = await this.alertController.create({
+    const modal = await this.modalController.create({
+      component: ConfirmationPage,
+      swipeToClose: false,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        desk, 
+        bookingType: this.selectedTarif,
+        dateFrom: this.selectedStartDate,
+        dateTo: this.selectedEndDate,
+        price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+        bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
+      }
+
+    });
+    await modal.present();
+
+    const data = await modal.onDidDismiss();
+    console.log(data);
+    if (data.data.confirmBooking ===true){
+      this.bookReservation(desk);
+    }else{
+      this.presentToastBookingCancel();
+    }
+    
+    /*const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Reservation bestätigen!',
       message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
@@ -265,6 +269,7 @@ export class Tab1Page implements OnInit {
     });
 
     await alert.present();
+    */
 
   }
 
@@ -354,7 +359,7 @@ export class Tab1Page implements OnInit {
     modal.onDidDismiss().then(data=>{
       //console.log(data);
       if (data.data.booked){
-        this.presentToasResource();
+        this.presentToastResource();
       }else{
         //console.log('closed');
       }
@@ -364,7 +369,29 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
-  async presentToasResource() {
+  async presentToastBookingCancel(){
+    const toast = await this.toastController.create({
+      message: 'Buchung abgebrochen.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+
+
+  }
+
+  async presentToastBookingBlocked() {
+    const toast = await this.toastController.create({
+      message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastResource() {
     const toast = await this.toastController.create({
       message: 'Erfolgreich hinzugefügt.',
       color: 'success',

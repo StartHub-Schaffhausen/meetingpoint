@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
-import { DeskPageModule } from '../desk/desk.module';
 import { InvoicePageModule } from '../invoice/invoice.module';
 import { AddDeskPageModule } from '../add-desk/add-desk.module';
+import { ConfirmationPageModule } from '../confirmation/confirmation.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { AddDeskPageModule } from '../add-desk/add-desk.module';
     CommonModule,
     FormsModule,
     Tab1PageRoutingModule,
-    DeskPageModule,
+    ConfirmationPageModule,
     InvoicePageModule,
     AddDeskPageModule
   ],

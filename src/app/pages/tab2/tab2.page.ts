@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReservationPage } from '../reservation/reservation.page';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { DeskPage } from '../desk/desk.page';
 import { config } from 'src/app/config/config';
 import { Browser } from '@capacitor/browser';
 
@@ -48,7 +47,7 @@ export class Tab2Page implements OnInit {
     }
   }
 
-  async addReservation() {
+  /*async addReservation() {
     const modal = await this.modalController.create({
       component: DeskPage,
       swipeToClose: true,
@@ -60,7 +59,7 @@ export class Tab2Page implements OnInit {
     });
 
     return await modal.present();
-  }
+  }*/
 
 
   async presentModal(reservation) {

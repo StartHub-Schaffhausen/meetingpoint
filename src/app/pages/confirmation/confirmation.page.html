@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Zusammenfassung deiner Buchung</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="dismiss()">
+        schliessen
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button color="primary" (click)="conformBooking()" expand="block">
+    Verbindlich buchen
+  </ion-button>
+
+  <ion-list lines="none">
+
+
+    <ion-item>
+      <ion-icon slot="start" name="enter-outline"></ion-icon>
+      <ion-label>
+        <h2>Start deiner Buchung</h2>
+        <p> {{dateFrom | date:'dd.MM.y'}}
+          {{dateFrom | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="exit-outline"></ion-icon>
+      <ion-label>
+        <h2>Ende deiner Buchung</h2>
+        <p> {{dateTo | date:'dd.MM.y'}}
+          {{dateTo | date:'HH:mm'}} Uhr</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        {{desk.name}}: {{bookingTypeDescription}}
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="cash-outline"></ion-icon>
+      <ion-label>
+        <h2>Preis</h2>
+      </ion-label>
+
+      <ion-badge slot="end">
+        CHF {{price}}.-
+      </ion-badge>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-icon slot="start" name="home-outline"></ion-icon>
+      <ion-label>
+        <p>{{config.coworkingName}}</p>
+        <p>{{config.street}}</p>
+        <p>{{config.postalcode}} {{config.city}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-img src={{invoice.desk.picture}}>
+
+    </ion-img>
+
+
+
+  </ion-list>
+
+
+
+
+</ion-content>
