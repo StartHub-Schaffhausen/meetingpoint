@@ -83,7 +83,7 @@ export class Tab1Page implements OnInit {
 
 
   checkIfBlocked(date){
-    console.log("is blocked? " + date.toISOString().substring(0,10));
+    //console.log("is blocked? " + date.toISOString().substring(0,10));
 
     if (date.toISOString().substring(0,10) < '2021-08-30'){
       this.bookingBlocked = true;
@@ -199,7 +199,7 @@ export class Tab1Page implements OnInit {
   }
 
   changeStartDate(event) {
-    
+
     this.selectedStartDate = new Date(event.detail.value);
     this.selectedStartDate.setHours(8, 0, 0);
     this.selectedEndDate.setHours(18, 0, 0);
@@ -243,7 +243,7 @@ export class Tab1Page implements OnInit {
 
 
   async bookTable(desk) {
-    console.log(desk);
+    //console.log(desk);
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -254,7 +254,7 @@ export class Tab1Page implements OnInit {
         role: 'cancel',
         cssClass: 'secondary',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
+         // console.log('Confirm Cancel: blah');
         }
       }, {
         text: 'Ja, buchen!',
@@ -352,11 +352,11 @@ export class Tab1Page implements OnInit {
     });
 
     modal.onDidDismiss().then(data=>{
-      console.log(data);
+      //console.log(data);
       if (data.data.booked){
         this.presentToasResource();
       }else{
-        console.log('closed');
+        //console.log('closed');
       }
 
     });

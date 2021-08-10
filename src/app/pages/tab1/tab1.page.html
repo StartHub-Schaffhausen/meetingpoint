@@ -22,12 +22,12 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="4">
+      <ion-col class="mt-8" size="12" size-md="4">
         <h1 class="text-2xl">Schritt 1: Datum wählen:</h1>
         <ion-datetime (ionChange)="changeStartDate($event)" presentation="date" locale="de-DE">
         </ion-datetime>
       </ion-col>
-      <ion-col  size="12" size-md="4">
+      <ion-col class="mt-8" size="12" size-md="4">
         <h1 class="text-2xl">Schritt 2: Tarif wählen:</h1>
         <ion-radio-group (ionChange)="changeTarif($event)" value="{{selectedTarif}}">
           <ion-item *ngFor="let entry of deskConfig">
