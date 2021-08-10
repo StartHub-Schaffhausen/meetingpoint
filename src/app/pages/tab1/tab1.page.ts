@@ -55,6 +55,8 @@ export class Tab1Page implements OnInit {
 
   selectedTarif = 'Day';
 
+  bookingBlocked = false;
+
   deskConfig = config.offer;
 
   freeDesks: any[] = [];
@@ -70,11 +72,24 @@ export class Tab1Page implements OnInit {
   ) {
     this.selectedStartDate.setHours(8, 0, 0);
     this.selectedEndDate.setHours(18, 0, 0);
+
+    this.checkIfBlocked(this.selectedStartDate);
+
   }
 
   async ngOnInit() {
-
     this.getReservations(this.selectedStartDate, this.selectedEndDate, this.selectedTarif);
+  }
+
+
+  checkIfBlocked(date){
+    console.log("is blocked? " + date.toISOString().substring(0,10));
+
+    if (date.toISOString().substring(0,10) < '2021-08-30'){
+      this.bookingBlocked = true;
+    }else{
+      this.bookingBlocked = false;
+    }
   }
 
   async getReservations(startDate, endDate, tarif) {
@@ -184,10 +199,13 @@ export class Tab1Page implements OnInit {
   }
 
   changeStartDate(event) {
-
+    
     this.selectedStartDate = new Date(event.detail.value);
     this.selectedStartDate.setHours(8, 0, 0);
     this.selectedEndDate.setHours(18, 0, 0);
+
+    this.checkIfBlocked(this.selectedStartDate);
+
 
     if (this.selectedTarif == 'Morning') {
       this.selectedEndDate = new Date(event.detail.value);

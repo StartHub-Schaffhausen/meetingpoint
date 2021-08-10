@@ -57,8 +57,11 @@
             <ion-row>
               <ion-col></ion-col>
               <ion-col>
-                <ion-button (click)="bookTable(desk)">
+                <ion-button (click)="bookTable(desk)" *ngIf="!bookingBlocked">
                   Tisch wählen
+                </ion-button>
+                <ion-button  *ngIf="bookingBlocked">
+                  Tisch nicht verfügbar
                 </ion-button>
               </ion-col>
               <ion-col></ion-col>
