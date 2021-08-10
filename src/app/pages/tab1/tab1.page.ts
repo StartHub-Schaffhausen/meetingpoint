@@ -44,6 +44,7 @@ import {
 } from '../invoice/invoice.page';
 import { AddDeskPage } from '../add-desk/add-desk.page';
 import { ConfirmationPage } from '../confirmation/confirmation.page';
+import { UserProfile } from 'src/app/models/user';
 
 @Component({
   selector: 'app-tab1',
@@ -225,54 +226,66 @@ export class Tab1Page implements OnInit {
   async bookTable(desk) {
     //console.log(desk);
 
-    const modal = await this.modalController.create({
-      component: ConfirmationPage,
-      swipeToClose: false,
-      presentingElement: this.routerOutlet.nativeEl,
-      componentProps: {
-        desk, 
-        bookingType: this.selectedTarif,
-        dateFrom: this.selectedStartDate,
-        dateTo: this.selectedEndDate,
-        price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
-        bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
+    const user: firebase.User = await this.authService.getUser();
+    const userRef = await this.afs.collection('users').doc<UserProfile>(user.uid).get().pipe(first()).toPromise();;
+    if (userRef.data().firstName && userRef.data().lastName){
+     
+        const modal = await this.modalController.create({
+        component: ConfirmationPage,
+        swipeToClose: false,
+        presentingElement: this.routerOutlet.nativeEl,
+        componentProps: {
+          desk, 
+          bookingType: this.selectedTarif,
+          dateFrom: this.selectedStartDate,
+          dateTo: this.selectedEndDate,
+          price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+          bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
+        }
+  
+      });
+      await modal.present();
+  
+      const data = await modal.onDidDismiss();
+      console.log(data);
+      if (data.data.confirmBooking ===true){
+        this.bookReservation(desk);
+      }else{
+        this.presentToastBookingCancel();
       }
+      
+      /*const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Reservation bestätigen!',
+        message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
+        buttons: [{
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+           // console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Ja, buchen!',
+          handler: () => {
+            this.bookReservation(desk);
+          }
+        }]
+      });
+  
+      await alert.present();
+      */
+  
 
-    });
-    await modal.present();
+    } else{
 
-    const data = await modal.onDidDismiss();
-    console.log(data);
-    if (data.data.confirmBooking ===true){
-      this.bookReservation(desk);
-    }else{
-      this.presentToastBookingCancel();
+      this.presentToastCompleteProfile();
+      
     }
-    
-    /*const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Reservation bestätigen!',
-      message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
-      buttons: [{
-        text: 'Abbrechen',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: (blah) => {
-         // console.log('Confirm Cancel: blah');
-        }
-      }, {
-        text: 'Ja, buchen!',
-        handler: () => {
-          this.bookReservation(desk);
-        }
-      }]
-    });
 
-    await alert.present();
-    */
 
+   
   }
-
 
   async bookReservation(desk: Desk) {
 
@@ -377,9 +390,19 @@ export class Tab1Page implements OnInit {
       duration: 2000
     });
     toast.present();
-
-
   }
+
+ async presentToastCompleteProfile(){
+
+  const toast = await this.toastController.create({
+    message: 'Bitte zuerst Profil vervollständigen.',
+    color: 'danger',
+    position: 'bottom',
+    duration: 2000
+  });
+  toast.present();
+ }
+  
 
   async presentToastBookingBlocked() {
     const toast = await this.toastController.create({
