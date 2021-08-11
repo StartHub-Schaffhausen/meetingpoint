@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 /*
 import firebase from 'firebase';
 import 'firebase/auth';
@@ -24,6 +24,7 @@ import 'firebase/firestore';
 })
 export class AppComponent {
   constructor(
+    public oidcSecurityService: OidcSecurityService,
     private swUpdate: SwUpdate,
     private alertController: AlertController,
     private afAuth: AngularFireAuth,
@@ -70,12 +71,12 @@ export class AppComponent {
       });
     // Subsequent queries will use persistence, if it was enabled successfully
     this.afAuth.setPersistence('local');
-
-
-
-
-
   }
+
+  ngOnInit() {
+    //this.login();
+  }
+
 
   initializeApp(): void {
     if (this.swUpdate.available) {
@@ -84,6 +85,16 @@ export class AppComponent {
       });
     }
   }
+
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    this.oidcSecurityService.logoff();
+  }
+
+
 
   async presentAlert() {
     const alert = await this.alertController.create({

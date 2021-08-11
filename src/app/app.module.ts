@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthConfigModule } from './auth/auth-config.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule,],
+    AngularFirestoreModule,
+    AuthConfigModule,],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
