@@ -34,8 +34,60 @@ export class AppComponent {
     private router: Router,
   ) {
     this.initializeApp();
+    this.initializeFirebase();
+  }
+
+  ngOnInit() {
+    //this.login();
+  }
+
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    this.oidcSecurityService.logoff();
+  }
 
 
+  initializeApp(): void {
+    if (this.swUpdate.available) {
+      this.swUpdate.available.subscribe(() => {
+        this.presentAlert();
+      });
+    }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      //cssClass: 'my-custom-class',
+      header: 'Neue Version',
+      message: 'Eine neue Version ist verfügbar. Neue Version laden?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            //console.log('Confirm Cancel: blah');
+          },
+        },
+        {
+          text: 'Laden',
+          handler: () => {
+            window.location.reload();
+            //console.log('Confirm Okay');
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  initializeFirebase(): void {
+
+    
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
@@ -72,58 +124,4 @@ export class AppComponent {
     // Subsequent queries will use persistence, if it was enabled successfully
     this.afAuth.setPersistence('local');
   }
-
-  ngOnInit() {
-    //this.login();
-  }
-
-
-  initializeApp(): void {
-    if (this.swUpdate.available) {
-      this.swUpdate.available.subscribe(() => {
-        this.presentAlert();
-      });
-    }
-  }
-
-  login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout() {
-    this.oidcSecurityService.logoff();
-  }
-
-
-
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      //cssClass: 'my-custom-class',
-      header: 'Neue Version',
-      message: 'Eine neue Version ist verfügbar. Neue Version laden?',
-      buttons: [
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            //console.log('Confirm Cancel: blah');
-          },
-        },
-        {
-          text: 'Laden',
-          handler: () => {
-            window.location.reload();
-            //console.log('Confirm Okay');
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-  }
-
-
-
-
 }

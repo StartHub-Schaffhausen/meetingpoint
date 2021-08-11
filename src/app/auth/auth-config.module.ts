@@ -7,7 +7,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): () => Promi
               stsServer: 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc', //https://eid.sh.ch/.well-known/openid-configuration
               redirectUrl: window.location.origin,
               postLogoutRedirectUri: window.location.origin,
-              clientId: 'owllyApp',
+              clientId: 'starthubmeetingpoint',
               scope: 'openid profile', // 'openid profile offline_access ' + your scopes
               responseType: 'code',
               silentRenew: true,
