@@ -8,7 +8,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): () => Promi
               redirectUrl: window.location.origin,
               postLogoutRedirectUri: window.location.origin,
               clientId: 'starthubmeetingpoint',
-              scope: 'openid profile', // 'openid profile offline_access ' + your scopes
+              scope: 'openid email profile address', // 'openid profile offline_access ' + your scopes
               responseType: 'code',
               silentRenew: true,
               useRefreshToken: true,
