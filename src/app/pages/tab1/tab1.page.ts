@@ -111,7 +111,15 @@ export class Tab1Page implements OnInit {
       this.bookingBlocked = true;
       this.presentToastBookingBlocked();
     }else{
-      this.bookingBlocked = false;
+
+      // check if WEEKEND
+      if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6){ // 0 for sunday / 1 for monday... / 2 for tuesday
+        this.bookingBlocked = true;
+        this.presentToastWeekendBlocked();
+      }else{
+        this.bookingBlocked = false;
+      }
+
     }
   }
 
@@ -431,6 +439,16 @@ export class Tab1Page implements OnInit {
   async presentToastBookingBlocked() {
     const toast = await this.toastController.create({
       message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentToastWeekendBlocked() {
+    const toast = await this.toastController.create({
+      message: 'Wir haben am Wochenende geschlossen.',
       color: 'danger',
       position: 'bottom',
       duration: 2000
