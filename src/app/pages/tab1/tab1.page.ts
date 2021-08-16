@@ -86,18 +86,18 @@ export class Tab1Page implements OnInit {
         position: 'top',
         color: 'primary',
         buttons: [{
-          text: 'YES, Probewoche!',
+          text: 'YES!',
           handler: ()=>{
             window.location.href = "mailto:hello@starthub.sh?subject=Probewoche&body=Ich komme gerne am xx. August zur Probewoche vorbei. Bitte reserviert mir einen gratis Platz im Coworking Space <VORNAME> <NAME> <EMAIL> <HANDY>";
           }
         },
-      {
+      /*{
         text: 'schliessen',
         role: 'cancel',
         handler: ()=>{
 
         }
-      }]
+      }*/]
       });
       toast.present();
     }
