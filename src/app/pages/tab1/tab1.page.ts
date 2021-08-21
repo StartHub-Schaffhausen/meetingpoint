@@ -359,7 +359,6 @@ export class Tab1Page implements OnInit {
       });
       await loading.present();
 
-      //const user: firebase.User = await this.authService.getUser();
       const booking$ = this.afs.collection('users').doc(user.uid)
         .collection('reservations').doc(newBooking.id).snapshotChanges();
 
