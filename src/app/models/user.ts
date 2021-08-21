@@ -7,4 +7,5 @@ export interface UserCredential {
     firstName: string;
     lastName: string;
     profilePicture: string;
+    bio: string;
   }
