@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "starthub-schaffhausen"
+  },
+  "targets": {
+    "starthub-schaffhausen": {
+      "hosting": {
+        "starthub-coworking": [
+          "public"
+        ]
+      }
+    }
   }
 }
