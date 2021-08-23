@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "starthub-coworking",
+    "site": "starthub-meetingpoint",
     "public": "www",
     "rewrites": [
       {
