@@ -11,41 +11,41 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardPageModule),
-        canActivate: [AuthGuard],
+        //canActivate: [AuthGuard],
       },
       
       
       {
         path: 'desks',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule),
-        canActivate: [AuthGuard],
+        //canActivate: [AuthGuard],
       },
       {
         path: 'reservations',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule),
-        canActivate: [AuthGuard],
+        //canActivate: [AuthGuard],
 
       },
       {
         path: 'profile',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule),
-        canActivate: [AuthGuard],
+        //canActivate: [AuthGuard],
       },
       {
         path: '',
         redirectTo: '/tabs/desks',
         pathMatch: 'full',
-        canActivate: [AuthGuard],
+        //canActivate: [AuthGuard],
       }
     ],
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
   {
     path: '',
     redirectTo: '/tabs/desks',
     pathMatch: 'full',
-    canActivate: [AuthGuard],
-  }
+    //canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

@@ -42,10 +42,19 @@ import {
 import {
   InvoicePage
 } from '../invoice/invoice.page';
-import { AddDeskPage } from '../add-desk/add-desk.page';
-import { ConfirmationPage } from '../confirmation/confirmation.page';
-import { UserProfile } from 'src/app/models/user';
-import { Browser } from 'protractor';
+import {
+  AddDeskPage
+} from '../add-desk/add-desk.page';
+import {
+  ConfirmationPage
+} from '../confirmation/confirmation.page';
+import {
+  UserProfile
+} from 'src/app/models/user';
+import {
+  Browser
+} from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -64,6 +73,7 @@ export class Tab1Page implements OnInit {
   freeDesks: any[] = [];
 
   constructor(
+    private router: Router,
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     public alertController: AlertController,
@@ -78,56 +88,50 @@ export class Tab1Page implements OnInit {
   }
 
   async ngOnInit() {
-  
-    if (new Date().getTime() <= 1629471600000){ 
+
+    /*
+    if (new Date().getTime() <= 1629471600000) {
       const toast = await this.toastController.create({
         message: 'Gratis Probewoche vom 16. bis 20. August! Melde dich per E-Mail hello@starthub.sh bei uns.',
         duration: 10000,
         position: 'top',
         color: 'primary',
         buttons: [{
-          text: 'YES!',
-          handler: ()=>{
-            window.location.href = "mailto:hello@starthub.sh?subject=Probewoche&body=Ich komme gerne am xx. August zur Probewoche vorbei. Bitte reserviert mir einen gratis Platz im Coworking Space <VORNAME> <NAME> <EMAIL> <HANDY>";
-          }
-        },
-      /*{
-        text: 'schliessen',
-        role: 'cancel',
-        handler: ()=>{
-
-        }
-      }*/]
+            text: 'YES!',
+            handler: () => {
+              window.location.href = "mailto:hello@starthub.sh?subject=Probewoche&body=Ich komme gerne am xx. August zur Probewoche vorbei. Bitte reserviert mir einen gratis Platz im Coworking Space <VORNAME> <NAME> <EMAIL> <HANDY>";
+            }
+          },
+        ]
       });
       toast.present();
     }
-      
+    */
+
   }
 
-  checkIfBlocked(){
+  checkIfBlocked() {
     //console.log("is blocked? " + date.toISOString().substring(0,10));
 
-    if (this.selectedStartDate.toISOString().substring(0,10) < '2021-08-30'){
+    /*
+    if (this.selectedStartDate.toISOString().substring(0, 10) < '2021-08-30') {
       this.bookingBlocked = true;
       this.presentToastBookingBlocked();
-    }else{
+    } else {
+*/
 
       // check if WEEKEND
-      if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6){ // 0 for sunday / 1 for monday... / 2 for tuesday
+      if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
         this.bookingBlocked = true;
         this.presentToastWeekendBlocked();
-      }else{
+      } else {
         this.bookingBlocked = false;
       }
 
-    }
+   // }
   }
 
   async getReservations() {
-
-    /*console.log("Start: " + this.selectedStartDate);
-    console.log("Ende: " + this.selectedEndDate);
-    console.log("Tarif: " + this.selectedTarif);*/
 
     this.freeDesks = [];
 
@@ -146,7 +150,7 @@ export class Tab1Page implements OnInit {
 
       //Lese Tages-Reservationen
 
-      if ( this.selectedTarif == 'Day' ||  this.selectedTarif == 'Morning' ||  this.selectedTarif == 'Afternoon') {
+      if (this.selectedTarif == 'Day' || this.selectedTarif == 'Morning' || this.selectedTarif == 'Afternoon') {
         const deskReservationRef$ =
           this.afs.collection('desks').doc(deskElement.id)
           .collection('reservations').doc(this.selectedStartDate.toISOString().substr(0, 10)).get();
@@ -205,7 +209,7 @@ export class Tab1Page implements OnInit {
   changeStartDate(event) {
 
     this.selectedStartDate = new Date(event.detail.value);
- 
+
     this.checkIfBlocked();
 
     this.setStartEndDate();
@@ -213,45 +217,45 @@ export class Tab1Page implements OnInit {
     this.getReservations();
   }
 
-  setStartEndDate(){
+  setStartEndDate() {
     if (this.selectedTarif == 'Morning') {
       this.selectedEndDate = this.selectedStartDate;
 
-      this.selectedStartDate = setHours(this.selectedStartDate,8);
-      
-      this.selectedEndDate = setHours(this.selectedEndDate,13);
-    }else if (this.selectedTarif == 'Afternoon') {
+      this.selectedStartDate = setHours(this.selectedStartDate, 8);
+
+      this.selectedEndDate = setHours(this.selectedEndDate, 13);
+    } else if (this.selectedTarif == 'Afternoon') {
       this.selectedEndDate = this.selectedStartDate;
 
-      this.selectedStartDate = setHours(this.selectedStartDate,13);
+      this.selectedStartDate = setHours(this.selectedStartDate, 13);
 
-      this.selectedEndDate = setHours(this.selectedEndDate,18);
+      this.selectedEndDate = setHours(this.selectedEndDate, 18);
 
-    }else if (this.selectedTarif == 'Day') {
+    } else if (this.selectedTarif == 'Day') {
       this.selectedEndDate = this.selectedStartDate;
 
-      this.selectedStartDate = setHours(this.selectedStartDate,8);
+      this.selectedStartDate = setHours(this.selectedStartDate, 8);
 
-      this.selectedEndDate = setHours(this.selectedEndDate,18);
+      this.selectedEndDate = setHours(this.selectedEndDate, 18);
 
-    }else if (this.selectedTarif == 'Week') {
+    } else if (this.selectedTarif == 'Week') {
       this.selectedEndDate = addBusinessDays(new Date(this.selectedStartDate.getTime()).getTime(), 4);
 
-      this.selectedStartDate = setHours(this.selectedStartDate,8);
+      this.selectedStartDate = setHours(this.selectedStartDate, 8);
 
-      this.selectedEndDate = setHours(this.selectedEndDate,18);
+      this.selectedEndDate = setHours(this.selectedEndDate, 18);
 
-    }else if (this.selectedTarif == 'Month') {
+    } else if (this.selectedTarif == 'Month') {
       this.selectedEndDate = addMonths(new Date(this.selectedStartDate.getTime()).getTime(), 1);
 
       this.selectedEndDate = subBusinessDays(new Date(this.selectedEndDate.getTime()).getTime(), 1);
 
-      this.selectedStartDate = setHours(this.selectedStartDate,8);
+      this.selectedStartDate = setHours(this.selectedStartDate, 8);
 
-      this.selectedEndDate = setHours(this.selectedEndDate,18);
+      this.selectedEndDate = setHours(this.selectedEndDate, 18);
     }
-    this.selectedStartDate = setMinutes(this.selectedStartDate,0);
-    this.selectedEndDate = setMinutes(this.selectedEndDate,0);
+    this.selectedStartDate = setMinutes(this.selectedStartDate, 0);
+    this.selectedEndDate = setMinutes(this.selectedEndDate, 0);
 
   }
 
@@ -259,34 +263,38 @@ export class Tab1Page implements OnInit {
     //console.log(desk);
 
     const user: firebase.User = await this.authService.getUser();
-    const userRef = await this.afs.collection('users').doc<UserProfile>(user.uid).get().pipe(first()).toPromise();;
-    if (userRef.data().firstName && userRef.data().lastName){
-     
+
+    if (user) { // LOGIN OK
+
+
+      const userRef = await this.afs.collection('users').doc < UserProfile > (user.uid).get().pipe(first()).toPromise();;
+      if (userRef.data().firstName && userRef.data().lastName) {
+
         const modal = await this.modalController.create({
-        component: ConfirmationPage,
-        swipeToClose: false,
-        presentingElement: this.routerOutlet.nativeEl,
-        componentProps: {
-          desk, 
-          bookingType: this.selectedTarif,
-          dateFrom: this.selectedStartDate,
-          dateTo: this.selectedEndDate,
-          price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
-          bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
+          component: ConfirmationPage,
+          swipeToClose: false,
+          presentingElement: this.routerOutlet.nativeEl,
+          componentProps: {
+            desk,
+            bookingType: this.selectedTarif,
+            dateFrom: this.selectedStartDate,
+            dateTo: this.selectedEndDate,
+            price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+            bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
+          }
+
+        });
+        await modal.present();
+
+        const data = await modal.onDidDismiss();
+        console.log(data);
+        if (data.data.confirmBooking === true) {
+          this.bookReservation(desk);
+        } else {
+          this.presentToastBookingCancel();
         }
-  
-      });
-      await modal.present();
-  
-      const data = await modal.onDidDismiss();
-      console.log(data);
-      if (data.data.confirmBooking ===true){
-        this.bookReservation(desk);
-      }else{
-        this.presentToastBookingCancel();
-      }
-      
-      /*const alert = await this.alertController.create({
+
+        /*const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Reservation bestätigen!',
         message: 'Willst du die Reservation <strong>verbindlich buchen</strong>?',
@@ -307,16 +315,33 @@ export class Tab1Page implements OnInit {
   
       await alert.present();
       */
+      } else {
+        this.presentToastCompleteProfile();
+      }
+    } else {
+      const alert = await this.alertController.create({
+        header: 'Du bist nicht eingeloggt.',
+        message: 'Bitte logge dich zuerst ein um eine Reservation zu machen',
+        buttons: [
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async (blah) => {
+              
+            }
+          }, {
+            text: 'Login',
+            handler: () => {
+              this.router.navigateByUrl('login');
   
-
-    } else{
-
-      this.presentToastCompleteProfile();
-      
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
     }
-
-
-   
   }
 
   async bookReservation(desk: Desk) {
@@ -391,7 +416,7 @@ export class Tab1Page implements OnInit {
 
   }
 
-  async addResource(){
+  async addResource() {
     const modal = await this.modalController.create({
       component: AddDeskPage,
       //cssClass: 'my-custom-class',
@@ -400,11 +425,11 @@ export class Tab1Page implements OnInit {
 
     });
 
-    modal.onDidDismiss().then(data=>{
+    modal.onDidDismiss().then(data => {
       //console.log(data);
-      if (data.data.booked){
+      if (data.data.booked) {
         this.presentToastResource();
-      }else{
+      } else {
         //console.log('closed');
       }
 
@@ -413,7 +438,7 @@ export class Tab1Page implements OnInit {
     return await modal.present();
   }
 
-  async presentToastBookingCancel(){
+  async presentToastBookingCancel() {
     const toast = await this.toastController.create({
       message: 'Buchung abgebrochen.',
       color: 'danger',
@@ -423,17 +448,17 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
- async presentToastCompleteProfile(){
+  async presentToastCompleteProfile() {
 
-  const toast = await this.toastController.create({
-    message: 'Bitte zuerst Profil vervollständigen.',
-    color: 'danger',
-    position: 'bottom',
-    duration: 2000
-  });
-  toast.present();
- }
-  
+    const toast = await this.toastController.create({
+      message: 'Bitte zuerst Profil vervollständigen.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 2000
+    });
+    toast.present();
+  }
+
 
   async presentToastBookingBlocked() {
     const toast = await this.toastController.create({

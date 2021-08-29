@@ -26,6 +26,8 @@ export class TabsPage implements OnInit {
 
   async ngOnInit(){
     const user: firebase.User = await this.authService.getUser();
+    if (user){
+
     const userRef = await this.afs.collection('users').doc<any>(user.uid).get();
     userRef.subscribe(userData=>{
       this.isAdmin = userData.data().admin || false;
@@ -33,8 +35,6 @@ export class TabsPage implements OnInit {
       this.isStartHub = userData.data().isStartHub || false;
     })
 
-
-    if (user){
       this.reservationCollection = this.afs.collection('users').doc(user.uid)
       .collection<Reservation>('reservations', ref => ref.where('dateTo', '>=', new Date())
       .orderBy('dateTo'));

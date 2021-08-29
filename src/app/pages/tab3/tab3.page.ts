@@ -13,6 +13,7 @@ import {
   Router
 } from '@angular/router';
 import {
+  AlertController,
   LoadingController,
   ToastController
 } from '@ionic/angular';
@@ -42,6 +43,7 @@ export class Tab3Page implements OnInit {
   private userProfileId = "";
 
   constructor(
+    private alertController: AlertController,
     private loadingController: LoadingController,
     private authService: AuthService,
     private router: Router,
@@ -58,6 +60,30 @@ export class Tab3Page implements OnInit {
       this.userProfileId = user.uid;
       this.userProfileRef = this.afs.collection('users').doc < UserProfile > (user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Du bist nicht eingeloggt.',
+        message: 'Bitte logge dich zuerst ein um das Profil zu sehen',
+        buttons: [
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async (blah) => {
+              
+            }
+          }, {
+            text: 'Login',
+            handler: () => {
+              this.router.navigateByUrl('login');  
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+
+
     }
   }
 

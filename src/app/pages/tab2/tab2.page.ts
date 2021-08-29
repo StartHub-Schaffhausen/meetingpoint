@@ -9,6 +9,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { config } from 'src/app/config/config';
 import { Browser } from '@capacitor/browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -24,6 +25,7 @@ export class Tab2Page implements OnInit {
   private reservationCollection: AngularFirestoreCollection<Reservation>;
   private reservationCollectionPast: AngularFirestoreCollection<Reservation>;
   constructor(
+    private router: Router,
     private afs: AngularFirestore,
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
@@ -44,6 +46,31 @@ export class Tab2Page implements OnInit {
       .orderBy('dateTo'));
       this.reservationPast$ = this.reservationCollectionPast.valueChanges({ idField: 'id' });
       this.user = user;
+    }else{
+      
+      const alert = await this.alertController.create({
+        header: 'Du bist nicht eingeloggt.',
+        message: 'Bitte logge dich zuerst ein um Reservationen zu sehen',
+        buttons: [
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async (blah) => {
+              
+            }
+          }, {
+            text: 'Login',
+            handler: () => {
+              this.router.navigateByUrl('login');  
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+
+
     }
   }
 
