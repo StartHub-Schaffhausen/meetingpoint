@@ -396,8 +396,10 @@ export class Tab1Page implements OnInit {
         }
       });
 
+      this.getReservations();
+
     } else {
-      //alert('User Error: no user available.');
+      alert('User Error: no user available.');
     }
   }
 
