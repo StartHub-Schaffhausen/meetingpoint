@@ -387,16 +387,25 @@ export class Tab1Page implements OnInit {
       const booking$ = this.afs.collection('users').doc(user.uid)
         .collection('reservations').doc(newBooking.id).snapshotChanges();
 
-      booking$.subscribe(booking => {
+        //.pipe(first()).toPromise()
+      const booking: any = booking$.pipe(first()).toPromise();
+      let data = booking.payload.data();
+        if (data.stripeInvoiceUrl) {
+          loading.dismiss();
+          this.presentInvoiceModal(data);
+        }
+//        this.getReservations();
+
+      /*booking$.subscribe(booking => {
 
         let data = booking.payload.data();
         if (data.stripeInvoiceUrl) {
           loading.dismiss();
           this.presentInvoiceModal(data);
+          
         }
-      });
-
-      this.getReservations();
+        this.getReservations();
+      })*/
 
     } else {
       alert('User Error: no user available.');
@@ -414,6 +423,10 @@ export class Tab1Page implements OnInit {
       }
 
     });
+    modal.onDidDismiss().then(()=>{
+      this.getReservations();
+    })
+
     return await modal.present();
 
   }
