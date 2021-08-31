@@ -28,7 +28,8 @@ import {
   subBusinessDays,
   setHours,
   setMinutes,
-  setSeconds
+  setSeconds,
+  format
 } from 'date-fns'
 import {
   AuthService
@@ -281,6 +282,12 @@ export class Tab1Page implements OnInit {
             bookingType: this.selectedTarif,
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
+
+            dateFromStringDate: format(this.selectedStartDate.getTime(),'dd.MM.y'),
+            dateFromStringTime: format(this.selectedStartDate.getTime(),'HH:mm'),
+            dateToStringDate: format(this.selectedEndDate.getTime(),'dd.MM.y'),
+            dateToStringTime: format(this.selectedEndDate.getTime(),'HH:mm'),
+
             price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
             bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
           }
