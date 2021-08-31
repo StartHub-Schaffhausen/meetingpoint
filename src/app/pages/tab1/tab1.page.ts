@@ -419,6 +419,7 @@ export class Tab1Page implements OnInit {
         //console.log("stripeInvoiceUrl: " + booking.payload.data().stripeInvoiceUrl);
 
         data.stripeInvoiceUrl = booking.payload.data().stripeInvoiceUrl;
+        data.pdf = booking.payload.data().pdf;
         if (data.stripeInvoiceUrl) {
           loading.dismiss();
           this.presentInvoiceModal(data);
