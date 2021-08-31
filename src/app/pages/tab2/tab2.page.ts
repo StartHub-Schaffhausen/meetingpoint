@@ -37,13 +37,13 @@ export class Tab2Page implements OnInit {
     const user: firebase.User = await this.authService.getUser();
     if (user){
       this.reservationCollection = this.afs.collection('users').doc(user.uid)
-      .collection<Reservation>('reservations', ref => ref.where('dateTo', '>=', new Date())
-      .orderBy('dateTo'));
+      .collection<Reservation>('reservations', ref => ref.where('reservation.dateTo', '>=', new Date())
+      .orderBy('reservation.dateTo'));
       this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
 
       this.reservationCollectionPast = this.afs.collection('users').doc(user.uid)
-      .collection<Reservation>('reservations', ref => ref.where('dateTo', '<', new Date())
-      .orderBy('dateTo'));
+      .collection<Reservation>('reservations', ref => ref.where('reservation.dateTo', '<', new Date())
+      .orderBy('reservation.dateTo'));
       this.reservationPast$ = this.reservationCollectionPast.valueChanges({ idField: 'id' });
       this.user = user;
     }else{
@@ -103,7 +103,7 @@ export class Tab2Page implements OnInit {
 
   async pay(slidingItem: IonItemSliding, reservation) {
 
-    await Browser.open({ url: reservation.stripeInvoiceUrl });
+    await Browser.open({ url: reservation.reservation.stripeInvoiceUrl });
     slidingItem.close();
   }
 

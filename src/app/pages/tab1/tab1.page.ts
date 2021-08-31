@@ -405,24 +405,25 @@ export class Tab1Page implements OnInit {
         .collection('reservations').doc(newBooking.id).snapshotChanges();
 
       //.pipe(first()).toPromise()
-      const booking: any = booking$.pipe(first()).toPromise();
+      /*const booking: any = booking$.pipe(first()).toPromise();
       let data = booking.payload.data();
       if (data.stripeInvoiceUrl) {
         loading.dismiss();
         this.presentInvoiceModal(data);
-      }
+      }*/
       //this.getReservations();
 
-      /*booking$.subscribe(booking => {
+      booking$.subscribe(booking => {
 
-        let data = booking.payload.data();
+        let data = booking.payload.data().booking;
+        data.stripeInvoiceUrl = booking.payload.data().stripeInvoiceUrl;
         if (data.stripeInvoiceUrl) {
           loading.dismiss();
           this.presentInvoiceModal(data);
           
         }
         this.getReservations();
-      })*/
+      })
 
     } else {
       alert('User Error: no user available.');

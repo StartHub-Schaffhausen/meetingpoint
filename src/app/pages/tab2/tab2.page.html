@@ -28,18 +28,18 @@
     </ion-list-header>
 
     <ion-item-sliding *ngFor="let reservation of reservationList" #slidingItem>
-      <ion-item button detail  (click)="presentModal(reservation)">
+      <ion-item button detail  (click)="presentModal(reservation.reservation)">
         <ion-avatar slot="start">
-          <img src="{{reservation.picture}}">
+          <img src="{{reservation.reservation.picture}}">
         </ion-avatar>
         <ion-label>
-          <h2>{{reservation.desk.name}}: {{reservation.bookingTypeDescription}}</h2>
+          <h2>{{reservation.reservation.desk.name}}: {{reservation.reservation.bookingTypeDescription}}</h2>
 
           <h3>Start deiner Buchung</h3>
-          <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+          <p> {{(reservation.reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
 
           <h3>Ende deiner Buchung</h3>
-          <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
+          <p> {{(reservation.reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}} {{(reservation.reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}}  Uhr</p>
 
         </ion-label>
  
@@ -53,8 +53,8 @@
        
 
       <ion-item-options side="end">
-        <ion-item-option *ngIf="!reservation.statusPaid" color="danger" (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
-        <ion-item-option *ngIf="!reservation.statusPaid" color="warning" (click)="pay(slidingItem, reservation)">bezahlen</ion-item-option>
+        <ion-item-option *ngIf="!reservation.reservation.statusPaid" color="danger" (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
+        <ion-item-option *ngIf="!reservation.reservation.statusPaid" color="warning" (click)="pay(slidingItem, reservation)">bezahlen</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
 
