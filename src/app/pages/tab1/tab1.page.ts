@@ -276,6 +276,8 @@ export class Tab1Page implements OnInit {
           presentingElement: this.routerOutlet.nativeEl,
           componentProps: {
             desk,
+            firstName: userRef.data().firstName,
+            lastName: userRef.data().lastName,
             bookingType: this.selectedTarif,
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
