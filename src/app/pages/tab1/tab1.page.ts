@@ -411,7 +411,7 @@ export class Tab1Page implements OnInit {
         loading.dismiss();
         this.presentInvoiceModal(data);
       }
-      //        this.getReservations();
+      //this.getReservations();
 
       /*booking$.subscribe(booking => {
 
