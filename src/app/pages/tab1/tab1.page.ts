@@ -383,13 +383,7 @@ export class Tab1Page implements OnInit {
         .doc(user.uid).collection('reservations')
         .add({
           reservation,
-          firstName: meta.firstName,
-          lastName: meta.lastName,
-          userId: meta.userId,
-          dateFromStringDate: meta.dateFromStringDate,
-          dateFromStringTime: meta.dateFromStringTime,
-          dateToStringDate: meta.dateToStringDate,
-          dateToStringTime: meta.dateToStringTime
+          meta
         });
 
       const alert = await this.alertController.create({
