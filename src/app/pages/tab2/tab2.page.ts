@@ -90,7 +90,7 @@ export class Tab2Page implements OnInit {
 
 
   async presentModal(reservation) {
-    console.log( reservation);
+    //console.log( reservation);
     const modal = await this.modalController.create({
       component: ReservationPage,
       swipeToClose: true,
@@ -112,7 +112,7 @@ export class Tab2Page implements OnInit {
 
   async cancel(slidingItem: IonItemSliding, reservation) {
 
-    console.log(reservation);
+    //console.log(reservation);
 
     const alert = await this.alertController.create({
       header: 'Reservation stornieren?',
