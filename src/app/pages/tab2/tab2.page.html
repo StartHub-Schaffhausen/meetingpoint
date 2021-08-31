@@ -45,19 +45,19 @@
 
               </ion-label>
 
-              <ion-badge color="success" slot="end" *ngIf="reservation.reservation.statusPaid">
+              <ion-badge color="success" slot="end" *ngIf="reservation.statusPaid">
                 bezahlt
               </ion-badge>
-              <ion-badge color="danger" slot="end" *ngIf="!reservation.reservation.statusPaid">
+              <ion-badge color="danger" slot="end" *ngIf="!reservation.statusPaid">
                 nicht bezahlt
               </ion-badge>
             </ion-item>
 
 
             <ion-item-options side="end">
-              <ion-item-option *ngIf="!reservation.reservation.statusPaid" color="danger"
+              <ion-item-option *ngIf="!reservation.statusPaid" color="danger"
                 (click)="cancel(slidingItem, reservation)">stornieren</ion-item-option>
-              <ion-item-option *ngIf="!reservation.reservation.statusPaid" color="warning"
+              <ion-item-option *ngIf="!reservation.statusPaid" color="warning"
                 (click)="pay(slidingItem, reservation)">bezahlen</ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -142,10 +142,10 @@
 
             </ion-label>
 
-            <ion-badge color="success" slot="end" *ngIf="reservation.statusPaid">
+            <ion-badge color="success" slot="end" *ngIf="stripe.statusPaid">
               bezahlt
             </ion-badge>
-            <ion-badge color="danger" slot="end" *ngIf="!reservation.statusPaid">
+            <ion-badge color="danger" slot="end" *ngIf="!stripe.statusPaid">
               nicht bezahlt
             </ion-badge>
           </ion-item>
