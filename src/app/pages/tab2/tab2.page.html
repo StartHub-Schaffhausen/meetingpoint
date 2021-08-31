@@ -142,10 +142,10 @@
 
             </ion-label>
 
-            <ion-badge color="success" slot="end" *ngIf="stripe.statusPaid">
+            <ion-badge color="success" slot="end" *ngIf="reservation.statusPaid">
               bezahlt
             </ion-badge>
-            <ion-badge color="danger" slot="end" *ngIf="!stripe.statusPaid">
+            <ion-badge color="danger" slot="end" *ngIf="!reservation.statusPaid">
               nicht bezahlt
             </ion-badge>
           </ion-item>
