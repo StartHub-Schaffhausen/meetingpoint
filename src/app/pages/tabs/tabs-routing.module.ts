@@ -13,8 +13,16 @@ const routes: Routes = [
         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardPageModule),
         //canActivate: [AuthGuard],
       },
-      
-      
+      {
+        path: 'community',
+        loadChildren: () => import('../community/community.module').then( m => m.CommunityPageModule)
+        //canActivate: [AuthGuard],
+      },
+      {
+        path: 'invoice-list',
+        loadChildren: () => import('../invoice-list/invoice-list.module').then( m => m.InvoiceListPageModule)
+        //canActivate: [AuthGuard],
+      },
       {
         path: 'desks',
         loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule),

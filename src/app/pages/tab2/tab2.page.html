@@ -36,12 +36,12 @@
                 <h2>{{reservation.reservation.desk.name}}: {{reservation.reservation.bookingTypeDescription}}</h2>
 
                 <h3>Start deiner Buchung</h3>
-                <p> {{(reservation.reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
-                  {{(reservation.reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+                <p> {{reservation.meta.dateFromStringDate}}
+                  {{reservation.meta.dateFromStringTime}} Uhr</p>
 
                 <h3>Ende deiner Buchung</h3>
-                <p> {{(reservation.reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
-                  {{(reservation.reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+                <p> {{reservation.meta.dateToStringDate}}
+                  {{reservation.meta.dateToStringTime}} Uhr</p>
 
               </ion-label>
 
@@ -130,15 +130,15 @@
               <img src="{{reservation.picture}}">
             </ion-avatar>
             <ion-label>
-              <h2>{{reservation.desk.name}}: {{reservation.bookingTypeDescription}}</h2>
+              <h2>{{reservation.reservation.desk.name}}: {{reservation.reservation.bookingTypeDescription}}</h2>
 
               <h3>Start deiner Buchung</h3>
-              <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
-                {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+              <p> {{reservation.meta.dateFromStringDate}}
+                {{reservation.meta.dateFromStringTime}} Uhr</p>
 
               <h3>Ende deiner Buchung</h3>
-              <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
-                {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+              <p> {{reservation.meta.dateToStringDate}}
+                {{reservation.meta.dateToStringTime}} Uhr</p>
 
             </ion-label>
 

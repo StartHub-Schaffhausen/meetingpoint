@@ -116,22 +116,22 @@ export class Tab1Page implements OnInit {
   checkIfBlocked() {
     //console.log("is blocked? " + date.toISOString().substring(0,10));
 
-    /*
-    if (this.selectedStartDate.toISOString().substring(0, 10) < '2021-08-30') {
+    if (this.selectedStartDate.toISOString().substring(0, 10) < new Date().toISOString().substring(0,10) ) { //'2021-08-30'
       this.bookingBlocked = true;
       this.presentToastBookingBlocked();
+      this.presentToastPast();
     } else {
-*/
 
-    // check if WEEKEND
-    if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
-      this.bookingBlocked = true;
-      this.presentToastWeekendBlocked();
-    } else {
-      this.bookingBlocked = false;
+
+      // check if WEEKEND
+      if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
+        this.bookingBlocked = true;
+        this.presentToastWeekendBlocked();
+      } else {
+        this.bookingBlocked = false;
+      }
+
     }
-
-    // }
   }
 
   async getReservations() {
@@ -147,7 +147,7 @@ export class Tab1Page implements OnInit {
 
     const ref$ = this.afs.collection('desks', ref => ref.where('active', '==', true).orderBy('name', 'asc')).get();
     const desk = await ref$.pipe(first()).toPromise();
-  
+
     //Loop über Desk
     for (const deskElement of desk.docs) {
 
@@ -305,6 +305,8 @@ export class Tab1Page implements OnInit {
             dateFromStringTime: format(this.selectedStartDate.getTime(), 'HH:mm'),
             dateToStringDate: format(this.selectedEndDate.getTime(), 'dd.MM.y'),
             dateToStringTime: format(this.selectedEndDate.getTime(), 'HH:mm'),
+            isoStringFrom: this.selectedStartDate.toISOString().substring(0,10),
+            isoStringTo: this.selectedEndDate.toISOString().substring(0,10)
           });
         } else {
           this.presentToastBookingCancel();
@@ -423,9 +425,9 @@ export class Tab1Page implements OnInit {
         if (data.stripeInvoiceUrl) {
           loading.dismiss();
           this.presentInvoiceModal(data);
-          
+
           bookingSubscriber.unsubscribe();
-          this.getReservations();
+          //this.getReservations(); wird bei ondiddismiss gemacht
         }
       })
 
@@ -491,7 +493,7 @@ export class Tab1Page implements OnInit {
       message: 'Bitte zuerst Profil vervollständigen.',
       color: 'danger',
       position: 'bottom',
-      duration: 2000
+      duration: 4000
     });
     toast.present();
   }
@@ -502,17 +504,28 @@ export class Tab1Page implements OnInit {
       message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
       color: 'danger',
       position: 'bottom',
-      duration: 2000
+      duration: 4000
     });
     toast.present();
   }
+
+  async presentToastPast() {
+    const toast = await this.toastController.create({
+      message: 'Dieses Datum liegt in der Vergangenheit. Back to the future 🚀',
+      color: 'danger',
+      position: 'bottom',
+      duration: 4000
+    });
+    toast.present();
+  }
+
 
   async presentToastWeekendBlocked() {
     const toast = await this.toastController.create({
       message: 'Wir haben am Wochenende geschlossen.',
       color: 'danger',
       position: 'bottom',
-      duration: 2000
+      duration: 4000
     });
     toast.present();
   }
@@ -522,7 +535,7 @@ export class Tab1Page implements OnInit {
       message: 'Erfolgreich hinzugefügt.',
       color: 'success',
       position: 'bottom',
-      duration: 2000
+      duration: 4000
     });
     toast.present();
   }

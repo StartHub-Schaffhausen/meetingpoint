@@ -24,18 +24,6 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
-  {
-    path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
-  },
-  {
-    path: 'invoice',
-    loadChildren: () => import('./pages/invoice/invoice.module').then( m => m.InvoicePageModule)
-  },
-  {
-    path: 'confirmation',
-    loadChildren: () => import('./pages/confirmation/confirmation.module').then( m => m.ConfirmationPageModule)
-  }
 
 ];
 @NgModule({
