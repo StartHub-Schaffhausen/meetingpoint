@@ -38,7 +38,7 @@
             {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
           -->
           <p>
-          {{meta.dateFromStringDate}} {{dateFromStringTime}} Uhr
+          {{meta.dateFromStringDate}} {{meta.dateFromStringTime}} Uhr
           </p>
       </ion-label>
     </ion-item>
@@ -48,7 +48,7 @@
       <ion-label>
         <h2>Ende deiner Buchung</h2>
         <p>
-          {{meta.dateToStringDate}} {{dateToStringTime}} Uhr
+          {{meta.dateToStringDate}} {{meta.dateToStringTime}} Uhr
         </p>
         <!--
           <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
