@@ -20,10 +20,10 @@ export class Tab2Page implements OnInit {
   //@ViewChild(IonItemSliding) slidingItem: IonItemSliding;
   deskConfig = config.offer;
   user: firebase.User;
-  reservation$: Observable<Reservation[]>;
-  reservationPast$: Observable<Reservation[]>;
-  private reservationCollection: AngularFirestoreCollection<Reservation>;
-  private reservationCollectionPast: AngularFirestoreCollection<Reservation>;
+  reservation$: Observable<any[]>;
+  reservationPast$: Observable<any[]>;
+  private reservationCollection: AngularFirestoreCollection<any>;
+  private reservationCollectionPast: AngularFirestoreCollection<any>;
   constructor(
     private router: Router,
     private afs: AngularFirestore,
@@ -90,12 +90,15 @@ export class Tab2Page implements OnInit {
 
 
   async presentModal(reservation) {
+    console.log( reservation);
     const modal = await this.modalController.create({
       component: ReservationPage,
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
       componentProps:{
-        reservation,
+        reservation: reservation.reservation,
+        stripe: reservation,
+        meta: reservation.meta
       }
     });
     return await modal.present();
@@ -103,7 +106,7 @@ export class Tab2Page implements OnInit {
 
   async pay(slidingItem: IonItemSliding, reservation) {
 
-    await Browser.open({ url: reservation.reservation.stripeInvoiceUrl });
+    await Browser.open({ url: reservation.stripeInvoiceUrl });
     slidingItem.close();
   }
 

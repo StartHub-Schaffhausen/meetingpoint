@@ -14,16 +14,21 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ReservationPage implements OnInit {
   @Input() reservation: Reservation;
+  @Input() stripe: any;
+  @Input() meta: any;
+
   config = config;
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
     private authService: AuthService,
     private afs: AngularFirestore,
-    ) { }
+    ) { 
+
+    }
 
   ngOnInit() {
-    console.log(this.reservation);
+   // console.log(this.reservation);
   }
   async openLink(link) {
     await Browser.open({ url: link });
@@ -45,9 +50,10 @@ export class ReservationPage implements OnInit {
     });
   }
 
-  async cancel(reservation) {
+  async cancel() {
 
-    console.log(reservation);
+    console.log(this.reservation);
+    console.log(this.stripe);
 
     const alert = await this.alertController.create({
       //cssClass: 'my-custom-class',
@@ -60,11 +66,11 @@ export class ReservationPage implements OnInit {
           cssClass: 'secondary',
           handler: async (blah) => {
             console.log('stornieren');
-            console.log(reservation.userId);
-            console.log(reservation.id);
+            console.log(this.reservation.userId);
+            console.log(this.stripe.id);
             const user: firebase.User = await this.authService.getUser();
 
-            await this.afs.collection('users').doc(user.uid).collection('reservations').doc(reservation.id).delete();
+            await this.afs.collection('users').doc(user.uid).collection('reservations').doc(this.stripe.id).delete();
             this.dismiss();
           }
         }, {

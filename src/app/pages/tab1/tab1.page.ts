@@ -295,7 +295,7 @@ export class Tab1Page implements OnInit {
         await modal.present();
 
         const data = await modal.onDidDismiss();
-        console.log(data);
+        //console.log(data);
         if (data.data.confirmBooking === true) {
           this.bookReservation(desk, {
             firstName: userRef.data().firstName,

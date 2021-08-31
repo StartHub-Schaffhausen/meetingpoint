@@ -33,8 +33,13 @@
       <ion-icon slot="start" name="enter-outline"></ion-icon>
       <ion-label>
         <h2>Start deiner Buchung</h2>
-        <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
-          {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+        <!--
+          <p> {{(reservation.dateFrom.seconds * 1000 ) | date:'dd.MM.y'}}
+            {{(reservation.dateFrom.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+          -->
+          <p>
+          {{meta.dateFromStringDate}} {{dateFromStringTime}} Uhr
+          </p>
       </ion-label>
     </ion-item>
 
@@ -42,8 +47,14 @@
       <ion-icon slot="start" name="exit-outline"></ion-icon>
       <ion-label>
         <h2>Ende deiner Buchung</h2>
-        <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
-          {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+        <p>
+          {{meta.dateToStringDate}} {{dateToStringTime}} Uhr
+        </p>
+        <!--
+          <p> {{(reservation.dateTo.seconds * 1000 ) | date:'dd.MM.y'}}
+            {{(reservation.dateTo.seconds * 1000 ) | date:'HH:mm'}} Uhr</p>
+        -->
+
       </ion-label>
     </ion-item>
 
@@ -60,7 +71,7 @@
 
 
 
-    <ion-item *ngIf="!reservation.statusPaid" (click)="openLink(reservation.stripeInvoiceUrl)">
+    <ion-item *ngIf="!stripe.statusPaid" (click)="openLink(stripe.stripeInvoiceUrl)">
       <ion-icon color="danger" slot="start" name="card-outline"></ion-icon>
       <ion-label color="danger">
         <h2>Rechnung bezahlen</h2>
@@ -70,7 +81,7 @@
       </ion-badge>
     </ion-item>
 
-    <ion-item *ngIf="reservation.pdf" (click)="openLink(reservation.pdf)">
+    <ion-item *ngIf="stripe.pdf" (click)="openLink(stripe.pdf)">
       <ion-icon slot="start" name="document-attach-outline"></ion-icon>
       <ion-label>
         <h2>Rechnung</h2>
@@ -93,20 +104,20 @@
 
     </ion-img>
 
-    <ion-button *ngIf="!reservation.statusPaid" expand="block" color="danger" (click)="cancel(reservation)">
+    <ion-button *ngIf="!stripe.statusPaid" expand="block" color="danger" (click)="cancel()">
       stornieren
     </ion-button>
 
 
 
-    <ion-list-header *ngIf="reservation.statusPaid">
+    <ion-list-header *ngIf="stripe.statusPaid">
       <ion-label>
         Reservationsbestätigung
       </ion-label>
     </ion-list-header>
   </ion-list>
 
-  <div class="center" *ngIf="reservation.statusPaid" style="padding-left:auto; padding-right:auto">
+  <div class="center" *ngIf="stripe.statusPaid" style="padding-left:auto; padding-right:auto">
     <deckgo-qrcode type="svg" style="--deckgo-qrcode-size: 300px; --deckgo-qrcode-background-fill:  #FFFFFF; --deckgo-qrcode-color-fill: #000000;" qrBackgroundColor="FFFFFF" qrFillColor="000000" content="{{ reservation.stripeInvoiceUrl }}"></deckgo-qrcode>
   </div>
 
