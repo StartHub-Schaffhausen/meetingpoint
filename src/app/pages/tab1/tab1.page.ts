@@ -147,7 +147,7 @@ export class Tab1Page implements OnInit {
 
     const ref$ = this.afs.collection('desks', ref => ref.where('active', '==', true).orderBy('name', 'asc')).get();
     const desk = await ref$.pipe(first()).toPromise();
-
+  
     //Loop über Desk
     for (const deskElement of desk.docs) {
 
@@ -413,16 +413,19 @@ export class Tab1Page implements OnInit {
       }*/
       //this.getReservations();
 
-      booking$.subscribe(booking => {
+      const bookingSubscriber = booking$.subscribe(booking => {
 
-        let data = booking.payload.data().booking;
+        let data = booking.payload.data().reservation;
+        //console.log("stripeInvoiceUrl: " + booking.payload.data().stripeInvoiceUrl);
+
         data.stripeInvoiceUrl = booking.payload.data().stripeInvoiceUrl;
         if (data.stripeInvoiceUrl) {
           loading.dismiss();
           this.presentInvoiceModal(data);
           
+          bookingSubscriber.unsubscribe();
+          this.getReservations();
         }
-        this.getReservations();
       })
 
     } else {
