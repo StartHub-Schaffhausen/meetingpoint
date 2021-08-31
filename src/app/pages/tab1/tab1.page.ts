@@ -55,7 +55,9 @@ import {
 import {
   Browser
 } from 'protractor';
-import { Router } from '@angular/router';
+import {
+  Router
+} from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -121,15 +123,15 @@ export class Tab1Page implements OnInit {
     } else {
 */
 
-      // check if WEEKEND
-      if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
-        this.bookingBlocked = true;
-        this.presentToastWeekendBlocked();
-      } else {
-        this.bookingBlocked = false;
-      }
+    // check if WEEKEND
+    if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
+      this.bookingBlocked = true;
+      this.presentToastWeekendBlocked();
+    } else {
+      this.bookingBlocked = false;
+    }
 
-   // }
+    // }
   }
 
   async getReservations() {
@@ -277,18 +279,13 @@ export class Tab1Page implements OnInit {
           presentingElement: this.routerOutlet.nativeEl,
           componentProps: {
             desk,
-            userId: user.uid,
-            firstName: userRef.data().firstName,
-            lastName: userRef.data().lastName,
-            
+
+
             bookingType: this.selectedTarif,
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
 
-            dateFromStringDate: format(this.selectedStartDate.getTime(),'dd.MM.y'),
-            dateFromStringTime: format(this.selectedStartDate.getTime(),'HH:mm'),
-            dateToStringDate: format(this.selectedEndDate.getTime(),'dd.MM.y'),
-            dateToStringTime: format(this.selectedEndDate.getTime(),'HH:mm'),
+
 
             price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
             bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
@@ -300,7 +297,15 @@ export class Tab1Page implements OnInit {
         const data = await modal.onDidDismiss();
         console.log(data);
         if (data.data.confirmBooking === true) {
-          this.bookReservation(desk);
+          this.bookReservation(desk, {
+            firstName: userRef.data().firstName,
+            lastName: userRef.data().lastName,
+            userId: user.uid,
+            dateFromStringDate: format(this.selectedStartDate.getTime(), 'dd.MM.y'),
+            dateFromStringTime: format(this.selectedStartDate.getTime(), 'HH:mm'),
+            dateToStringDate: format(this.selectedEndDate.getTime(), 'dd.MM.y'),
+            dateToStringTime: format(this.selectedEndDate.getTime(), 'HH:mm'),
+          });
         } else {
           this.presentToastBookingCancel();
         }
@@ -333,29 +338,27 @@ export class Tab1Page implements OnInit {
       const alert = await this.alertController.create({
         header: 'Du bist nicht eingeloggt.',
         message: 'Bitte logge dich zuerst ein um eine Reservation zu machen',
-        buttons: [
-          {
-            text: 'Abbrechen',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: async (blah) => {
-              
-            }
-          }, {
-            text: 'Login',
-            handler: () => {
-              this.router.navigateByUrl('login');
-  
-            }
+        buttons: [{
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: async (blah) => {
+
           }
-        ]
+        }, {
+          text: 'Login',
+          handler: () => {
+            this.router.navigateByUrl('login');
+
+          }
+        }]
       });
-  
+
       await alert.present();
     }
   }
 
-  async bookReservation(desk: Desk) {
+  async bookReservation(desk: Desk, meta: any) {
 
     let reservation: Reservation = {
       id: "",
@@ -366,7 +369,7 @@ export class Tab1Page implements OnInit {
       dateTo: this.selectedEndDate,
       price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
       bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
-      userId: "",
+      userId: meta.userId,
       bookingCreated: "",
       statusPaid: false,
       stripeInvoiceUrl: "",
@@ -378,7 +381,16 @@ export class Tab1Page implements OnInit {
     if (user) {
       const newBooking: DocumentReference = await this.afs.collection('users')
         .doc(user.uid).collection('reservations')
-        .add(reservation);
+        .add({
+          reservation,
+          firstName: meta.firstName,
+          lastName: meta.lastName,
+          userId: meta.userId,
+          dateFromStringDate: meta.dateFromStringDate,
+          dateFromStringTime: meta.dateFromStringTime,
+          dateToStringDate: meta.dateToStringDate,
+          dateToStringTime: meta.dateToStringTime
+        });
 
       const alert = await this.alertController.create({
         message: 'Vielen Dank für deine Buchung. Als nächstes musst du noch die Rechnung bezahlen.',
@@ -398,14 +410,14 @@ export class Tab1Page implements OnInit {
       const booking$ = this.afs.collection('users').doc(user.uid)
         .collection('reservations').doc(newBooking.id).snapshotChanges();
 
-        //.pipe(first()).toPromise()
+      //.pipe(first()).toPromise()
       const booking: any = booking$.pipe(first()).toPromise();
       let data = booking.payload.data();
-        if (data.stripeInvoiceUrl) {
-          loading.dismiss();
-          this.presentInvoiceModal(data);
-        }
-//        this.getReservations();
+      if (data.stripeInvoiceUrl) {
+        loading.dismiss();
+        this.presentInvoiceModal(data);
+      }
+      //        this.getReservations();
 
       /*booking$.subscribe(booking => {
 
@@ -434,7 +446,7 @@ export class Tab1Page implements OnInit {
       }
 
     });
-    modal.onDidDismiss().then(()=>{
+    modal.onDidDismiss().then(() => {
       this.getReservations();
     })
 
