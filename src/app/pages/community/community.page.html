@@ -29,9 +29,9 @@
             <img src="{{community.profilePicture}}" />
             <ion-card-header>
               <ion-card-subtitle>
-                von {{community.meta.dateFromStringDate}} {{community.meta.dateFromStringTime}} bis {{community.meta.dateToStringDate}} {{community.meta.dateToStringTime}} im Coworking
+                Von {{community.metadata.dateFromStringTime}} bis {{community.metadata.dateToStringTime}} Uhr im Coworking
               </ion-card-subtitle>
-              <ion-card-title>{{community.meta.firstName}} {{community.meta.lastName}}</ion-card-title>
+              <ion-card-title>{{community.metadata.firstName}} {{community.metadata.lastName}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               {{community.bio}}
@@ -129,9 +129,9 @@
         <img src="{{community.profilePicture}}" />
         <ion-card-header>
           <ion-card-subtitle>
-            von {{community.meta.dateFromStringDate}} {{community.meta.dateFromStringTime}} bis {{community.meta.dateToStringDate}} {{community.meta.dateToStringTime}} im Coworking
+            Am {{community.metadata.dateFromStringDate}} ab {{community.metadata.dateFromStringTime}} bis {{community.metadata.dateToStringTime}} Uhr im Coworking
           </ion-card-subtitle>
-          <ion-card-title>{{community.meta.firstName}} {{community.meta.lastName}}</ion-card-title>
+          <ion-card-title>{{community.metadata.firstName}} {{community.metadata.lastName}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           {{community.bio}}

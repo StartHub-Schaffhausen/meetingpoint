@@ -23,10 +23,10 @@ export class CommunityPage implements OnInit {
 
   async ngOnInit() {
 
-    this.communityCollection = this.afs.collection('community', ref => ref.where('meta.isoStringFrom', '==', new Date().toISOString().substring(0,10)));
+    this.communityCollection = this.afs.collection('community', ref => ref.where('metadata.isoStringFrom', '==', new Date().toISOString().substring(0,10)));
     this.community$ = this.communityCollection.valueChanges({ idField: 'id' });
 
-    this.communityCollectionFuture = this.afs.collection('community', ref => ref.where('meta.isoStringFrom', '>', new Date().toISOString().substring(0,10)));
+    this.communityCollectionFuture = this.afs.collection('community', ref => ref.where('metadata.isoStringFrom', '>', new Date().toISOString().substring(0,10)));
     this.communityFuture$ = this.communityCollectionFuture.valueChanges({ idField: 'id' });
   }
 
