@@ -126,9 +126,8 @@
   </ion-header>
   <ion-grid>
     <ion-row>
-      <ng-container *ngIf="reservation$ | async as reservationList; else loading">
+     <!-- <ng-container *ngIf="reservation$ | async as reservationList; else loading">
         <ion-col>
-
         </ion-col>
         <ion-col size="12" size-md="3" *ngFor="let reservation of reservationList">
           <ion-card button="true">
@@ -146,7 +145,7 @@
         </ion-col>
         <ion-col>
         </ion-col>
-      </ng-container>
+      </ng-container>-->
       <ng-template #loading>
         <ion-col>
           <ion-card>
