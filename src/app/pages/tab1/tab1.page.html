@@ -24,7 +24,7 @@
     <ion-row>
       <ion-col class="mt-8" size="12" size-md="4">
         <h1 class="text-2xl">Schritt 1: Datum wählen:</h1>
-        <ion-datetime (ionChange)="changeStartDate($event)" presentation="date" locale="de-DE">
+        <ion-datetime (ionChange)="changeStartDate($event)" firstDayOfWeek="1" presentation="date" locale="de-DE">
         </ion-datetime>
       </ion-col>
       <ion-col class="mt-8" size="12" size-md="4">
