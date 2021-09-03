@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-     Community im Coworking
+     Community 
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,22 +9,19 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Community im Coworking</ion-title>
+      <ion-title size="large">Community</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list-header>
+    <ion-label>Heute im Coworking Space anzutreffen</ion-label>
+  </ion-list-header>
+  
+
   <ion-grid>
     <ion-row>
-      <ion-title>
-        Heute im Coworking
-      </ion-title>
-    </ion-row>
-    <ion-row>
       <ng-container *ngIf="community$ | async as communityList; else loading">
-        <ion-col>
-         
-        </ion-col>
-        
-        <ion-col size="12" size-md="3" *ngFor="let community of communityList">
+         <ion-col size="12" size-md="3" size-xl="2" *ngFor="let community of communityList">
           <ion-card button="true">
             <img src="{{community.profilePicture}}" />
             <ion-card-header>
@@ -38,8 +35,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col>
-        </ion-col>
+
       </ng-container>
       <ng-template #loading>
         <ion-col>
@@ -114,17 +110,14 @@
     </ion-row>
 <!-- DEMNÄCHST-->
 
-<ion-row>
-  <ion-title>
-    Demnächst im Coworking
-  </ion-title>
-</ion-row>
+<ion-list-header>
+  <ion-label>Demnächst im Coworking Space anzutreffen</ion-label>
+</ion-list-header>
+
 <ion-row>
   <ng-container *ngIf="communityFuture$ | async as communityList; else loadingFuture">
-    <ion-col>
-     
-    </ion-col>
-    <ion-col size="12" size-md="3" *ngFor="let community of communityList">
+
+    <ion-col size="12" size-md="3" size-xl="2" *ngFor="let community of communityList">
       <ion-card button="true">
         <img src="{{community.profilePicture}}" />
         <ion-card-header>
@@ -137,8 +130,6 @@
           {{community.bio}}
         </ion-card-content>
       </ion-card>
-    </ion-col>
-    <ion-col>
     </ion-col>
   </ng-container>
   <ng-template #loadingFuture>

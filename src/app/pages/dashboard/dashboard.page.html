@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Admin Dashboard
+      Administration
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,17 +9,15 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Admin Dashboard</ion-title>
+      <ion-title size="large">Administration</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-grid>
     <ion-row>
       <ng-container *ngIf="reservation$ | async as reservationList; else loading">
-        <ion-col  >
-    
-        </ion-col>
-        <ion-col  size="12" size-md="3" *ngFor="let reservation of reservationList">
+
+        <ion-col  size="12" size-md="3" size-xl="2" *ngFor="let reservation of reservationList">
           <ion-card button="true">
             <img src="{{reservation.profilePicture}}" />
             <ion-card-header>
@@ -60,9 +58,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col >
-        <ion-col>
-  
-        </ion-col>
+
       </ng-container>
       <ng-template #loading>
         <ion-col>
