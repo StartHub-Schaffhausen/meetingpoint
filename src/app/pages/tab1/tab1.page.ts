@@ -140,7 +140,7 @@ export class Tab1Page implements OnInit {
 
     const loading = await this.loadingController.create({
       //cssClass: 'my-custom-class',
-      message: 'Bitte warten, wir laden die verfügbaren Angebote',
+      message: 'Bitte warten, wir laden die verfügbaren Tische',
       //duration: 2000
     });
     await loading.present();
