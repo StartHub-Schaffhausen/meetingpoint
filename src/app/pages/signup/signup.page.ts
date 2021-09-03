@@ -31,7 +31,9 @@ export class SignupPage implements OnInit {
   ngOnInit() {
     this.user = {
       email: '',
-      password: ''
+      password: '',
+      firstName: '',
+      lastName: ''
     };
 
   }

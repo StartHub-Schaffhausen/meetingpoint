@@ -54,20 +54,17 @@
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
 
-          <picture >
-            <source 
-              srcset="assets/img/starthub.jpg" 
-              media="(prefers-color-scheme: dark)">
-              <source 
-              srcset="assets/img/starthub-light.jpg" 
-              media="(prefers-color-scheme: light)">              
-              <img class="h-12 w-auto" src="assets/img/starthub-light.jpg" alt="Logo" />
+          <picture>
+            <source srcset="assets/img/starthub.jpg" media="(prefers-color-scheme: dark)">
+            <source srcset="assets/img/starthub-light.jpg" media="(prefers-color-scheme: light)">
+            <img class="h-12 w-auto" src="assets/img/starthub-light.jpg" alt="Logo" />
           </picture>
 
           <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Neuen Account erstellen</h2>
           <p class="mt-2 text-sm text-gray-600">
             Oder
-            <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500"> bist Du bereits registriert? </a>
+            <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500"> bist Du bereits registriert?
+            </a>
           </p>
         </div>
 
@@ -77,13 +74,7 @@
               <div>
                 <label for="email" class="block text-sm font-medium text-gray-700"> E-Mail Adresse </label>
                 <div class="mt-1">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    formControlName="email"
-                    required
+                  <input id="email" name="email" type="email" autocomplete="email" formControlName="email" required
                     class="
                       appearance-none
                       block
@@ -99,21 +90,36 @@
                       focus:border-indigo-500
                       sm:text-sm
                       dark:text-black
-                    "
-                  />
+                    " />
                 </div>
               </div>
 
               <div class="space-y-1">
                 <label for="password" class="block text-sm font-medium text-gray-700"> Passwort </label>
                 <div class="mt-1">
-                  <input
-                    id="password"
-                    formControlName="password"
-                    name="password"
-                    type="password"
-                    autocomplete="current-password"
-                    required
+                  <input id="password" formControlName="password" name="password" type="password"
+                    autocomplete="current-password" required class="
+                      appearance-none
+                      block
+                      w-full
+                      px-3
+                      py-2
+                      border border-gray-300
+                      rounded-md
+                      shadow-sm
+                      placeholder-gray-400
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                    " />
+                </div>
+              </div>
+
+              <div>
+                <label for="firstName" class="block text-sm font-medium text-gray-700"> Vorname </label>
+                <div class="mt-1">
+                  <input id="firstName" name="firstName" type="text" autocomplete="firstName" formControlName="firstName" required
                     class="
                       appearance-none
                       block
@@ -128,8 +134,30 @@
                       focus:ring-indigo-500
                       focus:border-indigo-500
                       sm:text-sm
-                    "
-                  />
+                      dark:text-black
+                    " />
+                </div>
+              </div>
+              <div>
+                <label for="lastName" class="block text-sm font-medium text-gray-700"> Nachname </label>
+                <div class="mt-1">
+                  <input id="lastName" name="lastName" type="text" autocomplete="lastName" formControlName="lastName" required
+                    class="
+                      appearance-none
+                      block
+                      w-full
+                      px-3
+                      py-2
+                      border border-gray-300
+                      rounded-md
+                      shadow-sm
+                      placeholder-gray-400
+                      focus:outline-none
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      sm:text-sm
+                      dark:text-black
+                    " />
                 </div>
               </div>
 
@@ -141,16 +169,14 @@
                   </label>
                 </div>-->
 
-          <!--      <div class="text-sm">
+                <!--      <div class="text-sm">
                   <a href="/reset-password" class="font-medium text-indigo-600 hover:text-indigo-500"> Passwort vergessen? </a>
                 </div>
               -->
               </div>
 
               <div>
-                <button
-                  (click)="submitCredentials(authForm)"
-                  class="
+                <button (click)="submitCredentials(authForm)" class="
                     w-full
                     flex
                     justify-center
@@ -166,8 +192,7 @@
                     hover:bg-primary-shade
                     focus:outline-none
                     focus:ring-2 focus:ring-offset-2 focus:ring-bg-primary-tint
-                  "
-                >
+                  ">
                   Registrieren
                 </button>
               </div>
@@ -181,4 +206,3 @@
     </div>
   </div>
 </ion-content>
-
