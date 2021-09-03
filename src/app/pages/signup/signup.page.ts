@@ -4,7 +4,13 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { UserCredential } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
-
+import {
+  UserProfile
+} from 'src/app/models/user';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-signup',
@@ -12,19 +18,22 @@ import {FormGroup, Validators, FormBuilder} from '@angular/forms';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-
+  private userProfileRef: AngularFirestoreDocument < UserProfile > ;
   public user: UserCredential;
   public authForm: FormGroup;
   constructor(
     private authService: AuthService,
     private alertCtrl: AlertController,
     private formBuilder: FormBuilder,
+    private afs: AngularFirestore,
     private loadingCtrl: LoadingController,
     private router: Router
   ) {
     this.authForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.minLength(6)],
+      lastName:  ['', Validators.required],
+      firstName:  ['', Validators.required],
     });
   }
 
@@ -32,8 +41,6 @@ export class SignupPage implements OnInit {
     this.user = {
       email: '',
       password: '',
-      firstName: '',
-      lastName: ''
     };
 
   }
@@ -54,10 +61,11 @@ export class SignupPage implements OnInit {
       this.presentLoading();
       const credentials: UserCredential = {
         email: authForm.value.email,
-        password: authForm.value.password,
+        password: authForm.value.password
       };
 
-      this.signupUser(credentials);
+      this.signupUser(credentials, {firstName: authForm.value.firstName,
+        lastName: authForm.value.lastName});
     }
   }
   async presentLoading() {
@@ -72,12 +80,16 @@ export class SignupPage implements OnInit {
     console.log('Loading dismissed!');
   }
 
-  async signupUser(credentials: UserCredential): Promise<void> {
+  async signupUser(credentials: UserCredential, userData: any): Promise<void> {
 
     console.log('signup user: ' + this.user.email);
 
     this.authService.signupUser(credentials.email, credentials.password).then(
-      () => {
+     async (data) => {
+    
+        this.userProfileRef = this.afs.collection('users').doc < UserProfile > (data.user.uid);
+        await this.userProfileRef.set(userData);
+      
         this.router.navigateByUrl('tabs');
       }).catch(err=>{
         this.alertCtrl.create({

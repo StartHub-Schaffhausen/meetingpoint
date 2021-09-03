@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.user = {
       email: '',
-      password: ''
+      password: '',
+
     };
 
   }
