@@ -44,7 +44,7 @@
   </ion-grid>
 
   <ion-grid class="mt-8">
-    <h1 class="text-2xl">Schritt 3: Tisch wählen:</h1>
+    <h1 class="text-2xl">Schritt 3: Tisch buchen:</h1>
     <ion-row>
       <ion-col size="12" size-md="3" *ngFor="let desk of freeDesks">
         <ion-card>
@@ -58,7 +58,7 @@
               <ion-col></ion-col>
               <ion-col>
                 <ion-button (click)="bookTable(desk)" *ngIf="!bookingBlocked">
-                  Tisch wählen
+                  Tisch buchen
                 </ion-button>
                 <ion-button  *ngIf="bookingBlocked">
                   Tisch nicht verfügbar

@@ -1,7 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Zusammenfassung deiner Buchung</ion-title>
     <ion-buttons slot="primary">
+      <ion-button (click)="confirmBooking()">
+        <b>buchen</b>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Deine Buchung</ion-title>
+    <ion-buttons slot="secondary">
       <ion-button (click)="dismiss()">
         schliessen
       </ion-button>
@@ -12,6 +17,13 @@
 <ion-content>
 
   <ion-list lines="none">
+    <ion-item>
+      <ion-icon slot="start" name="heart-outline"></ion-icon>
+      <ion-label>
+        {{desk.name}}: {{bookingTypeDescription}}
+      </ion-label>
+    </ion-item>
+
     <ion-item>
       <ion-icon slot="start" name="enter-outline"></ion-icon>
       <ion-label>
@@ -27,13 +39,6 @@
         <h2>Ende deiner Buchung</h2>
         <p> {{dateTo | date:'dd.MM.y'}}
           {{dateTo | date:'HH:mm'}} Uhr</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon slot="start" name="heart-outline"></ion-icon>
-      <ion-label>
-        {{desk.name}}: {{bookingTypeDescription}}
       </ion-label>
     </ion-item>
 

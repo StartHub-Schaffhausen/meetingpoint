@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Rechnung</ion-title>
-    <ion-buttons slot="primary">
+    <ion-buttons slot="secondary">
       <ion-button (click)="dismiss()">
         schliessen
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Rechnung</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="openLink(invoice.stripeInvoiceUrl)">
+        <b>bezahlen</b>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

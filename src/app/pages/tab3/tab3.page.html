@@ -1,11 +1,20 @@
+<ng-container *ngIf="userProfile$ | async as userProfile; else loading">
+
+
+
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="logout()">
+        logout
+      </ion-button>
+    </ion-buttons>
     <ion-title>
       Dein Profil
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="logout()">
-        logout
+      <ion-button (click)="saveProfile(userProfile)">
+        <b>speichern</b>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -27,14 +36,24 @@
       </ion-col>
       <ion-col size="12" size-md>
 
-        <ion-list *ngIf="userProfile$ | async as userProfile; else loading">
+        <ion-list >
           <!--<ion-list-header>
       <ion-label>Allgemeine Angaben</ion-label>
     </ion-list-header>-->
-          <ion-avatar class="ion-margin-start" (click)="takePicture(userProfile)">
-            <img src="{{ userProfile.profilePicture || '/assets/logo.png'}}">
-          </ion-avatar>
+    <ion-item>
+      <ion-avatar slot="start"  class="ion-margin-start" (click)="takePicture(userProfile)">
+        <img src="{{ userProfile.profilePicture || '/assets/logo.png'}}">
+      </ion-avatar>
 
+      <ion-label>
+        Profilbild
+      </ion-label>
+
+      <ion-icon slot="end" name="camera-outline" (click)="takePicture(userProfile)"></ion-icon>
+
+
+    </ion-item>
+      
           <ion-item>
             <ion-label position="stacked">E-Mail Adresse</ion-label>
             <ion-input readonly [(ngModel)]="userProfile.email"></ion-input>
@@ -124,3 +143,4 @@
   </ion-grid>
 
 </ion-content>
+</ng-container>

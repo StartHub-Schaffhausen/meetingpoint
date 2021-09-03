@@ -389,7 +389,7 @@ export class Tab1Page implements OnInit {
         });
 
       const alert = await this.alertController.create({
-        message: 'Vielen Dank für deine Buchung. Als nächstes musst du noch die Rechnung bezahlen.',
+        message: 'Vielen Dank für deine Buchung! Als nächstes kannst du die Rechnung bezahlen.',
         buttons: [{
           text: 'Ok',
           role: 'cancel'
@@ -399,7 +399,7 @@ export class Tab1Page implements OnInit {
       await alert.onDidDismiss();
 
       const loading = await this.loadingController.create({
-        message: 'Rechnung wird geladen...',
+        message: 'Bitte warten. Deine Rechnung wird geladen...',
       });
       await loading.present();
 
