@@ -9,6 +9,8 @@ import { InvoicePageModule } from '../invoice/invoice.module';
 import { AddDeskPageModule } from '../add-desk/add-desk.module';
 import { ConfirmationPageModule } from '../confirmation/confirmation.module';
 
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   imports: [
     IonicModule,
@@ -17,7 +19,8 @@ import { ConfirmationPageModule } from '../confirmation/confirmation.module';
     Tab1PageRoutingModule,
     ConfirmationPageModule,
     InvoicePageModule,
-    AddDeskPageModule
+    AddDeskPageModule,
+    FontAwesomeModule
   ],
   declarations: [Tab1Page]
 })

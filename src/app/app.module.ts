@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthConfigModule } from './auth/auth-config.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AuthConfigModule } from './auth/auth-config.module';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AuthConfigModule,],
+    AuthConfigModule,
+    FontAwesomeModule,],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

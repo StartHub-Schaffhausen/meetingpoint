@@ -23,12 +23,12 @@
   <ion-grid>
     <ion-row>
       <ion-col class="mt-8" size="12" size-md="4">
-        <h1 class="text-2xl">Schritt 1: Datum wählen:</h1>
+        <h1 class="text-2xl"><fa-icon [icon]="faCircle1" size="lg"></fa-icon> Datum wählen:</h1>
         <ion-datetime (ionChange)="changeStartDate($event)" firstDayOfWeek="1" presentation="date" locale="de-DE">
         </ion-datetime>
       </ion-col>
       <ion-col class="mt-8" size="12" size-md="4">
-        <h1 class="text-2xl">Schritt 2: Tarif wählen:</h1>
+        <h1 class="text-2xl"><fa-icon [icon]="faCircle2" size="lg"></fa-icon> Tarif wählen:</h1>
         <ion-radio-group (ionChange)="changeTarif($event)" value="{{selectedTarif}}">
           <ion-item *ngFor="let entry of deskConfig">
             <ion-label>{{entry.description}}</ion-label>
@@ -44,7 +44,7 @@
   </ion-grid>
 
   <ion-grid class="mt-8">
-    <h1 class="text-2xl">Schritt 3: Tisch buchen:</h1>
+    <h1 class="text-2xl"><fa-icon [icon]="faCircle3" size="lg"></fa-icon> Tisch buchen:</h1>
     <ion-row>
       <ion-col size="12" size-md="3" *ngFor="let desk of freeDesks">
         <ion-card>

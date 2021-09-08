@@ -53,11 +53,10 @@ import {
   UserProfile
 } from 'src/app/models/user';
 import {
-  Browser
-} from 'protractor';
-import {
   Router
 } from '@angular/router';
+
+import { faCircle1, faCircle2, faCircle3 } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-tab1',
@@ -65,6 +64,11 @@ import {
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
+
+  faCircle1 = faCircle1;
+  faCircle2 = faCircle2;
+  faCircle3 = faCircle3;
+
   selectedStartDate: Date = new Date();
   selectedEndDate: Date = new Date();
   selectedTarif = 'Day';
