@@ -9,7 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@master
+        uses: actions/checkout@master  
+      - name: Install Awesomefonts
+        run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+      - name: Install Awesomefonts
+        run: npm config set "//npm.fontawesome.com/:_authToken" C1122B4D-AA63-4DA0-B72C-4A8A6F740876
       - name: Install Dependencies
         run: npm ci
       - name: Build
