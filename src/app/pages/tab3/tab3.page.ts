@@ -60,27 +60,25 @@ export class Tab3Page implements OnInit {
       this.userProfileId = user.uid;
       this.userProfileRef = this.afs.collection('users').doc < UserProfile > (user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
-    }else{
+    } else {
       const alert = await this.alertController.create({
         header: 'Du bist nicht eingeloggt.',
         message: 'Bitte logge dich zuerst ein um das Profil zu sehen',
-        buttons: [
-          {
-            text: 'Abbrechen',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: async (blah) => {
-              
-            }
-          }, {
-            text: 'Login',
-            handler: () => {
-              this.router.navigateByUrl('login');  
-            }
+        buttons: [{
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: async (blah) => {
+
           }
-        ]
+        }, {
+          text: 'Login',
+          handler: () => {
+            this.router.navigateByUrl('login');
+          }
+        }]
       });
-  
+
       await alert.present();
 
 
@@ -97,6 +95,46 @@ export class Tab3Page implements OnInit {
     this.presentToast();
   }
 
+
+
+  async takePicture(userProfile) {
+    try {
+
+
+      const image = await Camera.getPhoto({
+        quality: 90,
+        correctOrientation: true,
+        source: CameraSource.Prompt,
+        allowEditing: true,
+        resultType: CameraResultType.Base64
+      });
+
+      const loading = await this.loadingController.create({
+        message: 'Profilbild wird gespeichert...',
+      });
+      await loading.present();
+
+      const path = `/userProfile/${this.userProfileId}/profilePicture.${image.format.toLowerCase()}`;
+      const ref = this.afstorage.ref(path);
+      const task = await ref.putString(image.base64String, 'base64', {
+        contentType: `image/${image.format.toLowerCase()}`
+      });
+
+      let downloadUrl = await task.ref.getDownloadURL();
+      userProfile.profilePicture = downloadUrl;
+      await this.userProfileRef.set(userProfile);
+      await loading.dismiss();
+    } catch (err) {
+      console.log(err);
+      const toast = await this.toastController.create({
+        message: 'Profilbild ändern abgebrochen',
+        color: 'danger',
+        position: 'bottom',
+        duration: 2000
+      });
+      toast.present();
+    }
+  }
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Änderungen gespeichert.',
@@ -105,31 +143,5 @@ export class Tab3Page implements OnInit {
       duration: 2000
     });
     toast.present();
-  }
-
-  async takePicture(userProfile) {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      correctOrientation: true,
-      source: CameraSource.Prompt,
-      allowEditing: true,
-      resultType: CameraResultType.Base64
-    });
-
-    const loading = await this.loadingController.create({
-      message: 'Profilbild wird gespeichert...',
-    });
-    await loading.present();
-
-    const path = `/userProfile/${this.userProfileId}/profilePicture.${image.format.toLowerCase()}`;
-    const ref = this.afstorage.ref(path);
-    const task = await ref.putString(image.base64String, 'base64', {
-      contentType: `image/${image.format.toLowerCase()}`
-    });
-
-    let downloadUrl = await task.ref.getDownloadURL();
-    userProfile.profilePicture = downloadUrl;
-    await this.userProfileRef.set(userProfile);
-    await loading.dismiss();
   }
 }
