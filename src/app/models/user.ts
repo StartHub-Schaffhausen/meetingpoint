@@ -9,4 +9,5 @@ export interface UserCredential {
     lastName: string;
     profilePicture: string;
     bio: string;
+    phone: number;
   }

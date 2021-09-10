@@ -71,6 +71,11 @@
           </ion-item>
 
           <ion-item>
+            <ion-label position="stacked">Telefon</ion-label>
+            <ion-input  [(ngModel)]="userProfile.phone"></ion-input>
+          </ion-item>
+
+          <ion-item>
             <ion-label position="stacked">Deine Biographie</ion-label>
             <ion-textarea rows="4" placeholder="Erzähl was über Dich" [(ngModel)]="userProfile.bio"></ion-textarea>
           </ion-item>
