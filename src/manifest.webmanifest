@@ -1,8 +1,8 @@
 {
-  "name": "Meeting Point",
-  "short_name": "Meeting Point",
-  "description": "Meeting Point CoWorking @Herrenacker",
-  "theme_color": "#1976d2",
+  "name": "StartHub Coworking",
+  "short_name": "SH Coworking",
+  "description": "StartHub Coworking",
+  "theme_color": "#ffc20e",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
