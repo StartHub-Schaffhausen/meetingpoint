@@ -4,8 +4,8 @@ import { AuthModule, OidcConfigService } from 'angular-auth-oidc-client';
 export function configureAuth(oidcConfigService: OidcConfigService): () => Promise<any> {
     return () =>
         oidcConfigService.withConfig({
-              stsServer: 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc', //https://eid.sh.ch/.well-known/openid-configuration
-              redirectUrl: window.location.origin,
+              stsServer: 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc-test', //https://eid.sh.ch/.well-known/openid-configuration
+              redirectUrl: 'http://localhost:8100/oidc', //window.location.origin,
               postLogoutRedirectUri: window.location.origin,
               clientId: 'starthubmeetingpoint',
               scope: 'openid email profile address', // 'openid profile offline_access ' + your scopes

@@ -38,7 +38,10 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    //this.login();
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
+      console.log('app authenticated', isAuthenticated);
+      console.log(`Current access token is '${accessToken}'`);
+    });
   }
 
   login() {
