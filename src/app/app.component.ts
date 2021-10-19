@@ -23,6 +23,7 @@ import 'firebase/firestore';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  public installPrompt = null;
   constructor(
     public oidcSecurityService: OidcSecurityService,
     private swUpdate: SwUpdate,
@@ -38,8 +39,11 @@ export class AppComponent {
   }
 
   ngOnInit() {
+
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
       console.log('app authenticated', isAuthenticated);
+      console.log('app userData', userData);
+      console.log('app idToken', idToken);
       console.log(`Current access token is '${accessToken}'`);
     });
   }
@@ -59,6 +63,16 @@ export class AppComponent {
         this.presentAlert();
       });
     }
+  }
+
+  getInstallPrompt():void{
+    window.addEventListener('beforeinstallprompt',(e)=>{
+      e.preventDefault();
+      this.installPrompt = e;
+    });
+  }
+  askUserToInstallApp(): void{
+    this.installPrompt.prompt();
   }
 
   async presentAlert() {
@@ -87,10 +101,7 @@ export class AppComponent {
 
     await alert.present();
   }
-
   initializeFirebase(): void {
-
-    
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.

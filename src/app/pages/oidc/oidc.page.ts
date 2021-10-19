@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-oidc',
@@ -7,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OidcPage implements OnInit {
 
-  constructor() { }
+  
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params); // { orderby: "price" }
+        
+        console.log("code: " + params.code);
+        console.log("state: " + params.state);
+
+      }
+    ).unsubscribe();
     
 
+  }
+  ngOnDestroy(){
 
   }
 
