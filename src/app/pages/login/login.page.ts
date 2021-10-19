@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { UserCredential } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import {FormGroup, Validators, FormBuilder} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,7 @@ export class LoginPage implements OnInit {
   public user: UserCredential;
   public authForm: FormGroup;
   constructor(
+    private oidcSecurityService: OidcSecurityService,
     private authService: AuthService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -30,9 +33,13 @@ export class LoginPage implements OnInit {
     this.user = {
       email: '',
       password: '',
-
     };
 
+  }
+
+  loginOIDC(){
+    const url = this.oidcSecurityService.getAuthorizeUrl();
+    window.location.href = url;
   }
 
   submitCredentials(authForm: FormGroup): void {
