@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit
+  
 } from '@angular/core';
 import {
   AngularFirestore,
@@ -37,7 +37,7 @@ import {
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page {
   userProfile$: Observable < UserProfile > ;
   private userProfileRef: AngularFirestoreDocument < UserProfile > ;
   private userProfileId = "";
@@ -57,7 +57,7 @@ export class Tab3Page implements OnInit {
     //https://blog.bitsrc.io/6-ways-to-unsubscribe-from-observables-in-angular-ab912819a78f
     //The async pipe subscribes to an Observable or Promise and returns the latest value it has emitted. When a new value is emitted, the async pipe marks the component to be checked for changes. When the component gets destroyed, the asyncpipe unsubscribes automatically to avoid potential memory leaks.
   }
-  async ngOnInit() {
+  async ionViewWillEnter() {
     const user = await this.authService.getUser();
     if (user) {
       this.userProfileId = user.uid;

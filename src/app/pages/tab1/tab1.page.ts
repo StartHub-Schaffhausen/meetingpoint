@@ -1,6 +1,5 @@
 import {
-  Component,
-  OnInit,
+  Component
 } from '@angular/core';
 import {
   AlertController,
@@ -63,7 +62,7 @@ import { faCircle1, faCircle2, faCircle3 } from '@fortawesome/pro-solid-svg-icon
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page {
 
   faCircle1 = faCircle1;
   faCircle2 = faCircle2;
@@ -89,37 +88,19 @@ export class Tab1Page implements OnInit {
     private afs: AngularFirestore,
     private authService: AuthService,
   ) {
+
+  }
+  ionViewWillEnter():void {
     this.setStartEndDate();
     this.checkIfBlocked();
     this.getReservations();
   }
 
+
   ngOnDestroy(){
     this.freeDesks = [];
   }
 
-  async ngOnInit() {
-
-    /*
-    if (new Date().getTime() <= 1629471600000) {
-      const toast = await this.toastController.create({
-        message: 'Gratis Probewoche vom 16. bis 20. August! Melde dich per E-Mail hello@starthub.sh bei uns.',
-        duration: 10000,
-        position: 'top',
-        color: 'primary',
-        buttons: [{
-            text: 'YES!',
-            handler: () => {
-              window.location.href = "mailto:hello@starthub.sh?subject=Probewoche&body=Ich komme gerne am xx. August zur Probewoche vorbei. Bitte reserviert mir einen gratis Platz im Coworking Space <VORNAME> <NAME> <EMAIL> <HANDY>";
-            }
-          },
-        ]
-      });
-      toast.present();
-    }
-    */
-
-  }
 
   checkIfBlocked() {
     //console.log("is blocked? " + date.toISOString().substring(0,10));

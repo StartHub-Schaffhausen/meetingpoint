@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './community.page.html',
   styleUrls: ['./community.page.scss'],
 })
-export class CommunityPage implements OnInit {
+export class CommunityPage {
   community$: Observable<any[]>;
   communityCollection: AngularFirestoreCollection<any>;
 
@@ -25,7 +25,7 @@ export class CommunityPage implements OnInit {
     private alertController: AlertController,
   ) { }
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
 
 
     const user = await this.authService.getUser();
