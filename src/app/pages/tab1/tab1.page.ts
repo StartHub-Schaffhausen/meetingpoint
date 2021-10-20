@@ -124,6 +124,7 @@ export class Tab1Page {
   }
 
   async getReservations() {
+    console.log("CALL getReservations ");
 
     this.freeDesks = [];
 
@@ -138,8 +139,10 @@ export class Tab1Page {
     const desk = await ref$.pipe(first()).toPromise();
 
     //Loop über Desk
+    console.log("Anzahl verfügbare Tische "  + desk.docs.length );
     for (const deskElement of desk.docs) {
 
+      console.log(deskElement.data());
       //Lese Tages-Reservationen
 
       if (this.selectedTarif == 'Day' || this.selectedTarif == 'Morning' || this.selectedTarif == 'Afternoon') {
@@ -199,14 +202,15 @@ export class Tab1Page {
   }
 
   changeStartDate(event) {
+    
+      this.selectedStartDate = new Date(event.detail.value);
 
-    this.selectedStartDate = new Date(event.detail.value);
-
-    this.checkIfBlocked();
-
-    this.setStartEndDate();
-
-    this.getReservations();
+      this.checkIfBlocked();
+  
+      this.setStartEndDate();
+  
+      this.getReservations();
+  
   }
 
   setStartEndDate() {
