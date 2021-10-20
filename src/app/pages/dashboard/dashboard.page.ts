@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Reservation } from 'src/app/models/reservation';
@@ -10,7 +10,7 @@ import { Browser } from '@capacitor/browser';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage  {
   reservation$: Observable<any[]>;
   reservationPast$: Observable<any[]>;
   private reservationCollection: AngularFirestoreCollection<Reservation>;
@@ -18,16 +18,22 @@ export class DashboardPage implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private authService: AuthService
-  ) { }
+  ) { 
 
-  async ngOnInit() {
-    const user: firebase.User = await this.authService.getUser();
-    if (user){
-      this.reservationCollection = this.afs.collection('invoices', ref => ref.where('reservationTo', '>=', new Date()).where('canceled', '==', false)
-      .orderBy('reservationTo'));
-      this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
-    }
   }
+
+  ionViewWillEnter():void {
+    
+    this.authService.getUser().then(user=>{
+      if (user){
+        this.reservationCollection = this.afs.collection('invoices', ref => ref.where('reservationTo', '>=', new Date()).where('canceled', '==', false)
+        .orderBy('reservationTo'));
+        this.reservation$ = this.reservationCollection.valueChanges({ idField: 'id' });
+      }
+    });
+   
+  }
+
   async openLink(link) {
     await Browser.open({ url: link });
   };
