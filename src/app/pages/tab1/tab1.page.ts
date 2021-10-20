@@ -89,7 +89,6 @@ export class Tab1Page implements OnInit {
     private afs: AngularFirestore,
     private authService: AuthService,
   ) {
-    this.freeDesks = [];
     this.setStartEndDate();
     this.checkIfBlocked();
     this.getReservations();
