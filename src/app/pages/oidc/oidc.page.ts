@@ -19,8 +19,13 @@ export class OidcPage implements OnInit {
     private authService: AuthService,
     private loadingController: LoadingController) { }
 
-  ngOnInit() {
-    this.presentLoading();
+  async ngOnInit() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      //duration: 20000
+    });
+    await loading.present();
 
     this.route.queryParams
       .subscribe(params => {
@@ -37,12 +42,13 @@ export class OidcPage implements OnInit {
           this.oidc.getEidLogin(params.code, params.state).pipe(first()).toPromise().then(data =>{
             //console.log(data);
             this.authService.loginWithToken(data as string).then( ()=>{
-              
+              loading.dismiss();
               this.router.navigateByUrl('/');
               
             });
           });
         }catch(e){
+          loading.dismiss();
           this.router.navigateByUrl('/');
         }
 
@@ -56,16 +62,5 @@ export class OidcPage implements OnInit {
     this.loading.dismiss();
   }
 
-  async presentLoading() {
-    this.loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-      //duration: 20000
-    });
-    await this.loading.present();
-
-    const { role, data } = await this.loading.onDidDismiss();
-    console.log('Loading dismissed!');
-  }
 
 }
