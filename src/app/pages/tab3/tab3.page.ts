@@ -41,8 +41,8 @@ import { Browser } from '@capacitor/browser';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  userProfile$: Observable < UserProfile > ;
-  private userProfileRef: AngularFirestoreDocument < UserProfile > ;
+  userProfile$: Observable < any > ;
+  private userProfileRef: AngularFirestoreDocument < any > ;
   private userProfileId = "";
 
   constructor(
