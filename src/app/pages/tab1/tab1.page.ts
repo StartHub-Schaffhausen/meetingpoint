@@ -1,5 +1,5 @@
 import {
-  Component
+  Component,
 } from '@angular/core';
 import {
   AlertController,
@@ -62,7 +62,7 @@ import { faCircle1, faCircle2, faCircle3 } from '@fortawesome/pro-solid-svg-icon
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page{
 
   faCircle1 = faCircle1;
   faCircle2 = faCircle2;
@@ -75,6 +75,7 @@ export class Tab1Page {
   bookingBlocked = false;
 
   deskConfig = config.offer;
+  isStudent:boolean = false;
 
   freeDesks: any[] = [];
 
@@ -88,8 +89,25 @@ export class Tab1Page {
     private afs: AngularFirestore,
     private authService: AuthService,
   ) {
+   
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
+          if (userRef.data().isStudent === true) {
+            this.isStudent = true;
+            console.log("STUDENT");
+          }else{
+            this.isStudent = false;
+            console.log("KEIN STUDENT");
+          }
+        } else {
+          this.isStudent = false;
+        }
+      });
 
   }
+
+
   ionViewWillEnter():void {
     this.setStartEndDate();
     this.checkIfBlocked();

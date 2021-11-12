@@ -17,37 +17,43 @@ export const config = {
   offer: [{
       id: 1,
       type: 'Morning',
-      price: 12,
+      price: 7,
+      priceSpecial: 5,
       usageHours: '08:00 - 13:00',
       description: 'Vormittag'
     },
     {
       id: 2,
       type: 'Afternoon',
-      price: 12,
+      price: 7,
+      priceSpecial: 5,
       usageHours: '13:00 - 18:00',
       description: 'Nachmittag'
     },
     {
       id: 3,
       type: 'Day',
-      price: 19,
+      price: 12,
+      priceSpecial: 10,
       usageHours: '08:00 - 18:00',
       description: 'Ganzer Tag'
     },
     {
       id: 4,
       type: 'Week',
-      price: 85,
+      price: 55,
+      priceSpecial: 50,
       usageHours: '08:00 - 18:00',
       description: 'Ganze Woche'
     },
     {
       id: 5,
       type: 'Month',
-      price: 320,
+      price: 250,
+      priceSpecial: 200,
       usageHours: '08:00 - 18:00',
       description: 'Ganzer Monat'
     },
-  ]
+  ],
+
 };
