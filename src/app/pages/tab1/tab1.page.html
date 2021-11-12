@@ -33,12 +33,21 @@
           <ion-item *ngFor="let entry of deskConfig">
             <ion-label>{{entry.description}}</ion-label>
             <ion-radio slot="start" value="{{entry.type}}"></ion-radio>
-            <ion-badge *ngIf="!isStudent" slot="end">
-              CHF {{entry.price}}.-
+            <ion-badge *ngIf="!isStudent && !itsFree" slot="end">
+              CHF {{entry.price}}.- 
             </ion-badge>
-            <ion-badge *ngIf="isStudent" slot="end">
-              CHF {{entry.priceSpecial}}.-
+            <ion-badge *ngIf="isStudent && !itsFree" slot="end">
+              CHF {{entry.priceSpecial}}.-  
             </ion-badge>
+            <ion-badge *ngIf="itsFree && ( entry.type === 'Day' || entry.type == 'Morning' || entry.type == 'Afternoon')" slot="end">
+              Gratis
+            </ion-badge>
+            <ion-badge *ngIf="!isStudent &&itsFree && ( entry.type === 'Week' || entry.type == 'Month' )" slot="end">
+              CHF {{entry.price}}.- 
+            </ion-badge>
+            <ion-badge *ngIf="isStudent &&itsFree && ( entry.type === 'Week' || entry.type == 'Month' )" slot="end">
+              CHF {{entry.priceSpecial}}.- 
+            </ion-badge>            
           </ion-item>
         </ion-radio-group>
       </ion-col>

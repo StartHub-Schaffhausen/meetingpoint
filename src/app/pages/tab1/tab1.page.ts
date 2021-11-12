@@ -72,6 +72,8 @@ export class Tab1Page{
   selectedEndDate: Date = new Date();
   selectedTarif = 'Day';
 
+  itsFree: boolean = false;
+
   bookingBlocked = false;
 
   deskConfig = config.offer;
@@ -111,12 +113,25 @@ export class Tab1Page{
   ionViewWillEnter():void {
     this.setStartEndDate();
     this.checkIfBlocked();
+    this.checkIfFreeDay();
     this.getReservations();
   }
 
 
   ngOnDestroy(){
     this.freeDesks = [];
+  }
+
+
+  checkIfFreeDay() {
+    //console.log("is blocked? " + date.toISOString().substring(0,10));
+
+    if (this.selectedStartDate.getDay() === 3 ) { //'2021-08-30'
+      this.presentItsFree();
+      this.itsFree = true;
+    }else{
+      this.itsFree = false;
+    }
   }
 
 
@@ -224,6 +239,7 @@ export class Tab1Page{
       this.selectedStartDate = new Date(event.detail.value);
 
       this.checkIfBlocked();
+      this.checkIfFreeDay();
   
       this.setStartEndDate();
   
@@ -284,6 +300,13 @@ export class Tab1Page{
       const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
       if (userRef.data().firstName && userRef.data().lastName) {
 
+        const isStudent = userRef.data().isStudent;
+        let calculatedPrice = ((isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price );
+        
+        if ((this.selectedTarif === 'Morning' || this.selectedTarif === 'Afternoon' || this.selectedTarif === 'Day') && this.itsFree){
+          calculatedPrice = 0;
+        }
+
         const modal = await this.modalController.create({
           component: ConfirmationPage,
           swipeToClose: false,
@@ -295,7 +318,7 @@ export class Tab1Page{
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
 
-            price: ((userRef.data().isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price ),
+            price: calculatedPrice,
             bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
           }
 
@@ -305,6 +328,7 @@ export class Tab1Page{
         const data = await modal.onDidDismiss();
         //console.log(data);
         if (data.data.confirmBooking === true) {
+
           this.bookReservation(desk, {
             firstName: userRef.data().firstName,
             lastName: userRef.data().lastName,
@@ -315,7 +339,7 @@ export class Tab1Page{
             dateToStringTime: format(this.selectedEndDate.getTime(), 'HH:mm'),
             isoStringFrom: this.selectedStartDate.toISOString().substring(0,10),
             isoStringTo: this.selectedEndDate.toISOString().substring(0,10)
-          });
+          }, calculatedPrice);
         } else {
           this.presentToastBookingCancel();
         }
@@ -368,7 +392,7 @@ export class Tab1Page{
     }
   }
 
-  async bookReservation(desk: Desk, meta: any) {
+  async bookReservation(desk: Desk, meta: any, calculatedPrice: number) {
 
     let reservation: Reservation = {
       id: "",
@@ -377,7 +401,8 @@ export class Tab1Page{
       bookingType: this.selectedTarif,
       dateFrom: this.selectedStartDate,
       dateTo: this.selectedEndDate,
-      price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+      //price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+      price: calculatedPrice,
       bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
       userId: meta.userId,
       bookingCreated: "",
@@ -511,7 +536,7 @@ export class Tab1Page{
     const toast = await this.toastController.create({
       message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();
@@ -521,18 +546,27 @@ export class Tab1Page{
     const toast = await this.toastController.create({
       message: 'Dieses Datum liegt in der Vergangenheit. Back to the future 🚀',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();
   }
 
+  async presentItsFree() {
+    const toast = await this.toastController.create({
+      message: 'Mittwoch ist Gratis Coworking Tag',
+      color: 'success',
+      position: 'top',
+      duration: 4000
+    });
+    toast.present();
+  }
 
   async presentToastWeekendBlocked() {
     const toast = await this.toastController.create({
       message: 'Wir haben am Wochenende geschlossen.',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();
