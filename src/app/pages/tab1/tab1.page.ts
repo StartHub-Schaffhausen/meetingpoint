@@ -281,7 +281,7 @@ export class Tab1Page{
     if (user) { // LOGIN OK
 
 
-      const userRef = await this.afs.collection('users').doc < UserProfile > (user.uid).get().pipe(first()).toPromise();;
+      const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
       if (userRef.data().firstName && userRef.data().lastName) {
 
         const modal = await this.modalController.create({
@@ -291,14 +291,11 @@ export class Tab1Page{
           componentProps: {
             desk,
 
-
             bookingType: this.selectedTarif,
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
 
-
-
-            price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+            price: ((userRef.data().isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price ),
             bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
           }
 
