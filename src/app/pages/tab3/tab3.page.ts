@@ -64,7 +64,7 @@ export class Tab3Page {
     const user = await this.authService.getUser();
     if (user) {
       this.userProfileId = user.uid;
-      this.userProfileRef = this.afs.collection('users').doc < UserProfile > (user.uid);
+      this.userProfileRef = this.afs.collection('users').doc < any > (user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
     } else {
       const alert = await this.alertController.create({
