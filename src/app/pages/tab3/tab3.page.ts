@@ -32,6 +32,9 @@ import {
   CameraResultType
 } from '@capacitor/camera';
 
+import { Browser } from '@capacitor/browser';
+
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -146,5 +149,11 @@ export class Tab3Page {
       duration: 2000
     });
     toast.present();
+  }
+
+  requestSpecial(){
+    Browser.open({
+      "url": 'mailto:coworking@starthub.sh?subject=Studentenrabatt beantragen&body=Bitte sende uns eine Studiums-/Semesterbestätigung'
+    })
   }
 }
