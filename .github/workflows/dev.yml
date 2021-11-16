@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@dev  
+        uses: actions/checkout@master  
       - name: Install Awesomefonts
         run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/
       - name: Install Awesomefonts
@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: npm run build:ci
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@dev
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
