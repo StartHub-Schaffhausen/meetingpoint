@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
 } from '@angular/core';
 import {
   AlertController,
@@ -63,7 +62,7 @@ import { faCircle1, faCircle2, faCircle3 } from '@fortawesome/pro-solid-svg-icon
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page{
 
   faCircle1 = faCircle1;
   faCircle2 = faCircle2;
@@ -73,9 +72,12 @@ export class Tab1Page implements OnInit {
   selectedEndDate: Date = new Date();
   selectedTarif = 'Day';
 
+  itsFree: boolean = false;
+
   bookingBlocked = false;
 
   deskConfig = config.offer;
+  isStudent:boolean = false;
 
   freeDesks: any[] = [];
 
@@ -89,38 +91,49 @@ export class Tab1Page implements OnInit {
     private afs: AngularFirestore,
     private authService: AuthService,
   ) {
-    this.freeDesks = [];
+   
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
+          if (userRef.data().isStudent === true) {
+            this.isStudent = true;
+            console.log("STUDENT");
+          }else{
+            this.isStudent = false;
+            console.log("KEIN STUDENT");
+          }
+        } else {
+          this.isStudent = false;
+        }
+      });
+
+  }
+
+
+  ionViewWillEnter():void {
     this.setStartEndDate();
     this.checkIfBlocked();
+    this.checkIfFreeDay();
     this.getReservations();
   }
+
 
   ngOnDestroy(){
     this.freeDesks = [];
   }
 
-  async ngOnInit() {
 
-    /*
-    if (new Date().getTime() <= 1629471600000) {
-      const toast = await this.toastController.create({
-        message: 'Gratis Probewoche vom 16. bis 20. August! Melde dich per E-Mail hello@starthub.sh bei uns.',
-        duration: 10000,
-        position: 'top',
-        color: 'primary',
-        buttons: [{
-            text: 'YES!',
-            handler: () => {
-              window.location.href = "mailto:hello@starthub.sh?subject=Probewoche&body=Ich komme gerne am xx. August zur Probewoche vorbei. Bitte reserviert mir einen gratis Platz im Coworking Space <VORNAME> <NAME> <EMAIL> <HANDY>";
-            }
-          },
-        ]
-      });
-      toast.present();
+  checkIfFreeDay() {
+    //console.log("is blocked? " + date.toISOString().substring(0,10));
+
+    if (this.selectedStartDate.getDay() === 3 ) { //'2021-08-30'
+      this.presentItsFree();
+      this.itsFree = true;
+    }else{
+      this.itsFree = false;
     }
-    */
-
   }
+
 
   checkIfBlocked() {
     //console.log("is blocked? " + date.toISOString().substring(0,10));
@@ -144,6 +157,7 @@ export class Tab1Page implements OnInit {
   }
 
   async getReservations() {
+    console.log("CALL getReservations ");
 
     this.freeDesks = [];
 
@@ -158,8 +172,10 @@ export class Tab1Page implements OnInit {
     const desk = await ref$.pipe(first()).toPromise();
 
     //Loop über Desk
+    console.log("Anzahl verfügbare Tische "  + desk.docs.length );
     for (const deskElement of desk.docs) {
 
+      console.log(deskElement.data());
       //Lese Tages-Reservationen
 
       if (this.selectedTarif == 'Day' || this.selectedTarif == 'Morning' || this.selectedTarif == 'Afternoon') {
@@ -219,14 +235,16 @@ export class Tab1Page implements OnInit {
   }
 
   changeStartDate(event) {
+    
+      this.selectedStartDate = new Date(event.detail.value);
 
-    this.selectedStartDate = new Date(event.detail.value);
-
-    this.checkIfBlocked();
-
-    this.setStartEndDate();
-
-    this.getReservations();
+      this.checkIfBlocked();
+      this.checkIfFreeDay();
+  
+      this.setStartEndDate();
+  
+      this.getReservations();
+  
   }
 
   setStartEndDate() {
@@ -279,8 +297,15 @@ export class Tab1Page implements OnInit {
     if (user) { // LOGIN OK
 
 
-      const userRef = await this.afs.collection('users').doc < UserProfile > (user.uid).get().pipe(first()).toPromise();;
+      const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
       if (userRef.data().firstName && userRef.data().lastName) {
+
+        const isStudent = userRef.data().isStudent;
+        let calculatedPrice = ((isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price );
+        
+        if ((this.selectedTarif === 'Morning' || this.selectedTarif === 'Afternoon' || this.selectedTarif === 'Day') && this.itsFree){
+          calculatedPrice = 0;
+        }
 
         const modal = await this.modalController.create({
           component: ConfirmationPage,
@@ -289,14 +314,11 @@ export class Tab1Page implements OnInit {
           componentProps: {
             desk,
 
-
             bookingType: this.selectedTarif,
             dateFrom: this.selectedStartDate,
             dateTo: this.selectedEndDate,
 
-
-
-            price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+            price: calculatedPrice,
             bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
           }
 
@@ -306,6 +328,7 @@ export class Tab1Page implements OnInit {
         const data = await modal.onDidDismiss();
         //console.log(data);
         if (data.data.confirmBooking === true) {
+
           this.bookReservation(desk, {
             firstName: userRef.data().firstName,
             lastName: userRef.data().lastName,
@@ -316,7 +339,7 @@ export class Tab1Page implements OnInit {
             dateToStringTime: format(this.selectedEndDate.getTime(), 'HH:mm'),
             isoStringFrom: this.selectedStartDate.toISOString().substring(0,10),
             isoStringTo: this.selectedEndDate.toISOString().substring(0,10)
-          });
+          }, calculatedPrice);
         } else {
           this.presentToastBookingCancel();
         }
@@ -369,7 +392,7 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  async bookReservation(desk: Desk, meta: any) {
+  async bookReservation(desk: Desk, meta: any, calculatedPrice: number) {
 
     let reservation: Reservation = {
       id: "",
@@ -378,7 +401,8 @@ export class Tab1Page implements OnInit {
       bookingType: this.selectedTarif,
       dateFrom: this.selectedStartDate,
       dateTo: this.selectedEndDate,
-      price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+      //price: this.deskConfig.find(element => element.type === this.selectedTarif).price,
+      price: calculatedPrice,
       bookingTypeDescription: this.deskConfig.find(element => element.type === this.selectedTarif).description,
       userId: meta.userId,
       bookingCreated: "",
@@ -512,7 +536,7 @@ export class Tab1Page implements OnInit {
     const toast = await this.toastController.create({
       message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();
@@ -522,18 +546,27 @@ export class Tab1Page implements OnInit {
     const toast = await this.toastController.create({
       message: 'Dieses Datum liegt in der Vergangenheit. Back to the future 🚀',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();
   }
 
+  async presentItsFree() {
+    const toast = await this.toastController.create({
+      message: 'Mittwoch ist Gratis Coworking Tag',
+      color: 'success',
+      position: 'top',
+      duration: 4000
+    });
+    toast.present();
+  }
 
   async presentToastWeekendBlocked() {
     const toast = await this.toastController.create({
       message: 'Wir haben am Wochenende geschlossen.',
       color: 'danger',
-      position: 'bottom',
+      position: 'top',
       duration: 4000
     });
     toast.present();

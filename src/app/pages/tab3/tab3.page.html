@@ -53,7 +53,7 @@
 
 
     </ion-item>
-      
+
           <ion-item>
             <ion-label position="stacked">E-Mail Adresse</ion-label>
             <ion-input readonly [(ngModel)]="userProfile.email"></ion-input>
@@ -79,6 +79,19 @@
             <ion-label position="stacked">Deine Biographie</ion-label>
             <ion-textarea rows="4" placeholder="Erzähl was über Dich" [(ngModel)]="userProfile.bio"></ion-textarea>
           </ion-item>
+
+          <ion-item *ngIf="userProfile.isStudent">
+            <ion-label position="stacked">Spezial</ion-label>
+            <ion-text>Studentenrabatt</ion-text>
+            <ion-toggle slot="end" checked></ion-toggle>
+          </ion-item>
+
+          <ion-item *ngIf="!userProfile.isStudent">
+            <ion-label position="stacked">Spezial</ion-label>
+            <ion-text>Studentenrabatt</ion-text>
+            <ion-button slot="end" (click)="requestSpecial()">beantragen</ion-button>
+          </ion-item>
+      
 
           <ion-button color="primary" expand="block" (click)="saveProfile(userProfile)">speichern</ion-button>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit,   Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';import { config } from 'src/app/config/config';
-;
+import { ModalController } from '@ionic/angular';
+import { config } from 'src/app/config/config';
 import { Desk } from 'src/app/models/resources';
 
 @Component({

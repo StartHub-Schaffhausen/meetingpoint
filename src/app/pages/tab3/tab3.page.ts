@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit
+  
 } from '@angular/core';
 import {
   AngularFirestore,
@@ -32,14 +32,17 @@ import {
   CameraResultType
 } from '@capacitor/camera';
 
+import { Browser } from '@capacitor/browser';
+
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit {
-  userProfile$: Observable < UserProfile > ;
-  private userProfileRef: AngularFirestoreDocument < UserProfile > ;
+export class Tab3Page {
+  userProfile$: Observable < any > ;
+  private userProfileRef: AngularFirestoreDocument < any > ;
   private userProfileId = "";
 
   constructor(
@@ -53,12 +56,15 @@ export class Tab3Page implements OnInit {
   ) {
 
   }
-
-  async ngOnInit() {
+  ngOnDestroy(){
+    //https://blog.bitsrc.io/6-ways-to-unsubscribe-from-observables-in-angular-ab912819a78f
+    //The async pipe subscribes to an Observable or Promise and returns the latest value it has emitted. When a new value is emitted, the async pipe marks the component to be checked for changes. When the component gets destroyed, the asyncpipe unsubscribes automatically to avoid potential memory leaks.
+  }
+  async ionViewWillEnter() {
     const user = await this.authService.getUser();
     if (user) {
       this.userProfileId = user.uid;
-      this.userProfileRef = this.afs.collection('users').doc < UserProfile > (user.uid);
+      this.userProfileRef = this.afs.collection('users').doc < any > (user.uid);
       this.userProfile$ = this.userProfileRef.valueChanges();
     } else {
       const alert = await this.alertController.create({
@@ -143,5 +149,11 @@ export class Tab3Page implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  requestSpecial(){
+    Browser.open({
+      "url": 'mailto:coworking@starthub.sh?subject=Studentenrabatt beantragen&body=Bitte sende uns eine Studiums-/Semesterbestätigung'
+    })
   }
 }
