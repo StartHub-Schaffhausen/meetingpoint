@@ -23,4 +23,4 @@ jobs:
         with:
           args: deploy --only hosting:starthub-meetingpoint,hosting:starthub-coworking
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_DEV }}
