@@ -5,15 +5,16 @@
 export const environment = {
   production: false,
   firebaseConfig:{
-    apiKey: 'AIzaSyDi0_7lIZraMduu4nFyVlLJwu1HTx8Clww',
-    authDomain: 'starthub-schaffhausen.firebaseapp.com',
-    databaseURL: 'https://starthub-schaffhausen.firebaseio.com',
-    projectId: 'starthub-schaffhausen',
-    storageBucket: 'starthub-schaffhausen.appspot.com',
-    messagingSenderId: '654144830314',
-    appId: '1:654144830314:web:bb8b47c9d4e9b3efa30313'
+    apiKey: "AIzaSyCKpbR0riOR8rc6ZU9Js5QWeFVWYKE-xKc",
+    authDomain: "starthub-schaffhausen-dev.firebaseapp.com",
+    databaseURL: 'https://starthub-schaffhausen-dev.firebaseio.com',
+    projectId: "starthub-schaffhausen-dev",
+    storageBucket: "starthub-schaffhausen-dev.appspot.com",
+    messagingSenderId: "286218765636",
+    appId: "1:286218765636:web:e1c21527e9b23553648311"
   }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
