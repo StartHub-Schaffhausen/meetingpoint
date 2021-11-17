@@ -35,6 +35,10 @@ const routes: Routes = [
 
       },
       {
+        path: 'faq',
+        loadChildren: () => import('../faq/faq.module').then( m => m.FaqPageModule)
+      },
+      {
         path: 'profile',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule),
         //canActivate: [AuthGuard],
