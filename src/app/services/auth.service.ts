@@ -14,6 +14,10 @@ export class AuthService {
 
   constructor(public auth: AngularFireAuth) { }
 
+  loginWithToken(token:string){
+    return this.auth.signInWithCustomToken(token);
+  }
+
   mobileLogin(phonenumber: string){
    //this.auth.signInWithPhoneNumber(phonenumber, )
   }
