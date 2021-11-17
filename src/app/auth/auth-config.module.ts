@@ -6,7 +6,7 @@ import {  AuthModule,  LogLevel} from 'angular-auth-oidc-client';
     AuthModule.forRoot({
       config: {
         authority: 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc-test', //https://eid.sh.ch/.well-known/openid-configuration'
-        redirectUrl: 'http://localhost:8100/oidc', //window.location.origin,
+        redirectUrl: 'https://coworking.starthub.sh/oidc', //window.location.origin,
         postLogoutRedirectUri: window.location.origin,
         clientId: 'starthubmeetingpoint',
         scope: 'openid email profile address',
