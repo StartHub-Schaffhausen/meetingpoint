@@ -216,12 +216,13 @@ export class Tab1Page{
     }
 
     await loading.dismiss();
-    const toast = await this.toastController.create({
+    
+    /*const toast = await this.toastController.create({
       message: 'Angebote aktualisiert',
       duration: 2000,
       color: 'success'
     });
-    toast.present();
+    toast.present();*/
 
   }
 
