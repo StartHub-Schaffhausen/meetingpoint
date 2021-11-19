@@ -28,6 +28,12 @@ const routes: Routes = [
     path: 'oidc',
     loadChildren: () => import('./pages/oidc/oidc.module').then( m => m.OidcPageModule)
   },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+  },
+
+
 
 
 

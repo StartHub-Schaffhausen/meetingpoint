@@ -15,6 +15,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthConfigModule } from './auth/auth-config.module';
+
+import {AngularFireFunctionsModule, REGION} from '@angular/fire/functions';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -35,10 +38,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireFunctionsModule,
     AngularFireStorageModule,
     AuthConfigModule,
     FontAwesomeModule,],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },{provide: REGION, useValue: 'europe-west6'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
