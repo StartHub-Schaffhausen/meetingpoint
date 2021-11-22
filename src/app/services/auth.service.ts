@@ -36,6 +36,16 @@ export class AuthService {
   signupUser(email: string, password: string): Promise<any> {
     return this.auth.createUserWithEmailAndPassword(email,password);
   }
+  
+  async updatePassword(password: string){
+    const user = await this.auth.currentUser;
+    return user.updatePassword(password);
+  }
+
+  async updateEMail(email: string){
+    const user = await this.auth.currentUser;
+    return user.updateEmail(email);
+  }
 
   resetPassword(email: string): Promise<void> {
     return this.auth.sendPasswordResetEmail(email);
