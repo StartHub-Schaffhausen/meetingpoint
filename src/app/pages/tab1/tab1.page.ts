@@ -299,7 +299,7 @@ export class Tab1Page{
 
 
       const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
-      if (userRef.data().firstName && userRef.data().lastName) {
+      if (userRef.data().firstName && userRef.data().lastName && userRef.data().email  ) {
 
         const isStudent = userRef.data().isStudent;
         let calculatedPrice = ((isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price );
@@ -524,7 +524,7 @@ export class Tab1Page{
   async presentToastCompleteProfile() {
 
     const toast = await this.toastController.create({
-      message: 'Bitte zuerst Profil vervollständigen.',
+      message: 'Bitte zuerst Profil vervollständigen (Vorname, Nachname, E-Mail).',
       color: 'danger',
       position: 'bottom',
       duration: 4000
