@@ -164,14 +164,14 @@ export class Tab3Page {
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Abbrechen',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
           }
         }, {
-          text: 'Ok',
+          text: 'Ändern',
           handler: (data) => {
             console.log('Confirm Ok');
             this.authService.loginUser(data.currentEmail, data.currentPassword).then(async task=>{
