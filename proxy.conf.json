@@ -1,0 +1,11 @@
+{
+    "/proxy": {
+      "target": "https://europe-west6-starthub-schaffhausen-dev.cloudfunctions.net/proxy",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/proxy": ""
+      }
+    }
+  }

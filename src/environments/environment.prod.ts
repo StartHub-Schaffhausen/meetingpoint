@@ -1,5 +1,3 @@
-// It says prod - but it's DEV
-
 export const environment = {
   production: true,
   firebaseConfig:{
@@ -12,3 +10,4 @@ export const environment = {
     appId: "1:286218765636:web:e1c21527e9b23553648311"
   }
 };
+// It says prod - but it's DEV

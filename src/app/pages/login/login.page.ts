@@ -38,8 +38,11 @@ export class LoginPage implements OnInit {
   }
 
   loginOIDC(){
-    const url = this.oidcSecurityService.getAuthorizeUrl();
-    window.location.href = url;
+
+    this.oidcSecurityService.authorize();
+
+    // const url = this.oidcSecurityService.getAuthorizeUrl();
+    // window.location.href = url;
   }
 
   submitCredentials(authForm: FormGroup): void {

@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
 */
+import { HttpHeaders } from '@angular/common/http';
 
 import {SwUpdate} from '@angular/service-worker';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -40,7 +41,7 @@ export class AppComponent {
 
   ngOnInit() {
 
-    /* this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
+   /* this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
       console.log('app authenticated', isAuthenticated);
       console.log('app userData', userData);
       console.log('app idToken', idToken);

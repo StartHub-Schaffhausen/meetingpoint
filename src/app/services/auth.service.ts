@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import {first} from 'rxjs/operators';
@@ -12,7 +13,9 @@ import {first} from 'rxjs/operators';
 export class AuthService {
   private user: firebase.User;
 
-  constructor(public auth: AngularFireAuth) { }
+  constructor(
+    public auth: AngularFireAuth,
+    private oidcSecurityService: OidcSecurityService) { }
 
   loginWithToken(token:string){
     return this.auth.signInWithCustomToken(token);
@@ -41,6 +44,7 @@ export class AuthService {
     return this.auth.sendPasswordResetEmail(email);
   }
   logoutUser(): Promise<void> {
+    // this.oidcSecurityService.logoff();
     return this.auth.signOut();
   }
 
