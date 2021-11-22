@@ -53,10 +53,10 @@
 
 
     </ion-item>
-
-          <ion-item>
+          
+          <ion-item >
             <ion-label position="stacked">E-Mail Adresse</ion-label>
-            <ion-input readonly [(ngModel)]="userProfile.email"></ion-input>
+            <ion-input (click)="changeEmail()" readonly [(ngModel)]="userProfile.email"></ion-input>
           </ion-item>
 
           <ion-item>
