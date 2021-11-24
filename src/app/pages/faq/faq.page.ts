@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component,  OnInit} from '@angular/core';
+import {  Browser} from '@capacitor/browser';
 
 @Component({
   selector: 'app-faq',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqPage implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  async openLink(link) {
+    await Browser.open({
+      url: link
+    });
+
+
   }
 
 }
