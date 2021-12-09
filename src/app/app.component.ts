@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 /*
 import firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
 */
 
-
-//import { OidcSecurityService } from 'angular-auth-oidc-client';
 import {SwUpdate} from '@angular/service-worker';
 import { AlertController, ModalController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
-// import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFirestore} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 import firebase from 'firebase';
@@ -26,11 +25,11 @@ import 'firebase/firestore';
 export class AppComponent {
   public installPrompt = null;
   constructor(
-    //public oidcSecurityService: OidcSecurityService,
+    public oidcSecurityService: OidcSecurityService,
     private swUpdate: SwUpdate,
     private alertController: AlertController,
     private afAuth: AngularFireAuth,
-    //private afStore: AngularFirestore,
+    private afStore: AngularFirestore,
     public modalController: ModalController,
     //public routerOutlet: IonRouterOutlet,
     private router: Router,
@@ -41,21 +40,21 @@ export class AppComponent {
 
   ngOnInit() {
 
-   /* this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
+    this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken }) => {
       console.log('app authenticated', isAuthenticated);
       console.log('app userData', userData);
       console.log('app idToken', idToken);
       console.log(`Current access token is '${accessToken}'`);
-    });  */
+    });
   }
- /*
+
   login() {
     this.oidcSecurityService.authorize();
   }
 
   logout() {
     this.oidcSecurityService.logoff();
-  } */
+  }
 
 
   initializeApp(): void {
