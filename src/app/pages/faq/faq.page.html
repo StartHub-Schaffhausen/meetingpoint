@@ -178,6 +178,29 @@
         </ion-item>
       </ion-list>
     </ion-accordion>
+    <ion-accordion value="15">
+      <ion-item slot="header">
+        <ion-text>Was gibt es im Meetingpoint zu essen?</ion-text>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item>
+          <ion-textarea readonly>Täglich kochen wir mit viel Liebe zum Detail herzhafte, abwechslungsreiche, saisonale Gerichte aus regionalen Produkten!</ion-textarea>
+          <ion-button (click)="openLink('https://www.meetingpoint-sh.ch/wp-content/uploads/Meetingpoint_Schaffhausen_Menueplan_Bistro.pdf')">Menuplan</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+    <ion-accordion value="16">
+      <ion-item slot="header">
+        <ion-text>Gibt es auch eine Zusammenfassung der wichtigsten Regeln?</ion-text>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item>
+          <ion-textarea readonly>Schon mal vorne Weg das WLAN: WiFi "MeetingPoint-Gast" und PW wifi4Gast$21</ion-textarea>
+          <ion-button (click)="openLink('https://www.starthub.sh/wp-content/uploads/2021/09/StartHub_Coworking_Hausregeln.pdf')">Hausregeln</ion-button>
+          <!--<ion-textarea readonly></ion-textarea>-->
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
   </ion-accordion-group>
 
 </ion-content>

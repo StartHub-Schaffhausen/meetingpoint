@@ -101,7 +101,95 @@ export class Tab3Page {
     this.presentToast();
   }
 
+  
+  async changePassword(){
 
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Passwort ändern',
+      inputs: [
+        {
+          name: 'password',
+          type: 'password',
+          placeholder: 'Advanced Attributes',
+          cssClass: 'specialClass',
+          attributes: {
+            minLength: 6,
+          }
+        }
+
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log('Confirm Ok');
+            this.authService.updatePassword(data.password);
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async changeEmail(){
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'E-Mail Adresse ändern',
+      inputs: [
+        {
+          name: 'currentEmail',
+          type: 'email',
+          placeholder: 'current@mail.ch'
+        },
+        {
+          name: 'currentPassword',
+          type: 'password',
+          placeholder: 'secret'
+        },
+        {
+          name: 'email',
+          type: 'email',
+          placeholder: 'new@e-mail.com'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ändern',
+          handler: (data) => {
+            console.log('Confirm Ok');
+            this.authService.loginUser(data.currentEmail, data.currentPassword).then(async task=>{
+              await this.authService.updateEMail(data.email);
+              this.userProfileRef.set({
+                email: data.email
+              },{
+                merge: true
+              })
+
+            })
+          }
+        }
+      ]
+    });
+    await alert.present();
+
+  }
 
   async takePicture(userProfile) {
     try {

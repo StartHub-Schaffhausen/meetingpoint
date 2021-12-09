@@ -299,7 +299,9 @@ export class Tab1Page{
 
 
       const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
+
       if (userRef.data().firstName && userRef.data().lastName && userRef.data().email) {
+
 
         const isStudent = userRef.data().isStudent;
         let calculatedPrice = ((isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price );
