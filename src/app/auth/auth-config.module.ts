@@ -5,7 +5,7 @@ import { AuthModule, LogLevel} from 'angular-auth-oidc-client';
   imports: [
     AuthModule.forRoot({
       config: {
-        authority: '/proxy/.well-known/openid-configuration',  //'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc-test', //https://eid.sh.ch/.well-known/openid-configuration'
+        authority: 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc-test',  // '/proxy/.well-known/openid-configuration' 'https://europe-west6-starthub-schaffhausen.cloudfunctions.net/api/oidc-test', //https://eid.sh.ch/.well-known/openid-configuration'
         redirectUrl: window.location.origin + '/oidc', //window.location.origin,
         postLogoutRedirectUri: window.location.origin,
         clientId: 'starthubmeetingpoint',
