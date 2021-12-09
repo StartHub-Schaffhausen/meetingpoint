@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFireFunctions} from '@angular/fire/functions';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import {OidcSecurityService } from 'angular-auth-oidc-client';
 import {Observable} from 'rxjs';
 
 @Injectable({
