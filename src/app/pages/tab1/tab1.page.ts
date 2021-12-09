@@ -172,10 +172,10 @@ export class Tab1Page{
     const desk = await ref$.pipe(first()).toPromise();
 
     //Loop über Desk
-    console.log("Anzahl verfügbare Tische "  + desk.docs.length );
+    // console.log("Anzahl verfügbare Tische "  + desk.docs.length );
     for (const deskElement of desk.docs) {
 
-      console.log(deskElement.data());
+      // console.log(deskElement.data());
       //Lese Tages-Reservationen
 
       if (this.selectedTarif == 'Day' || this.selectedTarif == 'Morning' || this.selectedTarif == 'Afternoon') {
@@ -299,7 +299,9 @@ export class Tab1Page{
 
 
       const userRef = await this.afs.collection('users').doc < any > (user.uid).get().pipe(first()).toPromise();;
-      if (userRef.data().firstName && userRef.data().lastName && userRef.data().email  ) {
+
+      if (userRef.data().firstName && userRef.data().lastName && userRef.data().email) {
+
 
         const isStudent = userRef.data().isStudent;
         let calculatedPrice = ((isStudent) ?  this.deskConfig.find(element => element.type === this.selectedTarif).priceSpecial : this.deskConfig.find(element => element.type === this.selectedTarif).price );

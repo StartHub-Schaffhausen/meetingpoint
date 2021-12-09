@@ -1,11 +1,11 @@
-name: Build + Deploy
+name: Build + Deploy DEV
 on:
   push:
     branches:
-      - master
+      - dev
 jobs:
   build:
-    name: Build & Deploy Production App
+    name: Build & Deploy DEV App
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -21,6 +21,6 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:starthub-meetingpoint,hosting:starthub-coworking
+          args: deploy --only hosting
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_DEV }}
