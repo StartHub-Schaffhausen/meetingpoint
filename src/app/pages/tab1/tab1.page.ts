@@ -587,7 +587,7 @@ export class Tab1Page{
       message: 'Mittwoch ist Gratis Coworking Tag',
       color: 'success',
       position: 'top',
-      duration: 4000
+      duration: 2000
     });
     toast.present();
   }
