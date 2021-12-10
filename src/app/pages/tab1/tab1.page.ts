@@ -584,7 +584,7 @@ export class Tab1Page{
     const toast = await this.toastController.create({
       message: 'Mittwoch ist Gratis Coworking Tag',
       color: 'success',
-      position: 'top',
+      position: 'bottom',
       duration: 4000
     });
     toast.present();
