@@ -138,12 +138,13 @@ export class Tab1Page{
   checkIfBlocked() {
     //console.log("is blocked? " + date.toISOString().substring(0,10));
 
+    //check if Past
     if (this.selectedStartDate.toISOString().substring(0, 10) < new Date().toISOString().substring(0,10) ) { //'2021-08-30'
       this.bookingBlocked = true;
-      this.presentToastBookingBlocked();
+      //this.presentToastBookingBlocked();
       this.presentToastPast();
     } else {
-
+      this.bookingBlocked = false;
 
       // check if WEEKEND
       if (this.selectedStartDate.getDay() == 0 || this.selectedStartDate.getDay() == 6) { // 0 for sunday / 1 for monday... / 2 for tuesday
@@ -151,6 +152,22 @@ export class Tab1Page{
         this.presentToastWeekendBlocked();
       } else {
         this.bookingBlocked = false;
+
+        // check if COWORKING Closed
+        if (this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-25' 
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-26'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-27'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-28'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-29'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-30'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-31'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-01-01'
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-01-02' ) { 
+          this.bookingBlocked = true;
+          this.presentToastCoworkingClosed();
+        } else {
+          this.bookingBlocked = false;
+        }
       }
 
     }
@@ -536,6 +553,16 @@ export class Tab1Page{
   async presentToastBookingBlocked() {
     const toast = await this.toastController.create({
       message: 'An diesem Tag ist keine Buchung möglich. Buchungen sind ab 30.08.2021 möglich.',
+      color: 'danger',
+      position: 'top',
+      duration: 4000
+    });
+    toast.present();
+  }
+
+  async presentToastCoworkingClosed() {
+    const toast = await this.toastController.create({
+      message: 'Wir haben an diesem Tag geschlossen.',
       color: 'danger',
       position: 'top',
       duration: 4000
