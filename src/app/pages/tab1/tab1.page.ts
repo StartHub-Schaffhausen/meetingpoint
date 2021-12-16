@@ -154,7 +154,10 @@ export class Tab1Page{
         this.bookingBlocked = false;
 
         // check if COWORKING Closed
-        if (this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-25' 
+        if (
+           this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-23' 
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-24' 
+        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-25' 
         || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-26'
         || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-27'
         || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-28'
