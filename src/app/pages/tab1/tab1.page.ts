@@ -155,17 +155,11 @@ export class Tab1Page{
 
         // check if COWORKING Closed
         if (
-           this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-23' 
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-24' 
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-25' 
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-26'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-27'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-28'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-29'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-30'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-31'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-01-01'
-        || this.selectedStartDate.toISOString().substring(0, 10) == '2021-01-02' ) { 
+           this.selectedStartDate.toISOString().substring(0, 10) <= '2022-01-23' 
+          /* || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-24' 
+            || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-25' 
+            || this.selectedStartDate.toISOString().substring(0, 10) == '2021-12-26' */
+       ) { 
           this.bookingBlocked = true;
           this.presentToastCoworkingClosed();
         } else {
