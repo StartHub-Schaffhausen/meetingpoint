@@ -2,18 +2,21 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
+//DEV starthub-schaffhausen-dev
 export const environment = {
   production: false,
   firebaseConfig:{
-    apiKey: 'AIzaSyDi0_7lIZraMduu4nFyVlLJwu1HTx8Clww',
-    authDomain: 'starthub-schaffhausen.firebaseapp.com',
-    databaseURL: 'https://starthub-schaffhausen.firebaseio.com',
-    projectId: 'starthub-schaffhausen',
-    storageBucket: 'starthub-schaffhausen.appspot.com',
-    messagingSenderId: '654144830314',
-    appId: '1:654144830314:web:bb8b47c9d4e9b3efa30313'
+//    databaseURL: 'https://starthub-schaffhausen.firebaseio.com',
+    apiKey: "AIzaSyCKpbR0riOR8rc6ZU9Js5QWeFVWYKE-xKc",
+    authDomain: "starthub-schaffhausen-dev.firebaseapp.com",
+    projectId: "starthub-schaffhausen-dev",
+    storageBucket: "starthub-schaffhausen-dev.appspot.com",
+    messagingSenderId: "286218765636",
+    appId: "1:286218765636:web:e1c21527e9b23553648311"
   }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

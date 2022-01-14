@@ -5,7 +5,7 @@
   "homepage": "https://starthub.sh/coworking",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "build:ci": "ng build --configuration production",
     "build:prod": "cross-env NODE_ENV=production ng build --configuration production",
